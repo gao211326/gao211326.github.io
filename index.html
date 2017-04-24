@@ -291,7 +291,7 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <excerpt in="" index="" |="" 首页摘要="">
+              <Excerpt in index | 首页摘要>
 
 <blockquote>
 <p>人生得意须尽欢，莫使金樽空对月。</p>
@@ -339,9 +339,9 @@
 <h6 id="7、图片截屏或者擦除"><a href="#7、图片截屏或者擦除" class="headerlink" title="7、图片截屏或者擦除"></a>7、图片截屏或者擦除</h6><p>在这两个功能中，最主要用到的函数是<code>renderInContext</code>和<code>CGContextClearRect</code>，第一个主要是用来截屏用的，渲染当前图片，与之接近的还有一个函数<code>drawInContext</code>，当然，我们不能用这个函数，因为这个函数不能渲染图片，只针对layer。而后面的一个函数主要是用来清除该区域的。通过上面两个函数，我们就能够轻松的实现擦除功能，就如橡皮擦功能。<br>代码如下</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">+ (UIImage *)gl_wipeImageWithView:(UIView *)view movePoint:(CGPoint)point brushSize:(CGSize)size</div><div class="line">&#123;</div><div class="line">    //开启上下文</div><div class="line">    UIGraphicsBeginImageContext(view.bounds.size);</div><div class="line">    </div><div class="line">    CGContextRef context = UIGraphicsGetCurrentContext();</div><div class="line">    //此方法不能渲染图片 只针对layer</div><div class="line">    //[view.layer drawInContext:context];</div><div class="line">    </div><div class="line">    //以point为中心，然后size的一半向两边延伸  坐画笔  橡皮擦</div><div class="line">    CGRect clearRect = CGRectMake(point.x - size.width/2.0, point.y - size.width/2.0, size.width, size.height);</div><div class="line">    </div><div class="line">    //渲染图片</div><div class="line">    [view.layer renderInContext:context];</div><div class="line">    //清除该区域</div><div class="line">    CGContextClearRect(context, clearRect);</div><div class="line">    //得到新图片</div><div class="line">    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();</div><div class="line">    </div><div class="line">    UIGraphicsEndImageContext();</div><div class="line">    //避免内存泄漏</div><div class="line">    view.layer.contents = nil;</div><div class="line">    </div><div class="line">    return newImage;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>移动路径的代码就不在这里贴了，<code>demo</code>中有的，截屏的核心代码也就不贴了，很简单的，可以查看<code>demo</code>。</p>
-<h5 id="写在最后"><a href="#写在最后" class="headerlink" title="写在最后"></a>写在最后</h5><p>其实上面的这些都是比较简单的，主要是通过<code>CGContextRef</code>及其中的一些方法进行实习的，真正让人东西的，还是图形的处理，如添加马赛克、图片滤镜等，今天面试就问道了滤镜，当场就蒙了，后面我会努力研究下，希望到时候也能有好的东西分享给大家。<br>下面附上<a href="https://github.com/gao211326/UIImageOperationDemo" target="_blank" rel="external">demo</a>地址，如果觉得还可以，可以给个<code>star</code>哦，不甚感激~</p>
-<the rest="" of="" contents="" |="" 余下全文="">
-</the></excerpt>
+<h5 id="写在最后"><a href="#写在最后" class="headerlink" title="写在最后"></a>写在最后</h5><p>其实上面的这些都是比较简单的，主要是通过<code>CGContextRef</code>及其中的一些方法进行实习的，真正让人东西的，还是图形的处理，如添加马赛克、图片滤镜等，今天面试就问道了滤镜，当场就蒙了，后面我会努力研究下，希望到时候也能有好的东西分享给大家。<br>下面附上<a href="https://github.com/gao211326/UIImageOperationDemo">demo</a>地址，如果觉得还可以，可以给个<code>star</code>哦，不甚感激~</p>
+<p>+
+          
       
     </div>
     
@@ -350,6 +350,10 @@
       
 
       
+      
+        <p class="article-more-link">
+          <a href="/2017/04/24/iOS UIImage常用category/#more">阅读全文 >></a>
+        </p>
       
       <div class="clearfix"></div>
     </div>
