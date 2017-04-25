@@ -15,23 +15,23 @@
 
 
 
-<meta name="description" content="路漫漫其修远兮，吾将上下而求索 #####前记想研究自定义转场动画很久了，时间就像海绵，挤一挤还是有的，花了差不多有10天的时间，终于对转场动画了解了一点。自从iOS 7以后，我们就可以自定义转场动画，实现我们想要的效果，在这之前，我们先来看一张图，大概了解下，需要知道些什么 相关类联系图  相信各位看官也差不多看完这张图了，下面我们就来简单了解下其中的类和相关的函数 说到转场动画，其实无非就是我">
+<meta name="description" content="路漫漫其修远兮，吾将上下而求索   #####前记想研究自定义转场动画很久了，时间就像海绵，挤一挤还是有的，花了差不多有10天的时间，终于对转场动画了解了一点。自从iOS 7以后，我们就可以自定义转场动画，实现我们想要的效果，在这之前，我们先来看一张图，大概了解下，需要知道些什么">
 <meta name="keywords">
 <meta property="og:type" content="article">
-<meta property="og:title" content="半笑半醉间">
-<meta property="og:url" content="http://yoursite.com/2017/04/12/iOS自定义转场动画/index.html">
+<meta property="og:title" content="iOS Quart2D绘图之UIImage简单使用">
+<meta property="og:url" content="http://yoursite.com/2017/04/05/iOS自定义转场动画/index.html">
 <meta property="og:site_name" content="半笑半醉间">
-<meta property="og:description" content="路漫漫其修远兮，吾将上下而求索 #####前记想研究自定义转场动画很久了，时间就像海绵，挤一挤还是有的，花了差不多有10天的时间，终于对转场动画了解了一点。自从iOS 7以后，我们就可以自定义转场动画，实现我们想要的效果，在这之前，我们先来看一张图，大概了解下，需要知道些什么 相关类联系图  相信各位看官也差不多看完这张图了，下面我们就来简单了解下其中的类和相关的函数 说到转场动画，其实无非就是我">
+<meta property="og:description" content="路漫漫其修远兮，吾将上下而求索   #####前记想研究自定义转场动画很久了，时间就像海绵，挤一挤还是有的，花了差不多有10天的时间，终于对转场动画了解了一点。自从iOS 7以后，我们就可以自定义转场动画，实现我们想要的效果，在这之前，我们先来看一张图，大概了解下，需要知道些什么">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2525768-3de3520ec46cfa0a.gif?imageMogr2/auto-orient/strip">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2525768-9562ad05ab50db6c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2525768-b29e25db7cba47cd.gif?imageMogr2/auto-orient/strip">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2525768-cd46b09ac54ba40a.gif?imageMogr2/auto-orient/strip">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2525768-ebef7ba6c2fabc04.gif?imageMogr2/auto-orient/strip">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2525768-b0638aceb3247fa1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2017-04-12T07:53:28.000Z">
+<meta property="og:updated_time" content="2017-04-25T03:58:31.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="半笑半醉间">
-<meta name="twitter:description" content="路漫漫其修远兮，吾将上下而求索 #####前记想研究自定义转场动画很久了，时间就像海绵，挤一挤还是有的，花了差不多有10天的时间，终于对转场动画了解了一点。自从iOS 7以后，我们就可以自定义转场动画，实现我们想要的效果，在这之前，我们先来看一张图，大概了解下，需要知道些什么 相关类联系图  相信各位看官也差不多看完这张图了，下面我们就来简单了解下其中的类和相关的函数 说到转场动画，其实无非就是我">
+<meta name="twitter:title" content="iOS Quart2D绘图之UIImage简单使用">
+<meta name="twitter:description" content="路漫漫其修远兮，吾将上下而求索   #####前记想研究自定义转场动画很久了，时间就像海绵，挤一挤还是有的，花了差不多有10天的时间，终于对转场动画了解了一点。自从iOS 7以后，我们就可以自定义转场动画，实现我们想要的效果，在这之前，我们先来看一张图，大概了解下，需要知道些什么">
 <meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/2525768-3de3520ec46cfa0a.gif?imageMogr2/auto-orient/strip">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
@@ -64,7 +64,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>半笑半醉间</title>
+<title>iOS Quart2D绘图之UIImage简单使用 | 半笑半醉间</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -267,8 +267,8 @@
       <div class="body-wrap"><article id="post-iOS自定义转场动画" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2017/04/12/iOS自定义转场动画/" class="article-date">
-      <time datetime="2017-04-12T07:53:28.000Z" itemprop="datePublished">2017-04-12</time>
+      <a href="/2017/04/05/iOS自定义转场动画/" class="article-date">
+      <time datetime="2017-04-04T16:00:00.000Z" itemprop="datePublished">2017-04-05</time>
 </a>
 
 
@@ -279,11 +279,38 @@
       <input type="hidden" class="isFancy" />
     
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      iOS Quart2D绘图之UIImage简单使用
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+
+        
+        <div class="clearfix"></div>
+      </div>
+      
+    
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>路漫漫其修远兮，吾将上下而求索<br><img src="http://upload-images.jianshu.io/upload_images/2525768-3de3520ec46cfa0a.gif?imageMogr2/auto-orient/strip" alt="kaipingtu.gif"></p>
+        <excerpt in="" index="" |="" 首页摘要="">
+
+<blockquote>
+<p>路漫漫其修远兮，吾将上下而求索</p>
+</blockquote>
+<p><img src="http://upload-images.jianshu.io/upload_images/2525768-3de3520ec46cfa0a.gif?imageMogr2/auto-orient/strip" alt="kaipingtu.gif"></p>
 <p>#####前记<br>想研究自定义转场动画很久了，时间就像海绵，挤一挤还是有的，花了差不多有10天的时间，终于对转场动画了解了一点。自从<code>iOS 7</code>以后，我们就可以自定义转场动画，实现我们想要的效果，在这之前，我们先来看一张图，大概了解下，需要知道些什么</p>
+<a id="more"></a>
+<the rest="" of="" contents="" |="" 余下全文="">
+
+
 <p><code>相关类联系图</code></p>
 <p><img src="http://upload-images.jianshu.io/upload_images/2525768-9562ad05ab50db6c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Paste_Image.png"></p>
 <p>相信各位看官也差不多看完这张图了，下面我们就来简单了解下其中的类和相关的函数</p>
@@ -363,7 +390,7 @@
 <p>这个还是花了些时间，主要不在思想上，而是在翻书有个阴影效果哪里，等下我会讲到。先说说思路，主要还是通过截图来实现。首先需要截当前<code>vc</code>的部分，如果向左滑则截右边，向右则截左，然后还需要截目标<code>vc</code>的两部分图，分别加到<code>containerView</code>上，假如现在向左翻，那么就要将目标<code>vc</code>的左边截图加到<code>containerView</code>的左边并且隐藏起来，让其绕<code>y</code>轴旋转<code>M_PI_2</code>，就是直插屏幕的样子，那么目标<code>vc</code>的右边截图就需要放到当前<code>vc</code>的下面，这样当当前<code>vc</code>在滑动的时候，我们就能看到下面的图了。当当前<code>vc</code>绕<code>y</code>轴旋转<code>-M_PI_2</code>的时候，目标<code>vc</code>的左边截图显示出来，并恢复原状，完成整副动画。<br>需要注意的是，截图在绕<code>y</code>轴旋转的时候，因为我们的<code>layer</code>的默认<code>anchorPoint</code>为<code>(0.5,0.5)</code>，所以需要改变<code>anchorPoint</code>的只，否则就绕中心在旋转了。</p>
 <p>说了这么多，还是看看核心代码吧<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div></pre></td><td class="code"><pre><div class="line">p.p1 &#123;margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Menlo; color: #3d71ff&#125;p.p2 &#123;margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Menlo; color: #4dbf56&#125;p.p3 &#123;margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Menlo; color: #00afca&#125;p.p4 &#123;margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Menlo; color: #3d71ff; min-height: 16.0px&#125;p.p5 &#123;margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Menlo; color: #2337da&#125;p.p6 &#123;margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px &apos;PingFang SC&apos;; color: #4dbf56&#125;span.s1 &#123;font-variant-ligatures: no-common-ligatures&#125;span.s2 &#123;font-variant-ligatures: no-common-ligatures; color: #c2349b&#125;span.s3 &#123;font-variant-ligatures: no-common-ligatures; color: #00afca&#125;span.s4 &#123;font-variant-ligatures: no-common-ligatures; color: #3d71ff&#125;span.s5 &#123;font: 14.0px &apos;PingFang SC&apos;; font-variant-ligatures: no-common-ligatures&#125;span.s6 &#123;font-variant-ligatures: no-common-ligatures; color: #4dbf56&#125;span.s7 &#123;font: 14.0px &apos;PingFang SC&apos;; font-variant-ligatures: no-common-ligatures; color: #4dbf56&#125;span.s8 &#123;font: 14.0px Menlo; font-variant-ligatures: no-common-ligatures; color: #2337da&#125;span.s9 &#123;font: 14.0px Menlo; font-variant-ligatures: no-common-ligatures; color: #3d71ff&#125;span.s10 &#123;font: 14.0px Menlo; font-variant-ligatures: no-common-ligatures&#125;span.s11 &#123;font-variant-ligatures: no-common-ligatures; color: #8b84cf&#125;span.s12 &#123;font-variant-ligatures: no-common-ligatures; color: #93c96a&#125;span.s13 &#123;font-variant-ligatures: no-common-ligatures; color: #d28f5a&#125;</div><div class="line"></div><div class="line">- (void)setToAnimation:(id&lt;UIViewControllerContextTransitioning&gt;)contextTransition</div><div class="line">&#123;</div><div class="line">    //获取目标动画的VC</div><div class="line">    UIViewController *toVc = [contextTransition viewControllerForKey:UITransitionContextToViewControllerKey];</div><div class="line">    UIViewController *fromVc = [contextTransition viewControllerForKey:UITransitionContextFromViewControllerKey];</div><div class="line">    UIView *containerView = [contextTransition containerView];</div><div class="line">    </div><div class="line">    //m34 这个参数有点不好理解  为透视效果 我在http://www.jianshu.com/p/e8d1985dccec这里有讲</div><div class="line">    //当Z轴上有变化的时候 我们所看到的透视效果 可以对比看看 当你改成-0.1的时候 就懂了</div><div class="line">    CATransform3D transform = CATransform3DIdentity;</div><div class="line">    transform.m34 = -0.002;</div><div class="line">    [containerView.layer setSublayerTransform:transform];</div><div class="line">    </div><div class="line">    UIView *fromView = fromVc.view;</div><div class="line">    UIView *toView = toVc.view;</div><div class="line">    </div><div class="line">    //截图</div><div class="line">    //当前页面的右侧</div><div class="line">    CGRect from_half_right_rect = CGRectMake(fromView.frame.size.width/2.0, 0, fromView.frame.size.width/2.0, fromView.frame.size.height);</div><div class="line">    //目标页面的左侧</div><div class="line">    CGRect to_half_left_rect = CGRectMake(0, 0, toView.frame.size.width/2.0, toView.frame.size.height);</div><div class="line">    //目标页面的右侧</div><div class="line">    CGRect to_half_right_rect = CGRectMake(toView.frame.size.width/2.0, 0, toView.frame.size.width/2.0, toView.frame.size.height);</div><div class="line">    </div><div class="line">    //截三张图 当前页面的右侧 目标页面的左和右</div><div class="line">    UIView *fromRightSnapView = [fromView resizableSnapshotViewFromRect:from_half_right_rect afterScreenUpdates:NO withCapInsets:UIEdgeInsetsZero];</div><div class="line">    UIView *toLeftSnapView = [toView resizableSnapshotViewFromRect:to_half_left_rect afterScreenUpdates:YES withCapInsets:UIEdgeInsetsZero];</div><div class="line">    UIView *toRightSnapView = [toView resizableSnapshotViewFromRect:to_half_right_rect afterScreenUpdates:YES withCapInsets:UIEdgeInsetsZero];</div><div class="line">    </div><div class="line">    </div><div class="line">    fromRightSnapView.frame = from_half_right_rect;</div><div class="line">    toLeftSnapView.frame = to_half_left_rect;</div><div class="line">    toRightSnapView.frame = to_half_right_rect;</div><div class="line">    </div><div class="line">    //重新设置anchorPoint  分别绕自己的最左和最右旋转</div><div class="line">    fromRightSnapView.layer.position = CGPointMake(CGRectGetMinX(fromRightSnapView.frame), CGRectGetMinY(fromRightSnapView.frame) + CGRectGetHeight(fromRightSnapView.frame) * 0.5);</div><div class="line">    fromRightSnapView.layer.anchorPoint = CGPointMake(0, 0.5);</div><div class="line">    </div><div class="line">    toLeftSnapView.layer.position = CGPointMake(CGRectGetMinX(toLeftSnapView.frame) + CGRectGetWidth(toLeftSnapView.frame), CGRectGetMinY(toLeftSnapView.frame) + CGRectGetHeight(toLeftSnapView.frame) * 0.5);</div><div class="line">    toLeftSnapView.layer.anchorPoint = CGPointMake(1, 0.5);</div><div class="line">    </div><div class="line">    //添加阴影效果</div><div class="line"></div><div class="line">    UIView *fromRightShadowView = [self addShadowView:fromRightSnapView startPoint:CGPointMake(0, 1) endPoint:CGPointMake(1, 1)];</div><div class="line">    UIView *toLeftShaDowView = [self addShadowView:toLeftSnapView startPoint:CGPointMake(1, 1) endPoint:CGPointMake(0, 1)];</div><div class="line">    </div><div class="line">    //添加视图  注意顺序</div><div class="line">    [containerView insertSubview:toView atIndex:0];</div><div class="line">    [containerView addSubview:toLeftSnapView];</div><div class="line">    [containerView addSubview:toRightSnapView];</div><div class="line">    [containerView addSubview:fromRightSnapView];</div><div class="line"></div><div class="line">    toLeftSnapView.hidden = YES;</div><div class="line">    </div><div class="line">    </div><div class="line">    //先旋转到最中间的位置</div><div class="line">    toLeftSnapView.layer.transform = CATransform3DMakeRotation(M_PI_2, 0, 1, 0);</div><div class="line">    //StartTime 和 relativeDuration 均为百分百</div><div class="line">    [UIView animateKeyframesWithDuration:self.duration delay:0 options:UIViewKeyframeAnimationOptionCalculationModeLinear animations:^&#123;</div><div class="line">        [UIView addKeyframeWithRelativeStartTime:0 relativeDuration:0.5 animations:^&#123;</div><div class="line">            </div><div class="line">            fromRightSnapView.layer.transform = CATransform3DMakeRotation(-M_PI_2, 0, 1, 0);</div><div class="line">            fromRightShadowView.alpha = 1.0;</div><div class="line">        &#125;];</div><div class="line">        </div><div class="line">        [UIView addKeyframeWithRelativeStartTime:0.5 relativeDuration:0.5 animations:^&#123;</div><div class="line">            toLeftSnapView.hidden = NO;</div><div class="line">            toLeftSnapView.layer.transform = CATransform3DIdentity;</div><div class="line">            toLeftShaDowView.alpha = 0.0;</div><div class="line">        &#125;];</div><div class="line">    &#125; completion:^(BOOL finished) &#123;</div><div class="line">        [toLeftSnapView removeFromSuperview];</div><div class="line">        [toRightSnapView removeFromSuperview];</div><div class="line">        [fromRightSnapView removeFromSuperview];</div><div class="line">        [fromView removeFromSuperview];</div><div class="line">        </div><div class="line">        if ([contextTransition transitionWasCancelled]) &#123;</div><div class="line">            [containerView addSubview:fromView];</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        [contextTransition completeTransition:![contextTransition transitionWasCancelled]];</div><div class="line">    &#125;];</div><div class="line">    </div><div class="line">    </div><div class="line">    </div><div class="line">//本来打算用基础动画来实现 但是由于需要保存几个变量 在动画完成的代理函数中用，所以就取消这个想法了</div><div class="line">//    CABasicAnimation *fromRightAnimation = [CABasicAnimation animationWithKeyPath:@&quot;transform.rotation.x&quot;];</div><div class="line">//    fromRightAnimation.duration = self.duration/2.0;</div><div class="line">//    fromRightAnimation.beginTime = CACurrentMediaTime();</div><div class="line">//    fromRightAnimation.toValue = @(-M_PI_2);</div><div class="line">//    [fromRightSnapView.layer addAnimation:fromRightAnimation forKey:nil];</div><div class="line">//    </div><div class="line">//    </div><div class="line">//    CABasicAnimation *toLeftAnimation = [CABasicAnimation animationWithKeyPath:@&quot;transform.rotation.x&quot;];</div><div class="line">//    toLeftAnimation.beginTime = CACurrentMediaTime() + self.duration/2.0;</div><div class="line">//    toLeftAnimation.fromValue = @(M_PI_2);</div><div class="line">//    [toLeftAnimation setValue:contextTransition forKey:@&quot;contextTransition&quot;];</div><div class="line">//    [toLeftSnapView.layer addAnimation:toLeftAnimation forKey:@&quot;toLeftAnimation&quot;];</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <p>写到这里，差不多转场动画我能够写的就到这里了，文章实在是有点长，不是故意为之，只是我想写的稍微详细点，对自己也是一个很好的提升。如果能帮到你，还请给个<code>star</code>，嘿嘿~<br>下面就附上<a href="https://github.com/gao211326/GLTransitionAnimationDemo" target="_blank" rel="external">demo</a>地址<br>如果有什么不对的地方，还请多多指教，共同成长。</p>
-
+</the></excerpt>
       
     </div>
     
@@ -371,13 +398,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2017/04/12/iOS自定义转场动画/"></a></p>
+        <p><span>本文标题:</span><a href="/2017/04/05/iOS自定义转场动画/">iOS Quart2D绘图之UIImage简单使用</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">One Dream</a></p>
-        <p><span>发布时间:</span>2017-04-12, 15:53:28</p>
-        <p><span>最后更新:</span>2017-04-12, 15:53:28</p>
+        <p><span>发布时间:</span>2017-04-05, 00:00:00</p>
+        <p><span>最后更新:</span>2017-04-25, 11:58:31</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2017/04/12/iOS自定义转场动画/" title="">http://yoursite.com/2017/04/12/iOS自定义转场动画/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/2017/04/12/iOS自定义转场动画/　　作者: One Dream" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2017/04/05/iOS自定义转场动画/" title="iOS Quart2D绘图之UIImage简单使用">http://yoursite.com/2017/04/05/iOS自定义转场动画/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/2017/04/05/iOS自定义转场动画/　　作者: One Dream" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
@@ -389,16 +416,10 @@
 
     <nav id="article-nav">
         
-            <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2017/04/06/hello-world/">
-                    Hello World
-                </a>
-            </div>
-        
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/2017/04/24/iOS UIImage常用category/">
-                    iOS Quart2D绘图之UIImage简单使用
+                <a href="/2017/04/06/hello-world/">
+                    Hello World
                 </a>
             </div>
         
@@ -446,7 +467,7 @@
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"　| 半笑半醉间　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"iOS Quart2D绘图之UIImage简单使用　| 半笑半醉间　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -466,21 +487,19 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2017/04/06/hello-world/" title="上一篇: Hello World">
-                <i class="fa fa-angle-left"></i>
-            </a>
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
         
 
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2017/04/24/iOS UIImage常用category/" title="下一篇: iOS Quart2D绘图之UIImage简单使用">
+            <a href="/2017/04/06/hello-world/" title="下一篇: Hello World">
                 <i class="fa fa-angle-right"></i>
             </a>
         
     </div>
 
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/04/24/iOS UIImage常用category/">iOS Quart2D绘图之UIImage简单使用</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/12/iOS自定义转场动画/">iOS自定义转场动画</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/06/hello-world/">Hello World</a></li></ul>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/04/24/iOS UIImage常用category/">iOS Quart2D绘图之UIImage简单使用</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/06/hello-world/">Hello World</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/05/iOS自定义转场动画/">iOS Quart2D绘图之UIImage简单使用</a></li></ul>
 
 
 
