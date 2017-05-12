@@ -15,13 +15,13 @@
 
 
 
-<meta name="description" content="title: iOS CoreImage之滤镜简单使用 date: 2017-05-12    老骥伏枥，志在千里  #####前记最近一直在研究图像处理方面，既上一篇iOS Quart2D绘图之UIImage简单使用后，就一直在学习关于CoreImage图像滤镜处理。中间也看了不少文章，也得到了不少帮助，下面就结合这些知识和我自己的认识，记录一下，方便自己，方便他人  作用：对图像进行滤镜操作，">
+<meta name="description" content="老骥伏枥，志在千里  #####前记最近一直在研究图像处理方面，既上一篇iOS Quart2D绘图之UIImage简单使用后，就一直在学习关于CoreImage图像滤镜处理。中间也看了不少文章，也得到了不少帮助，下面就结合这些知识和我自己的认识，记录一下，方便自己，方便他人  作用：对图像进行滤镜操作，比如模糊、颜色改变、锐化、人脸识别等。 Core Graphics对比：基于Quartz">
 <meta name="keywords">
 <meta property="og:type" content="article">
-<meta property="og:title" content="半笑半醉间">
+<meta property="og:title" content="iOS CoreImage之滤镜简单使用">
 <meta property="og:url" content="http://yoursite.com/2017/05/12/iOS CoreImage之滤镜简单使用/index.html">
 <meta property="og:site_name" content="半笑半醉间">
-<meta property="og:description" content="title: iOS CoreImage之滤镜简单使用 date: 2017-05-12    老骥伏枥，志在千里  #####前记最近一直在研究图像处理方面，既上一篇iOS Quart2D绘图之UIImage简单使用后，就一直在学习关于CoreImage图像滤镜处理。中间也看了不少文章，也得到了不少帮助，下面就结合这些知识和我自己的认识，记录一下，方便自己，方便他人  作用：对图像进行滤镜操作，">
+<meta property="og:description" content="老骥伏枥，志在千里  #####前记最近一直在研究图像处理方面，既上一篇iOS Quart2D绘图之UIImage简单使用后，就一直在学习关于CoreImage图像滤镜处理。中间也看了不少文章，也得到了不少帮助，下面就结合这些知识和我自己的认识，记录一下，方便自己，方便他人  作用：对图像进行滤镜操作，比如模糊、颜色改变、锐化、人脸识别等。 Core Graphics对比：基于Quartz">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2525768-c7902222e7ac3d2d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2525768-6e86864a2a7eed2d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2525768-122207ff8e1f7a2f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
@@ -29,10 +29,10 @@
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2525768-9a6508f9be3a1f28.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2525768-81315e96710d1a9c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2525768-bfce0c969605bc45.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2017-05-12T09:06:14.000Z">
+<meta property="og:updated_time" content="2017-05-12T09:12:52.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="半笑半醉间">
-<meta name="twitter:description" content="title: iOS CoreImage之滤镜简单使用 date: 2017-05-12    老骥伏枥，志在千里  #####前记最近一直在研究图像处理方面，既上一篇iOS Quart2D绘图之UIImage简单使用后，就一直在学习关于CoreImage图像滤镜处理。中间也看了不少文章，也得到了不少帮助，下面就结合这些知识和我自己的认识，记录一下，方便自己，方便他人  作用：对图像进行滤镜操作，">
+<meta name="twitter:title" content="iOS CoreImage之滤镜简单使用">
+<meta name="twitter:description" content="老骥伏枥，志在千里  #####前记最近一直在研究图像处理方面，既上一篇iOS Quart2D绘图之UIImage简单使用后，就一直在学习关于CoreImage图像滤镜处理。中间也看了不少文章，也得到了不少帮助，下面就结合这些知识和我自己的认识，记录一下，方便自己，方便他人  作用：对图像进行滤镜操作，比如模糊、颜色改变、锐化、人脸识别等。 Core Graphics对比：基于Quartz">
 <meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/2525768-c7902222e7ac3d2d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
@@ -65,7 +65,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>半笑半醉间</title>
+<title>iOS CoreImage之滤镜简单使用 | 半笑半醉间</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -269,7 +269,7 @@
   
     <div class="article-meta">
       <a href="/2017/05/12/iOS CoreImage之滤镜简单使用/" class="article-date">
-      <time datetime="2017-05-12T09:00:01.000Z" itemprop="datePublished">2017-05-12</time>
+      <time datetime="2017-05-11T16:00:00.000Z" itemprop="datePublished">2017-05-12</time>
 </a>
 
 
@@ -280,12 +280,28 @@
       <input type="hidden" class="isFancy" />
     
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      iOS CoreImage之滤镜简单使用
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+
+        
+        <div class="clearfix"></div>
+      </div>
+      
+    
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>title: iOS CoreImage之滤镜简单使用</p>
-<p>date: 2017-05-12</p>
-<excerpt in="" index="" |="" 首页摘要="">
+        <excerpt in="" index="" |="" 首页摘要="">
 
 <blockquote>
 <p>老骥伏枥，志在千里</p>
@@ -366,12 +382,12 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2017/05/12/iOS CoreImage之滤镜简单使用/"></a></p>
+        <p><span>本文标题:</span><a href="/2017/05/12/iOS CoreImage之滤镜简单使用/">iOS CoreImage之滤镜简单使用</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">One Dream</a></p>
-        <p><span>发布时间:</span>2017-05-12, 17:00:01</p>
-        <p><span>最后更新:</span>2017-05-12, 17:06:14</p>
+        <p><span>发布时间:</span>2017-05-12, 00:00:00</p>
+        <p><span>最后更新:</span>2017-05-12, 17:12:52</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2017/05/12/iOS CoreImage之滤镜简单使用/" title="">http://yoursite.com/2017/05/12/iOS CoreImage之滤镜简单使用/</a>
+            <span>原始链接:</span><a class="post-url" href="/2017/05/12/iOS CoreImage之滤镜简单使用/" title="iOS CoreImage之滤镜简单使用">http://yoursite.com/2017/05/12/iOS CoreImage之滤镜简单使用/</a>
             <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/2017/05/12/iOS CoreImage之滤镜简单使用/　　作者: One Dream" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
@@ -435,7 +451,7 @@
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"　| 半笑半醉间　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"iOS CoreImage之滤镜简单使用　| 半笑半醉间　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
