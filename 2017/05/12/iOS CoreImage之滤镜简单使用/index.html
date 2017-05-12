@@ -15,13 +15,13 @@
 
 
 
-<meta name="description" content="老骥伏枥，志在千里  #####前记最近一直在研究图像处理方面，既上一篇iOS Quart2D绘图之UIImage简单使用后，就一直在学习关于CoreImage图像滤镜处理。中间也看了不少文章，也得到了不少帮助，下面就结合这些知识和我自己的认识，记录一下，方便自己，方便他人  作用：对图像进行滤镜操作，比如模糊、颜色改变、锐化、人脸识别等。 Core Graphics对比：基于Quartz 2D">
+<meta name="description" content="title: iOS CoreImage之滤镜简单使用 date: 2017-05-12    老骥伏枥，志在千里  #####前记最近一直在研究图像处理方面，既上一篇iOS Quart2D绘图之UIImage简单使用后，就一直在学习关于CoreImage图像滤镜处理。中间也看了不少文章，也得到了不少帮助，下面就结合这些知识和我自己的认识，记录一下，方便自己，方便他人  作用：对图像进行滤镜操作，">
 <meta name="keywords">
 <meta property="og:type" content="article">
 <meta property="og:title" content="半笑半醉间">
 <meta property="og:url" content="http://yoursite.com/2017/05/12/iOS CoreImage之滤镜简单使用/index.html">
 <meta property="og:site_name" content="半笑半醉间">
-<meta property="og:description" content="老骥伏枥，志在千里  #####前记最近一直在研究图像处理方面，既上一篇iOS Quart2D绘图之UIImage简单使用后，就一直在学习关于CoreImage图像滤镜处理。中间也看了不少文章，也得到了不少帮助，下面就结合这些知识和我自己的认识，记录一下，方便自己，方便他人  作用：对图像进行滤镜操作，比如模糊、颜色改变、锐化、人脸识别等。 Core Graphics对比：基于Quartz 2D">
+<meta property="og:description" content="title: iOS CoreImage之滤镜简单使用 date: 2017-05-12    老骥伏枥，志在千里  #####前记最近一直在研究图像处理方面，既上一篇iOS Quart2D绘图之UIImage简单使用后，就一直在学习关于CoreImage图像滤镜处理。中间也看了不少文章，也得到了不少帮助，下面就结合这些知识和我自己的认识，记录一下，方便自己，方便他人  作用：对图像进行滤镜操作，">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2525768-c7902222e7ac3d2d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2525768-6e86864a2a7eed2d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2525768-122207ff8e1f7a2f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
@@ -29,10 +29,10 @@
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2525768-9a6508f9be3a1f28.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2525768-81315e96710d1a9c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2525768-bfce0c969605bc45.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2017-05-12T09:00:01.000Z">
+<meta property="og:updated_time" content="2017-05-12T09:04:44.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="半笑半醉间">
-<meta name="twitter:description" content="老骥伏枥，志在千里  #####前记最近一直在研究图像处理方面，既上一篇iOS Quart2D绘图之UIImage简单使用后，就一直在学习关于CoreImage图像滤镜处理。中间也看了不少文章，也得到了不少帮助，下面就结合这些知识和我自己的认识，记录一下，方便自己，方便他人  作用：对图像进行滤镜操作，比如模糊、颜色改变、锐化、人脸识别等。 Core Graphics对比：基于Quartz 2D">
+<meta name="twitter:description" content="title: iOS CoreImage之滤镜简单使用 date: 2017-05-12    老骥伏枥，志在千里  #####前记最近一直在研究图像处理方面，既上一篇iOS Quart2D绘图之UIImage简单使用后，就一直在学习关于CoreImage图像滤镜处理。中间也看了不少文章，也得到了不少帮助，下面就结合这些知识和我自己的认识，记录一下，方便自己，方便他人  作用：对图像进行滤镜操作，">
 <meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/2525768-c7902222e7ac3d2d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
@@ -283,7 +283,11 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <blockquote>
+        <p>title: iOS CoreImage之滤镜简单使用</p>
+<p>date: 2017-05-12</p>
+<excerpt in="" index="" |="" 首页摘要="">
+
+<blockquote>
 <p>老骥伏枥，志在千里</p>
 </blockquote>
 <p>#####前记<br>最近一直在研究图像处理方面，既上一篇<a href="http://www.jianshu.com/p/e7cad3da2a8b" target="_blank" rel="external">iOS Quart2D绘图之UIImage简单使用</a>后，就一直在学习关于<code>CoreImage</code>图像滤镜处理。中间也看了不少文章，也得到了不少帮助，下面就结合这些知识和我自己的认识，记录一下，方便自己，方便他人</p>
@@ -291,7 +295,11 @@
 <li>作用：对图像进行滤镜操作，比如模糊、颜色改变、锐化、人脸识别等。</li>
 <li><code>Core Graphics</code>对比：基于<code>Quartz 2D</code>绘图引擎的绘图<code>API</code>，通过它可以进行绘图功能、常用的剪切裁剪合成等。</li>
 </ul>
-<p>######简介<br><code>Core Image</code>是一个很强大的框架。它可以让你简单地应用各种滤镜来处理图像，比如修改鲜艳程度, 色泽, 或者曝光。 它利用<code>GPU</code>（或者<code>CPU</code>）来非常快速、甚至实时地处理图像数据和视频的帧。并且隐藏了底层图形处理的所有细节，通过提供的API就能简单的使用了，无须关心<code>OpenGL</code>或者<code>OpenGL ES</code>是如何充分利用<code>GPU</code>的能力的，也不需要你知道<code>GCD</code>在其中发挥了怎样的作用，<code>Core Image</code>处理了全部的细节</p>
+<a id="more"></a>
+<the rest="" of="" contents="" |="" 余下全文="">
+
+<p>######简介</p>
+<p><code>Core Image</code>是一个很强大的框架。它可以让你简单地应用各种滤镜来处理图像，比如修改鲜艳程度, 色泽, 或者曝光。 它利用<code>GPU</code>（或者<code>CPU</code>）来非常快速、甚至实时地处理图像数据和视频的帧。并且隐藏了底层图形处理的所有细节，通过提供的API就能简单的使用了，无须关心<code>OpenGL</code>或者<code>OpenGL ES</code>是如何充分利用<code>GPU</code>的能力的，也不需要你知道<code>GCD</code>在其中发挥了怎样的作用，<code>Core Image</code>处理了全部的细节</p>
 <p><img src="http://upload-images.jianshu.io/upload_images/2525768-c7902222e7ac3d2d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="大概方式.png"></p>
 <p>######实现方式<br><code>Core Image</code>滤镜需要一副输入图像（生成图像的滤镜除外）以及一些定制滤镜行为的参数。被请求时，<code>Core Image</code>将滤镜应用于输入图像，并提供一副输出图像。在应用滤镜方面，<code>Core Image</code>的效率极高：仅当输出图像被请求时才应用滤镜，而不是在指定时就应用它们；另外，<code>Core Image</code>尽可能将滤镜合并，以最大限度地减少应用滤镜的计算量。</p>
 <p>######涉及API</p>
@@ -350,7 +358,7 @@
 <li><a href="http://blog.csdn.net/zhangao0086/article/details/39012231" target="_blank" rel="external">swift讲解 CoreImage</a> 用swift讲解的关于滤镜的，讲的非常详细。</li>
 <li><a href="http://colin1994.github.io/2016/10/21/Core-Image-OverView/?utm_source=tuicool&amp;utm_medium=referral" target="_blank" rel="external">Core Image 你需要了解的那些事~</a> 讲的很详细的一篇</li>
 </ul>
-
+</the></excerpt>
       
     </div>
     
@@ -361,7 +369,7 @@
         <p><span>本文标题:</span><a href="/2017/05/12/iOS CoreImage之滤镜简单使用/"></a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">One Dream</a></p>
         <p><span>发布时间:</span>2017-05-12, 17:00:01</p>
-        <p><span>最后更新:</span>2017-05-12, 17:00:01</p>
+        <p><span>最后更新:</span>2017-05-12, 17:04:44</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2017/05/12/iOS CoreImage之滤镜简单使用/" title="">http://yoursite.com/2017/05/12/iOS CoreImage之滤镜简单使用/</a>
             <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/2017/05/12/iOS CoreImage之滤镜简单使用/　　作者: One Dream" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
