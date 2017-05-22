@@ -15,22 +15,17 @@
 
 
 
-<meta name="description" content="人无远虑，必有近忧  前言在这个靠技术吃饭的年代，不多学一两门语言，还真的是很容易陷坑，最近分析了下编程语言，准备开始入GO这个坑，在花费了半天的时间后，终于搞定了环境的安装和IDEA的配置，这里我使用的是IntelliJ IDEA 15。">
+<meta name="description" content="水滴石穿，非一日之功  前言​    在环境变量配置好之后，正式入坑，每一门编程语言都有自己的独特语法，在一番查找资料后，对go的基础语法有一点点了解，下面就来记录记录">
 <meta name="keywords">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Go 语言之Mac环境配置">
-<meta property="og:url" content="http://yoursite.com/2017/05/19/Go 语言之Mac环境配置/index.html">
+<meta property="og:title" content="Go 语言基础之常量 变量">
+<meta property="og:url" content="http://yoursite.com/2017/05/22/Go 语言基础之常量 变量/index.html">
 <meta property="og:site_name" content="半笑半醉间">
-<meta property="og:description" content="人无远虑，必有近忧  前言在这个靠技术吃饭的年代，不多学一两门语言，还真的是很容易陷坑，最近分析了下编程语言，准备开始入GO这个坑，在花费了半天的时间后，终于搞定了环境的安装和IDEA的配置，这里我使用的是IntelliJ IDEA 15。">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2525768-3afe01ce3971a85e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2525768-0b15373e6bf52998.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2525768-df8d6e5b04f1b546.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2525768-9e65a67cdf42c488.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2017-05-22T06:45:53.000Z">
+<meta property="og:description" content="水滴石穿，非一日之功  前言​    在环境变量配置好之后，正式入坑，每一门编程语言都有自己的独特语法，在一番查找资料后，对go的基础语法有一点点了解，下面就来记录记录">
+<meta property="og:updated_time" content="2017-05-22T08:21:21.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Go 语言之Mac环境配置">
-<meta name="twitter:description" content="人无远虑，必有近忧  前言在这个靠技术吃饭的年代，不多学一两门语言，还真的是很容易陷坑，最近分析了下编程语言，准备开始入GO这个坑，在花费了半天的时间后，终于搞定了环境的安装和IDEA的配置，这里我使用的是IntelliJ IDEA 15。">
-<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/2525768-3afe01ce3971a85e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta name="twitter:title" content="Go 语言基础之常量 变量">
+<meta name="twitter:description" content="水滴石穿，非一日之功  前言​    在环境变量配置好之后，正式入坑，每一门编程语言都有自己的独特语法，在一番查找资料后，对go的基础语法有一点点了解，下面就来记录记录">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -62,7 +57,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>Go 语言之Mac环境配置 | 半笑半醉间</title>
+<title>Go 语言基础之常量 变量 | 半笑半醉间</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -262,11 +257,11 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap"><article id="post-Go 语言之Mac环境配置" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-Go 语言基础之常量 变量" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2017/05/19/Go 语言之Mac环境配置/" class="article-date">
-      <time datetime="2017-05-18T16:00:00.000Z" itemprop="datePublished">2017-05-19</time>
+      <a href="/2017/05/22/Go 语言基础之常量 变量/" class="article-date">
+      <time datetime="2017-05-21T16:00:00.000Z" itemprop="datePublished">2017-05-22</time>
 </a>
 
 
@@ -281,7 +276,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      Go 语言之Mac环境配置
+      Go 语言基础之常量 变量
     </h1>
   
 
@@ -301,78 +296,49 @@
         <excerpt in="" index="" |="" 首页摘要="">
 
 <blockquote>
-<p>人无远虑，必有近忧</p>
+<p>水滴石穿，非一日之功</p>
 </blockquote>
-<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>在这个靠技术吃饭的年代，不多学一两门语言，还真的是很容易陷坑，最近分析了下编程语言，准备开始入<code>GO</code>这个坑，在花费了半天的时间后，终于搞定了环境的安装和<code>IDEA</code>的配置，这里我使用的是<code>IntelliJ IDEA 15</code>。</p>
+<h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>​    在环境变量配置好之后，正式入坑，每一门编程语言都有自己的独特语法，在一番查找资料后，对<code>go</code>的基础语法有一点点了解，下面就来记录记录</p>
 <a id="more"></a>
 <the rest="" of="" contents="" |="" 余下全文="">
 
 
 
-<h4 id="下载"><a href="#下载" class="headerlink" title="下载"></a>下载</h4><p>地址：<a href="https://golang.org/dl/" target="_blank" rel="external">SDK</a></p>
-<p><img src="http://upload-images.jianshu.io/upload_images/2525768-3afe01ce3971a85e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Paste_Image.png"></p>
-<h4 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h4><p>双击下载后的<code>dmg</code>进行安装，安装成功后，打开终端，输入下面命令查看是否安装成功<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">go version</div></pre></td></tr></table></figure></p>
-<p>如果显示<code>go version go1.8.1 darwin/amd64</code>那么恭喜你，安装成功。</p>
-<h4 id="环境变量配置"><a href="#环境变量配置" class="headerlink" title="环境变量配置"></a>环境变量配置</h4><ol>
-<li><p>打开终端，<code>cd ~</code>进入主目录</p>
-</li>
-<li><p><code>ls -all</code>查看所有文件，看是否存在<code>.bash_profile</code>文件</p>
-</li>
-<li><p>如果不存在，则执行<code>touch .bash_profile</code>新建</p>
-</li>
-<li><p>如果存在，则执行<code>vi .bash_profile</code>打开进行编辑</p>
-<p>在文件中添加如下参数</p>
-</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">export GOPATH=/Users/xxxxx/Go</div><div class="line">export GOBIN=$GOPATH/bin</div><div class="line">export PATH=$PATH:$GOBIN</div></pre></td></tr></table></figure>
-<ol>
-<li>保存编辑，然后在执行<code>source ~/.bash_profile</code>，完成环境变量的配置</li>
-<li><code>go env</code>查看我们配置成功后的环境变量</li>
-</ol>
-<p>说明：</p>
-<p><code>GOPATH</code>：为我们开发常用的目录，建议不要和<code>Go</code>的安装目录一致，在该文件夹下又有三个文件夹：<code>src</code>、<code>pkg</code>、<code>bin</code> ，这里<code>src</code>我是自己新建的，<code>pkg</code>和<code>bin</code>是后面生成的。怎么生成的，后面会说到。</p>
-<ol>
-<li><code>src</code>：主要存放我们的源代码</li>
-<li><code>bin</code>：存放编译后生成的可执行文件，可以自己执行</li>
-<li><code>pkg</code>： 编译后生成的文件(<code>.a</code>文件)（非<code>main</code>函数的文件在<code>go install</code>后生成）</li>
-</ol>
-<p><code>GOBIN</code>：是<code>GOPATH</code>下的bin目录</p>
-<p><code>PATH</code>：环境变量，需要<code>go-bin</code>目录加入到<code>path</code>路径下，生成可执行文件就可以直接运行了。</p>
-<h4 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h4><p>通过终端进入我们配置好的路径<code>xxx\Go\src</code>中，新建一个文件夹<code>hellotest</code>（<code>mkdir hellotest</code>），新建一个<code>hello.go</code>（<code>vi hello.go</code>）文件，输入如下代码</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">package hellotest</div><div class="line"></div><div class="line">func HelloTets(s string) string &#123;</div><div class="line">	return string(s)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>保存退出后，在当前路径执行<code>go install</code>，如果没有<code>pkg</code>文件夹，那么执行成功后，会在<code>xxx\Go</code>下面生成一个，并且生成一个<code>hellotest.a</code>文件，这就是我们的第一个库，感觉酷酷哒，那么怎么用呢？</p>
-<p>下面我们在建一个<code>maintest</code>文件夹，然后新建一个<code>main.go</code>文件，在其中输入下面的内容</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">package main</div><div class="line"></div><div class="line">import (</div><div class="line">	&quot;fmt&quot;</div><div class="line">	&quot;hellotest&quot;</div><div class="line">)</div><div class="line"></div><div class="line">func main() &#123;</div><div class="line">	fmt.Printf(hellotest.HelloTets(&quot;你说我该怎么说呢&quot;))</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>并在当前文件夹中，执行下面的命令</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">go build</div></pre></td></tr></table></figure>
-<p>这样，我们就成功调用了之前的库文件，并且你会发现在当前文件夹中多了一个可执行文件<code>maintest</code>没错，就是这样的一个执行文件。再执行下面的命令</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">./maintest</div></pre></td></tr></table></figure>
-<p>便会输出</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">你说我该怎么说呢</div></pre></td></tr></table></figure>
-<p>再执行</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">go install</div></pre></td></tr></table></figure>
-<p>这时我们的执行文件就不再存在改文件中，而是转移到了<code>bin</code>文件夹中。<br>当然，我们也可以直接运行我们的<code>main.go</code>文件，如下</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">go run main.go</div></pre></td></tr></table></figure>
-<p>注：刚开始的小坑</p>
-<ol>
-<li>大写字母开头的变量是可导出的，也就是其它包可以读取的，是公有变量；小写字母开头的就是不可导出的，是私有变量。</li>
-<li>大写字母开头的函数也是一样，相当于<code>class</code>中的带<code>public</code>关键词的公有函数；小写字母开头的就是有<code>private</code>关键词的私有函数</li>
-</ol>
-<h4 id="IntelliJ-IDEA环境配置"><a href="#IntelliJ-IDEA环境配置" class="headerlink" title="IntelliJ IDEA环境配置"></a>IntelliJ IDEA环境配置</h4><ol>
-<li><p>打开<code>IntelliJ IDEA</code>,选择<code>IntelliJ IDEA--&gt;Preferences</code></p>
-</li>
-<li><p>如下图操作</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/2525768-0b15373e6bf52998.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Paste_Image.png"></p>
-</li>
-<li><p>在弹出的界面，搜索<code>go</code>，然后选择<code>Go language</code>进行安装</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/2525768-df8d6e5b04f1b546.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Paste_Image.png"></p>
-</li>
-<li><p>安装完成后，重新打开，你就可以进行新建工程了，如图</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/2525768-9e65a67cdf42c488.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Paste_Image.png"></p>
-</li>
-</ol>
-<p>到此环境就基本配置OK</p>
-<p>忙碌了一天了，要去办正事了，继续敲我的代码去了。</p>
+
+<h5 id="变量定义"><a href="#变量定义" class="headerlink" title="变量定义"></a>变量定义</h5><p>在<code>go</code>中变量的定义与<code>Objective-C</code>或者是<code>C</code>中的定义都不一样，这里引入了关键字<code>var</code>，倒是和<code>swift</code>有点类似，并且都是将变量的类型放在变量名后面</p>
+<p>如以下的定义</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">//定义一个float64类型的名为&quot;width&quot;的变量</div><div class="line">var width float64</div></pre></td></tr></table></figure>
+<p>当然我们也可以进行多变量的声明</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">//多变量声明 声明三个string类型的变量</div><div class="line">var q,w,e  string</div></pre></td></tr></table></figure>
+<p>定义变量并初始化赋值</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">var width float64 = 100.0</div></pre></td></tr></table></figure>
+<p>当然我们也可以同时初始化几个变量</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">var q,w,e  string = &quot;dd&quot;,&quot;12&quot;,&quot;300&quot;</div></pre></td></tr></table></figure>
+<p>如果觉得这样复杂的话 我们还可以不定义类型 直接像下面这样来定义</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">//不声明类型 自动识别 为int类型</div><div class="line">var dc = 234</div><div class="line">//后面三种类型需保持一致</div><div class="line">var q,w,e = &quot;dd&quot;,&quot;12&quot;,&quot;300&quot;</div></pre></td></tr></table></figure>
+<p>如果还觉得麻烦的话，那么只能….下面这样了，连<code>var</code>都省了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">//简短声明 这是使用变量的首选形式，但是它只能被用在函数体内，而不可以用于全局变量的声明与赋值</div><div class="line">a := &quot;1234&quot;</div><div class="line"></div><div class="line">//多变量声明</div><div class="line">var q,w,e  string</div><div class="line">q,w,e = &quot;opop&quot;,&quot;ddd&quot;,&quot;cmdd&quot;</div><div class="line">//直接使用简短声明</div><div class="line">o,p,k := q,w,e</div></pre></td></tr></table></figure>
+<p><code>:=</code>这个符号直接取代了<code>var</code>和<code>type</code>,这种形式叫做简短声明。不过它有一个限制，那就是它只能用在函数内部；在函数外部使用则会无法编译通过，所以一般用<code>var</code>方式来定义全局变量</p>
+<p>不可以再次对相同名称的变量使用初始化声明，比如上面的字符串<code>o</code>我们不能再像下面这样</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">//o := &quot;gkl&quot; //错误</div><div class="line">o = &quot;gkl&quot;//可以的</div></pre></td></tr></table></figure>
+<p>全局变量，关于全局变量，我们一般使用<code>var</code>在函数体外来定义</p>
+<p>如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">package hellotest</div><div class="line"></div><div class="line">//定义全局变量</div><div class="line">var str string;</div><div class="line">var width float64;</div><div class="line">var height float64 = 123;</div></pre></td></tr></table></figure>
+<p>关于全局变量和局部变量，在<code>go</code>中与其他语言有点不一样的就是，如果局部变量没有被使用，那么就会报错，而全局变量不会报错，所以定义全局变量的时候，一定要使用</p>
+<p>对于全局变量，我们还可以使用<code>()</code>的方式，来将其统一管理起来，如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">//多个全局变量 可以用括号的方式来统一定义</div><div class="line">var (</div><div class="line">	str string;</div><div class="line">	width float64;</div><div class="line">	height float64 = 123;</div><div class="line">)</div></pre></td></tr></table></figure>
+<p>这和我们导入多个头文件挺类似的，个人感觉还不错，至少美观些，哈哈</p>
+<h5 id="常量定义"><a href="#常量定义" class="headerlink" title="常量定义"></a>常量定义</h5><p>常量的话，还是和其他语言差不多，都是使用<code>const</code>关键字来定义</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">const Pi  = 3.1415926</div><div class="line">const MaxArea float64  = 100992.0</div><div class="line">const name  = &quot;Go编程&quot;</div></pre></td></tr></table></figure>
+<p>可以省略也可以添加常量的类型，当然我们也可以使用<code>()</code>来将所有的常量包起来</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">//常量必须赋值</div><div class="line">const (</div><div class="line">	minus int = 100</div><div class="line">	plus int = 200</div><div class="line">	add float64 = 300</div><div class="line">)</div></pre></td></tr></table></figure>
+<h5 id="枚举"><a href="#枚举" class="headerlink" title="枚举"></a>枚举</h5><p>枚举的话，与其他语言又不一样了，<code>go</code>中没有<code>enum</code>这么一个关键字来定义，而是依靠<code>const</code>和<code>iota</code></p>
+<p>来定义枚举</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">//枚举  iota默认为0</div><div class="line">const (</div><div class="line">	first  = iota;//默认=0</div><div class="line">	second</div><div class="line">	three//=2</div><div class="line">	four</div><div class="line">)</div></pre></td></tr></table></figure>
+<p><code>iota</code>定义的值默认为0，后面每一行的值加一，比如<code>three</code>就为2了。</p>
+<p>如果声明多个常量时，都在同一行，那么值一样</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">//枚举  iota默认为0</div><div class="line">const (</div><div class="line">	first  = iota;//默认=0</div><div class="line">	second</div><div class="line">	three//=2</div><div class="line">	four = iota</div><div class="line">	five,six,seven = iota,iota,iota//都为4</div><div class="line">)</div></pre></td></tr></table></figure>
+<p>学习的道路是曲折的，如果有什么问题，还望大家多多指教</p>
 </the></excerpt>
       
     </div>
@@ -381,13 +347,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2017/05/19/Go 语言之Mac环境配置/">Go 语言之Mac环境配置</a></p>
+        <p><span>本文标题:</span><a href="/2017/05/22/Go 语言基础之常量 变量/">Go 语言基础之常量 变量</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">One Dream</a></p>
-        <p><span>发布时间:</span>2017-05-19, 00:00:00</p>
-        <p><span>最后更新:</span>2017-05-22, 14:45:53</p>
+        <p><span>发布时间:</span>2017-05-22, 00:00:00</p>
+        <p><span>最后更新:</span>2017-05-22, 16:21:21</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2017/05/19/Go 语言之Mac环境配置/" title="Go 语言之Mac环境配置">http://yoursite.com/2017/05/19/Go 语言之Mac环境配置/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/2017/05/19/Go 语言之Mac环境配置/　　作者: One Dream" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2017/05/22/Go 语言基础之常量 变量/" title="Go 语言基础之常量 变量">http://yoursite.com/2017/05/22/Go 语言基础之常量 变量/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/2017/05/22/Go 语言基础之常量 变量/　　作者: One Dream" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
@@ -400,17 +366,11 @@
     <nav id="article-nav">
         
             <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2017/05/12/iOS CoreImage之滤镜简单使用/">
-                    iOS CoreImage之滤镜简单使用
+                <a href="/2017/05/19/Go 语言之Mac环境配置/">
+                    Go 语言之Mac环境配置
                 </a>
             </div>
         
-        
-            <div id="article-nav-older" class="article-nav-title">
-                <a href="/2017/05/22/Go 语言基础之常量 变量/">
-                    Go 语言基础之常量 变量
-                </a>
-            </div>
         
     </nav>
 
@@ -420,7 +380,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#下载"><span class="toc-number">1.1.</span> <span class="toc-text">下载</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#安装"><span class="toc-number">1.2.</span> <span class="toc-text">安装</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#环境变量配置"><span class="toc-number">1.3.</span> <span class="toc-text">环境变量配置</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#示例"><span class="toc-number">1.4.</span> <span class="toc-text">示例</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#IntelliJ-IDEA环境配置"><span class="toc-number">1.5.</span> <span class="toc-text">IntelliJ IDEA环境配置</span></a></li></ol></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#变量定义"><span class="toc-number">1.1.</span> <span class="toc-text">变量定义</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#常量定义"><span class="toc-number">1.2.</span> <span class="toc-text">常量定义</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#枚举"><span class="toc-number">1.3.</span> <span class="toc-text">枚举</span></a></li></ol></li></ol>
         
     </div>
     <style>
@@ -456,7 +416,7 @@
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"Go 语言之Mac环境配置　| 半笑半醉间　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"Go 语言基础之常量 变量　| 半笑半醉间　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -476,7 +436,7 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2017/05/12/iOS CoreImage之滤镜简单使用/" title="上一篇: iOS CoreImage之滤镜简单使用">
+            <a href="/2017/05/19/Go 语言之Mac环境配置/" title="上一篇: Go 语言之Mac环境配置">
                 <i class="fa fa-angle-left"></i>
             </a>
         
@@ -484,9 +444,7 @@
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2017/05/22/Go 语言基础之常量 变量/" title="下一篇: Go 语言基础之常量 变量">
-                <i class="fa fa-angle-right"></i>
-            </a>
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
         
     </div>
 
