@@ -15,13 +15,13 @@
 
 
 
-<meta name="description" content="老骥伏枥，志在千里  ####前记 最近一直在研究图像处理方面，既上一篇iOS Quart2D绘图之UIImage简单使用后，就一直在学习关于CoreImage图像滤镜处理。中间也看了不少文章，也得到了不少帮助，下面就结合这些知识和我自己的认识，记录一下，方便自己，方便他人  作用：对图像进行滤镜操作，比如模糊、颜色改变、锐化、人脸识别等。 Core Graphics对比：基于Quartz">
+<meta name="description" content="老骥伏枥，志在千里  前记最近一直在研究图像处理方面，既上一篇iOS Quart2D绘图之UIImage简单使用后，就一直在学习关于CoreImage图像滤镜处理。中间也看了不少文章，也得到了不少帮助，下面就结合这些知识和我自己的认识，记录一下，方便自己，方便他人  作用：对图像进行滤镜操作，比如模糊、颜色改变、锐化、人脸识别等。 Core Graphics对比：基于Quartz 2D绘图引">
 <meta name="keywords">
 <meta property="og:type" content="article">
 <meta property="og:title" content="iOS CoreImage之滤镜简单使用">
 <meta property="og:url" content="http://yoursite.com/2017/05/12/iOS CoreImage之滤镜简单使用/index.html">
 <meta property="og:site_name" content="半笑半醉间">
-<meta property="og:description" content="老骥伏枥，志在千里  ####前记 最近一直在研究图像处理方面，既上一篇iOS Quart2D绘图之UIImage简单使用后，就一直在学习关于CoreImage图像滤镜处理。中间也看了不少文章，也得到了不少帮助，下面就结合这些知识和我自己的认识，记录一下，方便自己，方便他人  作用：对图像进行滤镜操作，比如模糊、颜色改变、锐化、人脸识别等。 Core Graphics对比：基于Quartz">
+<meta property="og:description" content="老骥伏枥，志在千里  前记最近一直在研究图像处理方面，既上一篇iOS Quart2D绘图之UIImage简单使用后，就一直在学习关于CoreImage图像滤镜处理。中间也看了不少文章，也得到了不少帮助，下面就结合这些知识和我自己的认识，记录一下，方便自己，方便他人  作用：对图像进行滤镜操作，比如模糊、颜色改变、锐化、人脸识别等。 Core Graphics对比：基于Quartz 2D绘图引">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2525768-c7902222e7ac3d2d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2525768-6e86864a2a7eed2d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2525768-122207ff8e1f7a2f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
@@ -29,10 +29,10 @@
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2525768-9a6508f9be3a1f28.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2525768-81315e96710d1a9c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2525768-bfce0c969605bc45.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2017-05-19T09:45:36.000Z">
+<meta property="og:updated_time" content="2017-05-22T06:49:20.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="iOS CoreImage之滤镜简单使用">
-<meta name="twitter:description" content="老骥伏枥，志在千里  ####前记 最近一直在研究图像处理方面，既上一篇iOS Quart2D绘图之UIImage简单使用后，就一直在学习关于CoreImage图像滤镜处理。中间也看了不少文章，也得到了不少帮助，下面就结合这些知识和我自己的认识，记录一下，方便自己，方便他人  作用：对图像进行滤镜操作，比如模糊、颜色改变、锐化、人脸识别等。 Core Graphics对比：基于Quartz">
+<meta name="twitter:description" content="老骥伏枥，志在千里  前记最近一直在研究图像处理方面，既上一篇iOS Quart2D绘图之UIImage简单使用后，就一直在学习关于CoreImage图像滤镜处理。中间也看了不少文章，也得到了不少帮助，下面就结合这些知识和我自己的认识，记录一下，方便自己，方便他人  作用：对图像进行滤镜操作，比如模糊、颜色改变、锐化、人脸识别等。 Core Graphics对比：基于Quartz 2D绘图引">
 <meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/2525768-c7902222e7ac3d2d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
@@ -306,8 +306,7 @@
 <blockquote>
 <p>老骥伏枥，志在千里</p>
 </blockquote>
-<p>####前记</p>
-<p>最近一直在研究图像处理方面，既上一篇<a href="http://www.jianshu.com/p/e7cad3da2a8b" target="_blank" rel="external">iOS Quart2D绘图之UIImage简单使用</a>后，就一直在学习关于<code>CoreImage</code>图像滤镜处理。中间也看了不少文章，也得到了不少帮助，下面就结合这些知识和我自己的认识，记录一下，方便自己，方便他人</p>
+<h4 id="前记"><a href="#前记" class="headerlink" title="前记"></a>前记</h4><p>最近一直在研究图像处理方面，既上一篇<a href="http://www.jianshu.com/p/e7cad3da2a8b" target="_blank" rel="external">iOS Quart2D绘图之UIImage简单使用</a>后，就一直在学习关于<code>CoreImage</code>图像滤镜处理。中间也看了不少文章，也得到了不少帮助，下面就结合这些知识和我自己的认识，记录一下，方便自己，方便他人</p>
 <ul>
 <li>作用：对图像进行滤镜操作，比如模糊、颜色改变、锐化、人脸识别等。</li>
 <li><code>Core Graphics</code>对比：基于<code>Quartz 2D</code>绘图引擎的绘图<code>API</code>，通过它可以进行绘图功能、常用的剪切裁剪合成等。</li>
@@ -318,13 +317,10 @@
 
 
 
-<p>#####简介</p>
-<p><code>Core Image</code>是一个很强大的框架。它可以让你简单地应用各种滤镜来处理图像，比如修改鲜艳程度, 色泽, 或者曝光。 它利用<code>GPU</code>（或者<code>CPU</code>）来非常快速、甚至实时地处理图像数据和视频的帧。并且隐藏了底层图形处理的所有细节，通过提供的API就能简单的使用了，无须关心<code>OpenGL</code>或者<code>OpenGL ES</code>是如何充分利用<code>GPU</code>的能力的，也不需要你知道<code>GCD</code>在其中发挥了怎样的作用，<code>Core Image</code>处理了全部的细节</p>
+<h5 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h5><p><code>Core Image</code>是一个很强大的框架。它可以让你简单地应用各种滤镜来处理图像，比如修改鲜艳程度, 色泽, 或者曝光。 它利用<code>GPU</code>（或者<code>CPU</code>）来非常快速、甚至实时地处理图像数据和视频的帧。并且隐藏了底层图形处理的所有细节，通过提供的API就能简单的使用了，无须关心<code>OpenGL</code>或者<code>OpenGL ES</code>是如何充分利用<code>GPU</code>的能力的，也不需要你知道<code>GCD</code>在其中发挥了怎样的作用，<code>Core Image</code>处理了全部的细节</p>
 <p><img src="http://upload-images.jianshu.io/upload_images/2525768-c7902222e7ac3d2d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="大概方式.png"></p>
-<p>#####实现方式</p>
-<p><code>Core Image</code>滤镜需要一副输入图像（生成图像的滤镜除外）以及一些定制滤镜行为的参数。被请求时，<code>Core Image</code>将滤镜应用于输入图像，并提供一副输出图像。在应用滤镜方面，<code>Core Image</code>的效率极高：仅当输出图像被请求时才应用滤镜，而不是在指定时就应用它们；另外，<code>Core Image</code>尽可能将滤镜合并，以最大限度地减少应用滤镜的计算量。</p>
-<p>#####涉及API</p>
-<ul>
+<h5 id="实现方式"><a href="#实现方式" class="headerlink" title="实现方式"></a>实现方式</h5><p><code>Core Image</code>滤镜需要一副输入图像（生成图像的滤镜除外）以及一些定制滤镜行为的参数。被请求时，<code>Core Image</code>将滤镜应用于输入图像，并提供一副输出图像。在应用滤镜方面，<code>Core Image</code>的效率极高：仅当输出图像被请求时才应用滤镜，而不是在指定时就应用它们；另外，<code>Core Image</code>尽可能将滤镜合并，以最大限度地减少应用滤镜的计算量。</p>
+<h5 id="涉及API"><a href="#涉及API" class="headerlink" title="涉及API"></a>涉及API</h5><ul>
 <li><code>CIImage</code>  ：这是一个模型对象，它保存能构建图像的数据，可以是图像的<code>Data</code>，可以是一个文件，也可以是<code>CIFilter</code>输出的对象。</li>
 <li><code>CIContext</code> ：上下文，是框架真正工作的地方，它需要分配必要的内存，并编译和运行滤镜内核来执行图像处理。建立一个上下文是非常昂贵的，所以你会经常想创建一个反复使用的上下文。</li>
 <li><code>CIFilter</code> ：滤镜对象，主要是对图像进行处理的类。通过设置一些键值来控制滤镜的具体效果</li>
@@ -336,8 +332,7 @@
 <p>②<code>CGImage</code>：是基于像素的矩阵，每个点都对应了图片中点的像素信息</p>
 <p>③<code>CIImage</code>：包含了创建图片的所有必要的数据，但其本身没有渲染成图片，它代表的是图像数据或者生成图像数据的流程（如滤镜）。拥有与之关联的图片数据, 但本质上并不是一张图片，你可以<code>CIImage</code>对象作为一个图片的”配方”。<code>CIImage</code>对象拥有生成一张图片所具备的所有信息，但<code>Core Image</code>并不会真正的去渲染一张图片, 除非被要求这么做。</p>
 <hr>
-<p>#####使用方式</p>
-<ul>
+<h5 id="使用方式"><a href="#使用方式" class="headerlink" title="使用方式"></a>使用方式</h5><ul>
 <li>1 .  <code>CIImage</code>创建，在使用滤镜之前，你必须要先有一个<code>CIImage</code>对象，在拥有该对象后结合<code>CIFilter</code>才能实现我们的滤镜效果。这里需要注意的是，如果直接使用<code>image.cIImage</code>，那么很遗憾的告诉你，你将得到一个<code>nil</code>，哈哈<br>如下：</li>
 </ul>
 <p><img src="http://upload-images.jianshu.io/upload_images/2525768-6e86864a2a7eed2d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.CIImage.png"><br>原因在<code>UIImage</code>的<code>API</code>中有介绍<code>// returns underlying CIImage or nil if CGImageRef based</code>，应该是说图片可能不是基于<code>CIImage</code>而创建的<br>正确的方式为<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">//得到CIImage</div><div class="line">CIImage *inputCIImage = [[CIImage alloc] initWithImage:_image];</div></pre></td></tr></table></figure></p>
@@ -362,8 +357,7 @@
 </ul>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">    CIImage *outPutImage = [ciFilter outputImage];</div><div class="line">    //获取上下文</div><div class="line">    CIContext *context = [CIContext contextWithOptions:nil];</div><div class="line">    </div><div class="line">    CGImageRef cgImage = [context createCGImage:outPutImage fromRect:outPutImage.extent];</div><div class="line">    </div><div class="line">    UIImage *filter_image = [UIImage imageWithCGImage:cgImage];</div><div class="line">    CGImageRelease(cgImage);</div><div class="line">    </div><div class="line">    </div><div class="line">//    UIImage *filter_image = [UIImage imageWithCIImage:outPutImage];</div></pre></td></tr></table></figure>
 <p>就是上面屏蔽的代码部分<code>imageWithCIImage</code>，这就使我纳闷了，于是猜测并查阅资料，原来在调用该方法的时候，其实是隐式的声明了<code>CIContext</code>，这样看来，哇！好简单，省了我一堆代码，然而，这却引起另外的问题了，就是每次都会重新创建一个 <code>CIContext</code>，然而 <code>CIContext</code>的代价是非常高的。并且，<code>CIContext</code> 和 <code>CIImage</code> 对象是不可变的，在线程之间共享这些对象是安全的。所以多个线程可以使用同一个 <code>GPU</code> 或者 <code>CPU</code><br> <code>CIContext</code>对象来渲染 <code>CIImage</code> 对象。所以我们不应该使用 <code>imageWithCIImage</code> 来生成<code>UIImage</code>，而应该用上述另外一种方式来获取结果图像。</p>
-<p>#####Core Image 效率</p>
-<p><code>Core Image</code>在处理图像的时候，可以有两种选择<code>GPU</code>、<code>CPU</code>，在<code>Context</code>中可以对其进行设置，通过设置键值，这里的键值为<code>kCIContextUseSoftwareRenderer</code>，默认情况下，是为<code>GPU</code>处理方式，如果将其设置为<code>YES</code>，则为<code>CPU</code>处理<br>如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">//CPU处理</div><div class="line">CIContext *context = [CIContext contextWithOptions:[NSDictionary dictionaryWithObject:[NSNumber numberWithBool:YES] forKey:kCIContextUseSoftwareRenderer]];</div></pre></td></tr></table></figure></p>
+<h5 id="Core-Image-效率"><a href="#Core-Image-效率" class="headerlink" title="Core Image 效率"></a>Core Image 效率</h5><p><code>Core Image</code>在处理图像的时候，可以有两种选择<code>GPU</code>、<code>CPU</code>，在<code>Context</code>中可以对其进行设置，通过设置键值，这里的键值为<code>kCIContextUseSoftwareRenderer</code>，默认情况下，是为<code>GPU</code>处理方式，如果将其设置为<code>YES</code>，则为<code>CPU</code>处理<br>如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">//CPU处理</div><div class="line">CIContext *context = [CIContext contextWithOptions:[NSDictionary dictionaryWithObject:[NSNumber numberWithBool:YES] forKey:kCIContextUseSoftwareRenderer]];</div></pre></td></tr></table></figure></p>
 <p>如果通过<code>GPU</code>的话，速度就会更快，利用了<code>GPU</code>硬件的并行优势，可以使用 <code>OpenGLES</code> 或者<code>Metal</code> 来渲染图像，这种方式<code>CPU</code>完全没有负担，应用程序的运行循环不会受到图像渲染的影响。但是也有个问题，就是如果<code>APP</code>运行到后台的时候，<code>GPU</code>就会停止处理，等回到前台的时候又继续，而如果采取<code>CPU</code>来处理的话，就不会出现这么一种情况，在前面的图中，我们可以看到<code>CPU</code>是采用<code>GCD</code>的方式来对图像进行渲染。所以在使用的时候，还是需要分情况，如果是处理复杂的操作，比如高斯模糊这样的，建议还是用<code>GPU</code>来处理，可以节省<code>CPU</code>的开销，如果在后台还需要操作的话，可以使用<code>CPU</code>来操作。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">//</div><div class="line">CIImage *outPutImage = [ciFilter outputImage];</div><div class="line">//获取上下文</div><div class="line">CIContext *context = [CIContext contextWithOptions:nil];</div><div class="line"></div><div class="line">CGImageRef cgImage = [context createCGImage:outPutImage fromRect:outPutImage.extent];</div><div class="line"></div><div class="line">UIImage *filter_image = [UIImage imageWithCGImage:cgImage];</div><div class="line">CGImageRelease(cgImage);</div></pre></td></tr></table></figure>
 <p>上面的这段代码是通过<code>GPU</code>的方式来处理图像，然后得到结果<code>UIImage</code>，最后再赋值给<code>UIImageView</code>。</p>
@@ -391,7 +385,7 @@
         <p><span>本文标题:</span><a href="/2017/05/12/iOS CoreImage之滤镜简单使用/">iOS CoreImage之滤镜简单使用</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">One Dream</a></p>
         <p><span>发布时间:</span>2017-05-12, 00:00:00</p>
-        <p><span>最后更新:</span>2017-05-19, 17:45:36</p>
+        <p><span>最后更新:</span>2017-05-22, 14:49:20</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2017/05/12/iOS CoreImage之滤镜简单使用/" title="iOS CoreImage之滤镜简单使用">http://yoursite.com/2017/05/12/iOS CoreImage之滤镜简单使用/</a>
             <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/2017/05/12/iOS CoreImage之滤镜简单使用/　　作者: One Dream" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
@@ -427,7 +421,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            
+            <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#前记"><span class="toc-number">1.</span> <span class="toc-text">前记</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#简介"><span class="toc-number">1.1.</span> <span class="toc-text">简介</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#实现方式"><span class="toc-number">1.2.</span> <span class="toc-text">实现方式</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#涉及API"><span class="toc-number">1.3.</span> <span class="toc-text">涉及API</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#使用方式"><span class="toc-number">1.4.</span> <span class="toc-text">使用方式</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Core-Image-效率"><span class="toc-number">1.5.</span> <span class="toc-text">Core Image 效率</span></a></li></ol></li></ol>
         
     </div>
     <style>
