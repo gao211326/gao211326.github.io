@@ -266,7 +266,7 @@
   
     <div class="article-meta">
       <a href="/2017/05/23/Go 语言学习之数组 字典/" class="article-date">
-      <time datetime="2017-05-23T07:44:52.000Z" itemprop="datePublished">2017-05-23</time>
+      <time datetime="2017-05-22T16:00:00.000Z" itemprop="datePublished">2017-05-23</time>
 </a>
 
 
@@ -277,51 +277,27 @@
       <input type="hidden" class="isFancy" />
     
     
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/05/23/Go 语言学习之数组 字典/">Go 语言学习之数组 字典</a>
+    </h1>
+  
+
+      </header>
+      
+    
     <div class="article-entry" itemprop="articleBody">
       
           
-        <blockquote>
+              <Excerpt in index | 首页摘要>
+
+<blockquote>
 <p>仰天长笑出门去，我辈岂是蓬蒿人</p>
 </blockquote>
 <h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>在学习了<code>Go</code>语言中的变量常量之后，紧接着就是我们程序中最常用的数组和字典了，有了前面的语法基础，下面的学习就相对简单许多，下面就来记录记录数组和字典的使用</p>
-<h5 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h5><p>先来回顾下，在<code>C</code>语言中数组的使用</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">//定义</div><div class="line">int a[10];  /* 说明整型数组a，有10个元素 */</div><div class="line">float b[10], c[20];  /* 说明实型数组b，有10个元素，实型数组c，有20个元素 */</div><div class="line">char ch[20];  /* 说明字符数组ch，有20个元素 */</div><div class="line"></div><div class="line">//初始化</div><div class="line">int a[5]=&#123;1,2,3,4,5&#125;;</div><div class="line">//当然也可以不用指定个数</div><div class="line">int a[]=&#123;1,2,3,4,5&#125;;</div></pre></td></tr></table></figure>
-<p>其实在<code>Go</code>语言中数组的定义和<code>C</code>语言中大同小异，其定义方式为<code>var array [number] type</code></p>
-<p><code>number</code>为数组的个数，<code>type</code>为数组元素的类型，与<code>c</code>语言中相同的是都是通过<code>[]</code>中取值或者赋值</p>
-<p>下面来看看几个例子</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">                                                                 </div><div class="line">//直接初始化赋值                                                        </div><div class="line">var array = [5] int &#123;1,3,4,5,6&#125;;                                 </div><div class="line">a0 := array[0];                                                  </div><div class="line">                                                                 </div><div class="line">//先声明 在赋值                                                        </div><div class="line">var arrayN [5]int                                                </div><div class="line">arrayN[0] = 2;                                                   </div><div class="line">                                                                 </div><div class="line">//简短声明 不能省略类型                                                    </div><div class="line">arrayM := [3]int&#123;4,6,8&#125;                                          </div><div class="line">a1 := arrayM[2]                                                  </div><div class="line">                                                                 </div><div class="line">//13为数组的个数 数组前三个元素的值分别为 4，6，8后面的值默认为0                                                       </div><div class="line">arrayB := [13]int&#123;4,6,8&#125;                                         </div><div class="line">a2 := arrayB[2]    </div><div class="line">//将第一个值改为13</div><div class="line">arrayB[0] = 13                                                   </div><div class="line">                                                                 </div><div class="line">//系统自己会统计数量 这里应该为5个, 如果取arrayC[5]的话 会报错 越界                       </div><div class="line">arrayC :=[...] int&#123;2,3,4,56,7&#125;; //可以省略长度，而用&quot;...&quot;来代替 系统自己会统计数量                                </div><div class="line">//数组越界                                                           </div><div class="line">//arrayC[5]                                                      </div><div class="line">                                                                 </div><div class="line">a3 := arrayC[2]</div></pre></td></tr></table></figure>
-<p>那么支不支持多维数组呢？答案是肯定的</p>
-<p>下面看看一个二维数组</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">//二维数组                                                            </div><div class="line">doubleArray := [2][3]int&#123;[3]int&#123;1,2,3&#125;,[3]int&#123;4,5,6&#125;&#125;             </div><div class="line">//简化的二维数组   </div><div class="line">doubleArrayA := [2][3]int&#123;&#123;1,2,3&#125;,&#123;4,5,6&#125;&#125;                                                                     </div><div class="line"></div><div class="line">//doubleArray[0][0],doubleArrayA[1][1]的值分别为1和5</div></pre></td></tr></table></figure>
-<h5 id="动态数组"><a href="#动态数组" class="headerlink" title="动态数组"></a>动态数组</h5><p>大家都知道，在使用数组的时候，有时候我们都不知道数组的数量为多大，这时我们就需要动态数组，在<code>Go</code>中的动态数组其实和数组差不多，只是在定义的时候，不需要定义数量</p>
-<p>如</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">// 和声明array一样，只是少了长度</div><div class="line">var mutableArray []int</div></pre></td></tr></table></figure>
-<p>下面看看几个例子</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">//定义动态数组                                                                                                                    </div><div class="line">// 和声明array一样，只是少了长度                                                                                                        </div><div class="line">var mutableArray = [] int&#123;1,2,3,4&#125;//必须在声明的时候 初始化赋值                                                                          </div><div class="line">mutableArray[0] = 12                                                                                                        </div><div class="line">mutableArray[1] = 10                                                                                                        </div><div class="line">mutableArray[2] = 98                                                                                                        </div><div class="line">mutableArray[3] = 13//可以改动其值                                                                                                </div><div class="line">                                                                                                                            </div><div class="line">mutableArrayA := []int&#123;34,45,56,78&#125;                                                                                         </div><div class="line">b1 := mutableArrayA[2]                                                                                                      </div><div class="line">                                                                                                                            </div><div class="line">//2相当于 mutableArrayA 中的位置 从0开始,这里2就对应56                                                                                     </div><div class="line">//而4对应在数组mutableArrayA中的长度位置 34就对应1  78对应此处的4                                                                               </div><div class="line">mutableArrayB := mutableArrayA[2:4]                                                                                         </div><div class="line">//mutableArrayB[0] = 56                                                                                                     </div><div class="line">//mutableArrayB[1] = 78                                                                                                     </div><div class="line">                                                                                                                            </div><div class="line">mutableArrayC := []int&#123;1,2,3,4,5,6,7,8,9,10&#125;                                                                                </div><div class="line">mutableArrayD := mutableArrayC[2:4:7]  //固定容量 只能访问到7 (根据它生成的数组)D为&#123;3,4&#125;根据D生产的数组最多只能为&#123;3,4,5,6,7&#125;                              </div><div class="line">                                                                                                                            </div><div class="line">mutableArrayE := mutableArrayD[0:5] //最多只能生产5个长度的数组 &#123;3,4,5,6,7&#125;                                                             </div><div class="line">mutableArrayH := mutableArrayD[1:5] //&#123;4,5,6,7&#125;                                                                             </div><div class="line">                                                                                                                            </div><div class="line">mutableArrayF := mutableArrayC[2:4]   //不固定容量F的值应该为&#123;3,4&#125;                                                                    </div><div class="line">mutableArrayG := mutableArrayF[0:8]   //G的值为&#123;3,4,5,6,7,8,9,10&#125;</div></pre></td></tr></table></figure>
-<p>在上面的例子中，有几个地方需要注意</p>
-<p>那就是<code>mutableArray[n:m]</code>，这是什么意思呢？这个方法的意思是从一个数组中获取一个新的数组</p>
-<p>新的数组范围为:<code>mutableArray</code>第<code>n+1</code>个元素开始到第<code>m</code>个元素截止的数组</p>
-<p>如果<code>n</code>为0，那么表示从第<code>1</code>个元素开始到<code>m</code>个元素</p>
-<p>如果<code>m</code>为0，那么表示从第<code>n+1</code>个元素到最后一个元素</p>
-<p>如果<code>n</code>和<code>m</code>都为0，那么新数组和<code>mutableArray</code>一样</p>
-<p>在<code>mutableArrayF := mutableArrayC[2:4]</code>中，存在一个值，就是最大容量，怎么理解这个最大容量呢?</p>
-<p>先看一幅图</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/2525768-7b50e26c1030b0eb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="3B8E7FDE-1B10-48CD-A59E-D63199FE59EF.png"></p>
-<p>图有点丑，但是大意是这样的，<code>mutableArrayF</code>应该为{3,4}，现在又新建一个数组<code>mutableArrayG</code>，指向的范围为<code>mutableArrayF</code>的第<code>1</code>个元素开始，到第<code>8</code>个元素结束，但是我们的<code>mutableArrayF</code>元素只要两个元素，明显是越界了，但是这里却有个隐含的<code>最大容量</code>，可以把<code>mutableArrayF</code>想象成指向<code>mutableArrayC</code>的一个指针，其最大范围可以指到<code>mutableArrayC</code>的最后一个值，这么一来这个<code>最大容量</code>就可以理解为<code>mutableArrayF</code>的最大个数–8，所以这里当我们的<code>mutableArrayG</code>指向<code>mutableArrayF</code>的第8个元素时，就指向了<code>mutableArrayC</code>的最后一个元素，故而有了上面的值</p>
-<p>关于<code>mutableArrayD := mutableArrayC[2:4:7]</code> 这个该怎么理解呢？</p>
-<p>最后一个<code>7</code>是用来限制容量的，用<code>7-2=5</code>可以得到最新的容量，这样的话，我们<code>mutableArrayE</code>只能从<code>mutableArrayD</code>开始访问最长<code>5</code>个元素（<code>mutableArrayD为{3,4}</code>）</p>
-<h5 id="字典"><a href="#字典" class="headerlink" title="字典"></a>字典</h5><p>关键字：</p>
-<p><code>map</code>：定义字典，合适为<code>map[keyType] valueType</code></p>
-<p><code>make</code>：初始化字典</p>
-<p>使用方法</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">                                                 </div><div class="line">var mDic = make(map[string] string)            </div><div class="line">mDic[&quot;name&quot;] = &quot;gao&quot;                           </div><div class="line">mDic[&quot;sex&quot;] = &quot;男&quot;                              </div><div class="line">                                                 </div><div class="line">//通过make                                       </div><div class="line">nDic := make(map[string] int)                  </div><div class="line">nDic[&quot;age&quot;] = 12                               </div><div class="line">nDic[&quot;birthday&quot;] = 90</div></pre></td></tr></table></figure>
-<p>当然我们也可以不用<code>make</code>来初始化，而通过<code>{}</code>直接初始化赋值</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">                                                                        </div><div class="line">//不需要make  直接初始化赋值                                               </div><div class="line">pDic := map[string]string&#123;&quot;name&quot;:&quot;gao&quot;,&quot;sex&quot;:&quot;男&quot;,&quot;home&quot;:&quot;阆中&quot;&#125;</div></pre></td></tr></table></figure>
-<p>删除，通过<code>delete</code>函数来指定删除的<code>key</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">//删除key                 </div><div class="line">delete(pDic,&quot;name&quot;)</div></pre></td></tr></table></figure>
-<p>关于字典数组我所知道的就这么多了，后面将会遇到更严峻的挑战~</p>
-<p>​        </p>
-
+          
       
     </div>
     
@@ -330,6 +306,10 @@
       
 
       
+      
+        <p class="article-more-link">
+          <a href="/2017/05/23/Go 语言学习之数组 字典/#more">阅读全文 >></a>
+        </p>
       
       <div class="clearfix"></div>
     </div>

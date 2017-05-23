@@ -15,18 +15,18 @@
 
 
 
-<meta name="description" content="仰天长笑出门去，我辈岂是蓬蒿人  前言在学习了Go语言中的变量常量之后，紧接着就是我们程序中最常用的数组和字典了，有了前面的语法基础，下面的学习就相对简单许多，下面就来记录记录数组和字典的使用 数组先来回顾下，在C语言中数组的使用 123456789//定义int a[10];  /* 说明整型数组a，有10个元素 */float b[10], c[20];  /* 说明实型数组b，有10个元素">
+<meta name="description" content="仰天长笑出门去，我辈岂是蓬蒿人  前言在学习了Go语言中的变量常量之后，紧接着就是我们程序中最常用的数组和字典了，有了前面的语法基础，下面的学习就相对简单许多，下面就来记录记录数组和字典的使用">
 <meta name="keywords">
 <meta property="og:type" content="article">
-<meta property="og:title" content="半笑半醉间">
+<meta property="og:title" content="Go 语言学习之数组 字典">
 <meta property="og:url" content="http://yoursite.com/2017/05/23/Go 语言学习之数组 字典/index.html">
 <meta property="og:site_name" content="半笑半醉间">
-<meta property="og:description" content="仰天长笑出门去，我辈岂是蓬蒿人  前言在学习了Go语言中的变量常量之后，紧接着就是我们程序中最常用的数组和字典了，有了前面的语法基础，下面的学习就相对简单许多，下面就来记录记录数组和字典的使用 数组先来回顾下，在C语言中数组的使用 123456789//定义int a[10];  /* 说明整型数组a，有10个元素 */float b[10], c[20];  /* 说明实型数组b，有10个元素">
+<meta property="og:description" content="仰天长笑出门去，我辈岂是蓬蒿人  前言在学习了Go语言中的变量常量之后，紧接着就是我们程序中最常用的数组和字典了，有了前面的语法基础，下面的学习就相对简单许多，下面就来记录记录数组和字典的使用">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2525768-7b50e26c1030b0eb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2017-05-23T09:21:42.000Z">
+<meta property="og:updated_time" content="2017-05-23T09:32:27.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="半笑半醉间">
-<meta name="twitter:description" content="仰天长笑出门去，我辈岂是蓬蒿人  前言在学习了Go语言中的变量常量之后，紧接着就是我们程序中最常用的数组和字典了，有了前面的语法基础，下面的学习就相对简单许多，下面就来记录记录数组和字典的使用 数组先来回顾下，在C语言中数组的使用 123456789//定义int a[10];  /* 说明整型数组a，有10个元素 */float b[10], c[20];  /* 说明实型数组b，有10个元素">
+<meta name="twitter:title" content="Go 语言学习之数组 字典">
+<meta name="twitter:description" content="仰天长笑出门去，我辈岂是蓬蒿人  前言在学习了Go语言中的变量常量之后，紧接着就是我们程序中最常用的数组和字典了，有了前面的语法基础，下面的学习就相对简单许多，下面就来记录记录数组和字典的使用">
 <meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/2525768-7b50e26c1030b0eb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
@@ -59,7 +59,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>半笑半醉间</title>
+<title>Go 语言学习之数组 字典 | 半笑半醉间</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -263,7 +263,7 @@
   
     <div class="article-meta">
       <a href="/2017/05/23/Go 语言学习之数组 字典/" class="article-date">
-      <time datetime="2017-05-23T07:44:52.000Z" itemprop="datePublished">2017-05-23</time>
+      <time datetime="2017-05-22T16:00:00.000Z" itemprop="datePublished">2017-05-23</time>
 </a>
 
 
@@ -274,13 +274,37 @@
       <input type="hidden" class="isFancy" />
     
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Go 语言学习之数组 字典
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+
+        
+        <div class="clearfix"></div>
+      </div>
+      
+    
     <div class="article-entry" itemprop="articleBody">
       
           
-        <blockquote>
+        <excerpt in="" index="" |="" 首页摘要="">
+
+<blockquote>
 <p>仰天长笑出门去，我辈岂是蓬蒿人</p>
 </blockquote>
 <h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>在学习了<code>Go</code>语言中的变量常量之后，紧接着就是我们程序中最常用的数组和字典了，有了前面的语法基础，下面的学习就相对简单许多，下面就来记录记录数组和字典的使用</p>
+<a id="more"></a>
+<the rest="" of="" contents="" |="" 余下全文="">
+
+
 <h5 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h5><p>先来回顾下，在<code>C</code>语言中数组的使用</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">//定义</div><div class="line">int a[10];  /* 说明整型数组a，有10个元素 */</div><div class="line">float b[10], c[20];  /* 说明实型数组b，有10个元素，实型数组c，有20个元素 */</div><div class="line">char ch[20];  /* 说明字符数组ch，有20个元素 */</div><div class="line"></div><div class="line">//初始化</div><div class="line">int a[5]=&#123;1,2,3,4,5&#125;;</div><div class="line">//当然也可以不用指定个数</div><div class="line">int a[]=&#123;1,2,3,4,5&#125;;</div></pre></td></tr></table></figure>
 <p>其实在<code>Go</code>语言中数组的定义和<code>C</code>语言中大同小异，其定义方式为<code>var array [number] type</code></p>
@@ -318,7 +342,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">//删除key                 </div><div class="line">delete(pDic,&quot;name&quot;)</div></pre></td></tr></table></figure>
 <p>关于字典数组我所知道的就这么多了，后面将会遇到更严峻的挑战~</p>
 <p>​        </p>
-
+</the></excerpt>
       
     </div>
     
@@ -326,12 +350,12 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2017/05/23/Go 语言学习之数组 字典/"></a></p>
+        <p><span>本文标题:</span><a href="/2017/05/23/Go 语言学习之数组 字典/">Go 语言学习之数组 字典</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">One Dream</a></p>
-        <p><span>发布时间:</span>2017-05-23, 15:44:52</p>
-        <p><span>最后更新:</span>2017-05-23, 17:21:42</p>
+        <p><span>发布时间:</span>2017-05-23, 00:00:00</p>
+        <p><span>最后更新:</span>2017-05-23, 17:32:27</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2017/05/23/Go 语言学习之数组 字典/" title="">http://yoursite.com/2017/05/23/Go 语言学习之数组 字典/</a>
+            <span>原始链接:</span><a class="post-url" href="/2017/05/23/Go 语言学习之数组 字典/" title="Go 语言学习之数组 字典">http://yoursite.com/2017/05/23/Go 语言学习之数组 字典/</a>
             <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/2017/05/23/Go 语言学习之数组 字典/　　作者: One Dream" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
@@ -395,7 +419,7 @@
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"　| 半笑半醉间　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"Go 语言学习之数组 字典　| 半笑半醉间　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
