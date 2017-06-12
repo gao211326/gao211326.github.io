@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="One Dream" />
+
+
+
+<meta name="description" content="&amp;lt;Excerpt in index | 首页摘要&amp;gt;  山不在高，有仙则名 水不在深，有龙则灵  函数 函数可以说是所有程序的核心，不同的语言之间，函数的定义也不尽相同，大同小异，下面就Go的函数做个简单记录 定义 12345func funcName(input1 type1, input2 type2) (output1 type1, output2 type2) &amp;#123;		/">
+<meta name="keywords">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Go 语言学习之函数">
+<meta property="og:url" content="http://yoursite.com/2017/06/12/Go 语言学习之函数/index.html">
+<meta property="og:site_name" content="半笑半醉间">
+<meta property="og:description" content="&amp;lt;Excerpt in index | 首页摘要&amp;gt;  山不在高，有仙则名 水不在深，有龙则灵  函数 函数可以说是所有程序的核心，不同的语言之间，函数的定义也不尽相同，大同小异，下面就Go的函数做个简单记录 定义 12345func funcName(input1 type1, input2 type2) (output1 type1, output2 type2) &amp;#123;		/">
+<meta property="og:updated_time" content="2017-06-12T08:46:29.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Go 语言学习之函数">
+<meta name="twitter:description" content="&amp;lt;Excerpt in index | 首页摘要&amp;gt;  山不在高，有仙则名 水不在深，有龙则灵  函数 函数可以说是所有程序的核心，不同的语言之间，函数的定义也不尽相同，大同小异，下面就Go的函数做个简单记录 定义 12345func funcName(input1 type1, input2 type2) (output1 type1, output2 type2) &amp;#123;		/">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="半笑半醉间" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/favicon.png">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/orange/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>Go 语言学习之函数 | 半笑半醉间</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: undefined
+    }
+</script>
+
+
+    <script> yiliaConfig.jquery_ui = [false]; </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/avatar.png" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">One Dream</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">人生为棋，我愿为卒，行动虽慢，可谁曾见我后退半步</p>
+        
+
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa GitHub" href="https://github.com/gao211326" title="GitHub"></a>
+                            
+                                <a class="fa 简书" href="http://www.jianshu.com/u/d772826c5def" title="简书"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://hexo.io">Hexo</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://pages.github.com/">GitHub</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://moxfive.xyz/">MOxFIVE</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">专注于前端</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">One Dream</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/avatar.png" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">One Dream</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">人生为棋，我愿为卒，行动虽慢，可谁曾见我后退半步</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa GitHub" target="_blank" href="https://github.com/gao211326" title="GitHub"></a>
+                            
+                                <a class="fa 简书" target="_blank" href="http://www.jianshu.com/u/d772826c5def" title="简书"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-Go 语言学习之函数" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/06/12/Go 语言学习之函数/" class="article-date">
+      <time datetime="2017-06-11T16:00:00.000Z" itemprop="datePublished">2017-06-12</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Go 语言学习之函数
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+
+        
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p>&lt;Excerpt in index | 首页摘要&gt;</p>
+<blockquote>
+<p>山不在高，有仙则名
+水不在深，有龙则灵</p>
+</blockquote>
+<h4>函数</h4>
+<p>函数可以说是所有程序的核心，不同的语言之间，函数的定义也不尽相同，大同小异，下面就<code>Go</code>的函数做个简单记录</p>
+<h5>定义</h5>
+<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">func funcName(input1 type1, input2 type2) (output1 type1, output2 type2) &#123;</div><div class="line">		//这里是处理逻辑代码</div><div class="line">		//返回多个值</div><div class="line">		return value1, value2</div><div class="line">	&#125;</div></pre></td></tr></table></figure></p>
+<p>下面看看在<code>c</code>语言中和<code>Objective-C</code>中的定义方式</p>
+<p>&lt;!-- more --&gt;</p>
+<p>&lt;The rest of contents | 余下全文&gt;</p>
+<h6>c语言定义方式</h6>
+<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">type funcName(type1 input1,type2 input2)</div></pre></td></tr></table></figure></p>
+<h6>Objective-C定义方式</h6>
+<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">- (type)funcName:(type1 )input1 param:(type2)input2</div></pre></td></tr></table></figure></p>
+<p>从上面我们可以看出，其实在函数的定义上，基本上都是一样的，都由<code>返回类型</code>，<code>函数名</code>，<code>入参</code> 组成，但是在<code>go</code>中有个比较特殊的就是返回值，居然可以有多个返回值，是让我挺惊讶的，在<code>Objective-C</code>中，如果需要返回多个返回值，可以返回一个数组，用数组来装这多个返回值。</p>
+<p>下面来看看<code>go</code>中函数的简单使用</p>
+<h5>一般函数</h5>
+<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">//函数测试</div><div class="line">func moreReturnFunc(a int,b int)(c int,d int)  &#123;</div><div class="line">	c = a*b</div><div class="line">	d = a/b</div><div class="line">	return c,d;</div><div class="line">&#125;</div><div class="line"></div><div class="line">//返回数组</div><div class="line">func arrayReturnFunc(a int,b int)([]int)  &#123;</div><div class="line">	c := a+b;</div><div class="line">	d := a-b;</div><div class="line">	e := []int&#123;c,d&#125;</div><div class="line">	return e;</div><div class="line">&#125;</div><div class="line"></div><div class="line">//无返回值</div><div class="line">func noReturn(width float64,height float64)  &#123;</div><div class="line">	area := width * height</div><div class="line">	println(area)</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>在<code>go</code>中，函数的定义可以有返回值也可也没有返回值，在多返回值函数中，返回的时候可以不用带上变量名，如下面这样
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">//不带返回值</div><div class="line">func moreReturnFunc(a int,b int)(int,int)  &#123;</div><div class="line">    return a*b, a/b</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>当然在程序中，还是建议写上参数，这样方便理解和使用</p>
+<h5>可变参数</h5>
+<p>顾名思义，就是有着不定数量的参数的函数，下面我们来看看定义
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">func funcName(arg ...int) &#123;&#125;</div></pre></td></tr></table></figure></p>
+<p>看看使用方法
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line">//可变参数</div><div class="line"></div><div class="line">func sum(num ...int)  &#123;</div><div class="line">	fmt.Println(num)</div><div class="line">	total := 0</div><div class="line">	for _,value := range num&#123;</div><div class="line"></div><div class="line">		total += value</div><div class="line">	&#125;</div><div class="line">	fmt.Println(total)</div><div class="line">&#125;</div><div class="line"></div><div class="line">//主函数</div><div class="line">func main() &#123;</div><div class="line"></div><div class="line">    //多返回值</div><div class="line">	mm,bb := moreReturnFunc(20,5)</div><div class="line"></div><div class="line">	fmt.Println(mm,bb)//输出结果 100 4</div><div class="line"></div><div class="line">    //返回数组函数调用</div><div class="line">	fmt.Println(arrayReturnFunc(50,5)[0],arrayReturnFunc(50,5)[1])//输出结果55 45</div><div class="line"></div><div class="line"></div><div class="line">	//多个参数</div><div class="line">	sum(1,2,3,4)//输出结果[1 2 3 4]    10</div><div class="line"></div><div class="line">	//如果参数在数组里,需要加...</div><div class="line">	sum([]int&#123;1,2,3,4,5&#125;...)//输出结果[1 2 3 4 5]    15</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>大概使用过程就这样</p>
+<h5>传指针</h5>
+<p>关于传指针这个问题，其实就是我们需不需要让入参的值发生变化，在<code>c</code>语言或者是<code>Objective-C</code>中如果入参为<code>int</code>、<code>float</code>等，那么当我们在函数中对入参进行修改时，实际上是传了这个值的一份<code>copy</code>，当在被调用函数中修改参数值的时候，调用函数中相应实参不会发生任何变化，因为数值变化只作用在<code>copy</code>上。怎么说了，大概就是这样的
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">//主函数</div><div class="line">func main() &#123;</div><div class="line">	plusA := 10</div><div class="line">	plusB := 5</div><div class="line">	fmt.Println(plus(&amp;plusA,&amp;plusB),plusA)</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">func plus(a *int,b *int) int &#123;</div><div class="line">	*a = *a - *b</div><div class="line">	return *a</div><div class="line">&#125;</div><div class="line"></div><div class="line">//输出结果为：5   5这里由于传了指针，当*a = *a-*b的时候，改变的同一地址也就是plusA的值，所以当我们输出plusA的时候，值也就改变了</div></pre></td></tr></table></figure></p>
+<p>可以看看不传指针的情况
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">//主函数</div><div class="line">func main() &#123;</div><div class="line">	plusA := 10</div><div class="line">	plusB := 5</div><div class="line">	fmt.Println(plus(plusA,plusB),plusA)</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">func plus(a int,b int) int &#123;</div><div class="line">	a = a - b</div><div class="line">	return a</div><div class="line">&#125;</div><div class="line"></div><div class="line">输出结果为 ：5    10</div></pre></td></tr></table></figure></p>
+<p>注意上面传指针的时候，在调用函数的时候需要添加<code>&amp;</code>符号，传指针的方法和在<code>Objective-C</code>中参数是对象差不多，当然前提是不是<code>copy</code>属性</p>
+<h5>函数作为参数类型</h5>
+<p>将函数作为参数类型之前，我们首先需要将函数定义一个类型，定义方式为
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">type typeName func (inputType) outType</div></pre></td></tr></table></figure></p>
+<p>其实就是将函数的原型定义成一个类型
+可以看看具体使用，就对上面的函数进行改造添加几个函数测试
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line">//主函数</div><div class="line">func main() &#123;</div><div class="line">	plusA := 10</div><div class="line">	plusB := 5</div><div class="line">	fmt.Println(plus(plusA,plusB,sum,moreReturnFunc),plusA)</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">//定义类型</div><div class="line">type moreParatest func (arg...int) int</div><div class="line"></div><div class="line">type moreReturnParatest func (int,int) (int,int)</div><div class="line"></div><div class="line">func plus(a int,b int,c moreParatest,d moreReturnParatest) int &#123;</div><div class="line">	n,m:=moreReturnFunc(4,2)</div><div class="line">	a = a - b + c(1,2,3,4,5) + n + m</div><div class="line">	return a</div><div class="line">&#125;</div><div class="line"></div><div class="line">func sum(num ...int)  int &#123;</div><div class="line">	fmt.Println(num)</div><div class="line">	total := 0</div><div class="line">	for _,value := range num&#123;</div><div class="line"></div><div class="line">		total += value</div><div class="line">	&#125;</div><div class="line">	fmt.Println(total)</div><div class="line">	return total</div><div class="line">&#125;</div><div class="line"></div><div class="line">func moreReturnFunc(a int,b int)(c int,d int)  &#123;</div><div class="line">	c = a*b</div><div class="line">	d = a/b</div><div class="line">	return c,d;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>在上面的例子中，我先定义了两个类型的函数--<code>moreParatest</code>和<code>moreReturnParatest</code>，这两个函数一个是传入多个参数返回<code>int</code>，一个是传入两个<code>int</code>然后返回两个<code>int</code>返回值的函数，在<code>plus</code>函数中，将类型直接作为参数传入函数中，这样我们的参数<code>c</code>和<code>d</code>就相当于两个函数，在<code>plus</code>函数中，我们在调用他们，具体函数实现就不去管他。
+在<code>plus</code>函数定义好之后，我们在<code>main</code>函数中进行调用，由于我们的<code>sum</code>函数和<code>moreReturnFunc</code>分别对应满足定义的函数类型，所以直接将该两个函数当作参数传入即可
+最终结果如下
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">30 10</div></pre></td></tr></table></figure></p>
+<p>通过这样的方式，我们的程序可以变得非常灵活，特别是在封装接口的时候</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2017/06/12/Go 语言学习之函数/">Go 语言学习之函数</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">One Dream</a></p>
+        <p><span>发布时间:</span>2017-06-12, 00:00:00</p>
+        <p><span>最后更新:</span>2017-06-12, 16:46:29</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2017/06/12/Go 语言学习之函数/" title="Go 语言学习之函数">http://yoursite.com/2017/06/12/Go 语言学习之函数/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/2017/06/12/Go 语言学习之函数/　　作者: One Dream" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2017/06/06/iOS translucent引发的那点小事/">
+                    iOS translucent引发的那点小事
+                </a>
+            </div>
+        
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#undefined"><span class="toc-number">1.</span> <span class="toc-text">函数</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#undefined"><span class="toc-number">1.1.</span> <span class="toc-text">定义</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#undefined"><span class="toc-number">1.1.1.</span> <span class="toc-text">c语言定义方式</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#undefined"><span class="toc-number">1.1.2.</span> <span class="toc-text">Objective-C定义方式</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#undefined"><span class="toc-number">1.2.</span> <span class="toc-text">一般函数</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#undefined"><span class="toc-number">1.3.</span> <span class="toc-text">可变参数</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#undefined"><span class="toc-number">1.4.</span> <span class="toc-text">传指针</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#undefined"><span class="toc-number">1.5.</span> <span class="toc-text">函数作为参数类型</span></a></li></ol></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"Go 语言学习之函数　| 半笑半醉间　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2017/06/06/iOS translucent引发的那点小事/" title="上一篇: iOS translucent引发的那点小事">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/06/12/Go 语言学习之函数/">Go 语言学习之函数</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/06/iOS translucent引发的那点小事/">iOS translucent引发的那点小事</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/27/iOS 自定义键盘/">iOS 自定义键盘</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/25/Go 语言学习之流程控制/">Go 语言学习之流程控制</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/23/Go 语言学习之数组 字典/">Go 语言学习之数组 字典</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/22/Go 语言基础之常量 变量/">Go 语言基础之常量 变量</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/19/Go 语言之Mac环境配置/">Go 语言之Mac环境配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/12/iOS CoreImage之滤镜简单使用/">iOS CoreImage之滤镜简单使用</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/24/iOS UIImage常用category/">iOS Quart2D绘图之UIImage简单使用</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/05/iOS自定义转场动画/">iOS 自定义转场动画浅谈</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2016-2017 One Dream
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 4;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>
