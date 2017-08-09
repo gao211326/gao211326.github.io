@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="One Dream" />
+
+
+
+<meta name="description" content="学海无涯苦作舟，书山有路勤为径  写在最前最近出差刚回来，想想在北京的日子真的是惨不忍睹，太热了….而且对于我这个从小吃辣长大的川汉子来说，简直是折磨。扯点闲谈，现在进入正题吧。struct又称为机构体，在c语言或者是objective-c、java等其他语言中应该是都有的，可以作为一个容器，装入一些其他类型。在这之前，我也去重新复习了下c和objective-c中的结构体。">
+<meta name="keywords">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Go 语言学习之struct">
+<meta property="og:url" content="http://yoursite.com/2017/08/03/Go 语言学习之struct/index.html">
+<meta property="og:site_name" content="半笑半醉间">
+<meta property="og:description" content="学海无涯苦作舟，书山有路勤为径  写在最前最近出差刚回来，想想在北京的日子真的是惨不忍睹，太热了….而且对于我这个从小吃辣长大的川汉子来说，简直是折磨。扯点闲谈，现在进入正题吧。struct又称为机构体，在c语言或者是objective-c、java等其他语言中应该是都有的，可以作为一个容器，装入一些其他类型。在这之前，我也去重新复习了下c和objective-c中的结构体。">
+<meta property="og:updated_time" content="2017-08-09T08:21:46.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Go 语言学习之struct">
+<meta name="twitter:description" content="学海无涯苦作舟，书山有路勤为径  写在最前最近出差刚回来，想想在北京的日子真的是惨不忍睹，太热了….而且对于我这个从小吃辣长大的川汉子来说，简直是折磨。扯点闲谈，现在进入正题吧。struct又称为机构体，在c语言或者是objective-c、java等其他语言中应该是都有的，可以作为一个容器，装入一些其他类型。在这之前，我也去重新复习了下c和objective-c中的结构体。">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="半笑半醉间" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/favicon.png">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/orange/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>Go 语言学习之struct | 半笑半醉间</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: undefined
+    }
+</script>
+
+
+    <script> yiliaConfig.jquery_ui = [false]; </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/avatar.png" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">One Dream</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">人生为棋，我愿为卒，行动虽慢，可谁曾见我后退半步</p>
+        
+
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa GitHub" href="https://github.com/gao211326" title="GitHub"></a>
+                            
+                                <a class="fa 简书" href="http://www.jianshu.com/u/d772826c5def" title="简书"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://hexo.io">Hexo</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://pages.github.com/">GitHub</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://moxfive.xyz/">MOxFIVE</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">专注于前端</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">One Dream</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/avatar.png" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">One Dream</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">人生为棋，我愿为卒，行动虽慢，可谁曾见我后退半步</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa GitHub" target="_blank" href="https://github.com/gao211326" title="GitHub"></a>
+                            
+                                <a class="fa 简书" target="_blank" href="http://www.jianshu.com/u/d772826c5def" title="简书"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-Go 语言学习之struct" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/08/03/Go 语言学习之struct/" class="article-date">
+      <time datetime="2017-08-02T16:00:00.000Z" itemprop="datePublished">2017-08-03</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Go 语言学习之struct
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+
+        
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <excerpt in="" index="" |="" 首页摘要="">
+
+<blockquote>
+<p>学海无涯苦作舟，书山有路勤为径</p>
+</blockquote>
+<h4 id="写在最前"><a href="#写在最前" class="headerlink" title="写在最前"></a>写在最前</h4><p>最近出差刚回来，想想在北京的日子真的是惨不忍睹，太热了….而且对于我这个从小吃辣长大的川汉子来说，简直是折磨。扯点闲谈，现在进入正题吧。<code>struct</code>又称为机构体，在<code>c</code>语言或者是<code>objective-c</code>、<code>java</code>等其他语言中应该是都有的，可以作为一个容器，装入一些其他类型。在这之前，我也去重新复习了下<code>c</code>和<code>objective-c</code>中的结构体。</p>
+<a id="more"></a>
+<the rest="" of="" contents="" |="" 余下全文="">
+
+<h4 id="struct回顾"><a href="#struct回顾" class="headerlink" title="struct回顾"></a>struct回顾</h4><p>下面就举例说明下</p>
+<p>几种定义方式及其使用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div></pre></td><td class="code"><pre><div class="line">//test1为结构名 而 后面的test1Rename为结构变量</div><div class="line">typedef struct test1&#123;</div><div class="line">    CGFloat a;</div><div class="line">    CGFloat b;</div><div class="line">&#125;test1Rename;</div><div class="line"></div><div class="line">struct test2&#123;</div><div class="line">    CGFloat c;</div><div class="line">    CGFloat d;</div><div class="line">&#125;;</div><div class="line">typedef struct test2 test2Rename;</div><div class="line"></div><div class="line"></div><div class="line">typedef struct &#123;</div><div class="line">    CGFloat a;</div><div class="line">    CGFloat b;</div><div class="line">&#125;test3Rename;</div><div class="line"></div><div class="line"></div><div class="line">struct test4&#123;</div><div class="line">    CGFloat a;</div><div class="line">    CGFloat b;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">struct&#123;</div><div class="line">    CGFloat a;</div><div class="line">    CGFloat b;</div><div class="line">&#125;test5Rename;</div><div class="line"></div><div class="line">struct test6&#123;</div><div class="line">    CGFloat a;</div><div class="line">    CGFloat b;</div><div class="line">&#125;test6Rename;</div><div class="line"></div><div class="line">//typedef 的作用是为一种数据类型定义一个新名字</div><div class="line"></div><div class="line">//使用</div><div class="line"></div><div class="line">    test1Rename test1rename = &#123;9,9&#125;;</div><div class="line">    struct test1 test1 = &#123;10,11&#125;;</div><div class="line">    </div><div class="line">    test2Rename test2rename = &#123;11,12&#125;;</div><div class="line">    struct test2 test2 = &#123;21,22&#125;;</div><div class="line">    </div><div class="line">    test3Rename test3rename = &#123;1,2&#125;;</div><div class="line">    </div><div class="line">    </div><div class="line">    struct test4 test4 = &#123;22,33&#125;;</div><div class="line">    </div><div class="line">    </div><div class="line">    </div><div class="line">    test5Rename.a = 10;</div><div class="line">    test5Rename.b = 19;</div><div class="line">    </div><div class="line">    test6Rename.a = 11;</div><div class="line">    test6Rename.b = 12;</div><div class="line">    </div><div class="line">    struct test6 test6 =&#123;12,23&#125;;</div></pre></td></tr></table></figure>
+<p>上面定义了六种方式的结构体，其中前三种为带<code>typedef</code>关键字，后面不带，那么这个关键字又是什么意思呢？其大意就是<code>为一种数据类型定义一个新名字</code>，下面我们就根据例子的使用情况来讲解下。</p>
+<ul>
+<li><p>1和2 两种都是带了<code>typedef</code>且定义的时候有结构名和结构变量名</p>
+<p>在使用结构体的时候，我们可以有两种不同的方式，分别通过结构名来创建新的变量和通过结构变量来创建</p>
+<p>唯一的区别在于 ，通过结构名来创建，需要在前面加上<code>struct</code> ，而通过结构变量来创建则少了<code>struct</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">test1Rename test1rename = &#123;9,9&#125;;</div><div class="line">struct test1 test1 = &#123;10,11&#125;;</div><div class="line">  </div><div class="line">test2Rename test2rename = &#123;11,12&#125;;</div><div class="line">struct test2 test2 = &#123;21,22&#125;;</div></pre></td></tr></table></figure>
+</li>
+<li><p>3没有定义结构名，而是直接通过<code>typedef</code>来创建了一个结构变量，在使用的时候，同1和2中的通过结构变量来使用是一样的</p>
+</li>
+<li><p>4、5、6均没有使用<code>typedef</code>，4没有定义结构变量，所以在使用的时候必须加上<code>struct</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">struct test4 test4 = &#123;22,33&#125;;</div></pre></td></tr></table></figure>
+<p>5没有定义结构名，却定义的有结构变量，但是这里我们不同通过结构变量来创建结构体，只能直接使用该结构体变量，因为没有通过<code>typedef</code>来定义</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">test5Rename.a = 10;</div><div class="line">test5Rename.b = 19;</div><div class="line"></div><div class="line">//test5Rename test5rename = &#123;1,2&#125;; 错误</div></pre></td></tr></table></figure>
+<p>6则既定义了结构名也定义了结构变量，其中的结构变量可以直接使用，结构名可以用来创建新的结构变量</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">test6Rename.a = 11;</div><div class="line">test6Rename.b = 12;</div><div class="line">    </div><div class="line">struct test6 test6 =&#123;12,23&#125;;</div></pre></td></tr></table></figure>
+<p>​</p>
+</li>
+</ul>
+<p>到这里，我们就差不多对结构体有了大概的了解，对<code>typedef</code>的作用也大概有了了解，下面就进入今天的主题，在<code>go</code>中的<code>struct</code></p>
+<h4 id="struct"><a href="#struct" class="headerlink" title="struct"></a>struct</h4><p>在<code>go</code>中，其定义为</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">type structName struct &#123;</div><div class="line">	var1 string</div><div class="line">	var2 int</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>可以看出，在<code>go</code>中声明一个<code>struct</code>还是挺简单的，那么怎么使用呢？看下面代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">//定义一个Anima 结构体</div><div class="line">type Anima struct &#123;</div><div class="line">	Name string</div><div class="line">	Age int</div><div class="line">&#125;</div><div class="line"></div><div class="line">//使用方式</div><div class="line">	anima1 := hellotest.Anima&#123;&#125;</div><div class="line">	anima1.Age = 12</div><div class="line">	anima1.Name = &quot;大象&quot;</div><div class="line">	fmt.Println(anima1.Age,anima1.Name)</div><div class="line"></div><div class="line">	anima2 := hellotest.Anima&#123;&quot;河马&quot;,14&#125;</div><div class="line">	fmt.Println(anima2.Name,anima2.Age)</div><div class="line"></div><div class="line">	anima3 := hellotest.Anima&#123;Age:9,Name:&quot;豹子&quot;&#125;</div><div class="line">	fmt.Println(anima3.Age,anima3.Name)</div><div class="line"></div><div class="line">	var  anima4 hellotest.Anima </div><div class="line">	anima4.Age = 14</div><div class="line">	anima4.Name = &quot;狮子&quot;</div></pre></td></tr></table></figure>
+<p>在上面的使用方式中，有一种需要特别注意，那就是<code>anima2 := hellotest.Anima{&quot;河马&quot;,14}</code>这种方式，必须按照顺序提供初始化值，及按照我们定义的结构体中的属性的顺序来赋值</p>
+<p>注：由于上面，我是在<code>package</code> <code>hellotest</code>中定义的结构体，所以在<code>main</code> <code>package</code>中使用的时候，加了<code>hellotest.</code>的方式来调用，这中需要注意的是，结构体如果要被其他的包引用，那么结构体的首字母必须大写，而且里面属性如果需要被用到，也必须大写。</p>
+<h4 id="struct匿名字段"><a href="#struct匿名字段" class="headerlink" title="struct匿名字段"></a>struct匿名字段</h4><p>在<code>go</code>语言中，定义<code>struct</code>的时候，除了类型和字段名一一对应，也可以支持不写字段名，而只写类型，也就是匿名字段。</p>
+<p>下面看看例子</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">//匿名字段</div><div class="line">type Cat struct &#123;</div><div class="line">	int</div><div class="line">	string</div><div class="line">&#125;</div><div class="line"></div><div class="line">func CatInfo()  &#123;</div><div class="line">	cat := Cat&#123;12,&quot;小花&quot;&#125;</div><div class="line">	fmt.Println(cat.string,cat.int);</div><div class="line">&#125;</div><div class="line"></div><div class="line">//调用CatInfo方法</div><div class="line">hellotest.CatInfo()</div><div class="line">//输出结果   </div><div class="line">小花 12</div></pre></td></tr></table></figure>
+<p>上面的例子中匿名字段的类型，都是一些基本类型，如果换成是<code>struct</code>又会怎么样呢？我们就已刚刚那个<code>Cat</code>为例子，在其中加入<code>Anima</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">//匿名字段</div><div class="line">type Cat struct &#123;</div><div class="line">	Anima</div><div class="line">	int</div><div class="line">	string</div><div class="line">&#125;</div><div class="line"></div><div class="line">func CatInfo()  &#123;</div><div class="line">	cat := Cat&#123;Anima&#123;&quot;动物类型&quot;,4&#125;,12,&quot;小花&quot;&#125;</div><div class="line">	fmt.Println(cat.Age,cat.Name,cat.string,cat.int);</div><div class="line">	cat.Age = 5;</div><div class="line">	cat.Name = &quot;动物类型-温顺动物&quot;</div><div class="line">	fmt.Println(cat.Age,cat.Name,cat.string,cat.int);</div><div class="line">	cat.Anima.Age = 6;</div><div class="line">	cat.Anima.Name = &quot;动物类型-温顺动物-猫科&quot;</div><div class="line">	fmt.Println(cat.Age,cat.Name,cat.string,cat.int);</div><div class="line">	cat.Anima = Anima&#123;&quot;动物类型-温顺动物-猫科-白猫&quot;,7&#125;</div><div class="line">	fmt.Println(cat.Age,cat.Name,cat.string,cat.int);</div><div class="line">&#125;</div><div class="line">//输出结果为</div><div class="line">4 动物类型 小花 12</div><div class="line">5 动物类型-温顺动物 小花 12</div><div class="line">6 动物类型-温顺动物-猫科 小花 12</div><div class="line">7 动物类型-温顺动物-猫科-白猫 小花 12</div></pre></td></tr></table></figure>
+<p>通过上面的例子 我们可以看到，当匿名字段是<code>struct</code>的时候，<code>struct</code>的全部字段都被隐式的加入了当前的结构体中，我们不仅可以直接通过当前的结构体来调用，也可以访问匿名字段类型作为字段名，而且可以在相应的字段上面进行函数操作，如上面的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">cat.Anima.Age = 6;</div><div class="line">cat.Anima.Name = &quot;动物类型-温顺动物-猫科&quot;</div><div class="line">fmt.Println(cat.Age,cat.Name,cat.string,cat.int);</div><div class="line"></div><div class="line">cat.Anima = Anima&#123;&quot;动物类型-温顺动物-猫科-白猫&quot;,7&#125;</div><div class="line">fmt.Println(cat.Age,cat.Name,cat.string,cat.int);</div></pre></td></tr></table></figure>
+<p>但是值得注意的是，初始化的时候，必须通过匿名的<code>struct</code>来，但是后面改变值的时候，可以直接修改，如下面的方式是不可行的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">cat1 := Cat&#123;&quot;动物类型&quot;,4,12,&quot;小花&quot;&#125;</div><div class="line">fmt.Println(cat.Age,cat.Name,cat.string,cat.int);</div></pre></td></tr></table></figure>
+<p>最后还有一个问题，那就是如果我们的匿名<code>struct</code>中有个字段和我们的当前<code>struct</code>中都有相同的字段，那该怎么办呢？</p>
+<p>在<code>go</code>语言中，所采取的方式是优先采用最外层的属性，并且里层的需要访问，就必须通过匿名字段作为字段名来访问。看下面例子</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">type Anima struct &#123;</div><div class="line">	Name string</div><div class="line">	Age int</div><div class="line">&#125;</div><div class="line"></div><div class="line">type Dog struct &#123;</div><div class="line">	Anima</div><div class="line">	Sex string</div><div class="line">	Name string</div><div class="line">&#125;</div><div class="line"></div><div class="line">func DogInfo()  &#123;</div><div class="line">	dog := Dog&#123;Anima&#123;&quot;动物类型&quot;,8&#125;,&quot;公的&quot;,&quot;动物类型-凶猛动物-狗&quot;&#125;</div><div class="line">	fmt.Println(dog.Anima.Name,dog.Age,dog.Name,dog.Sex)</div><div class="line"></div><div class="line">	dog.Name = &quot;动物类型-凶猛动物-狗-小白狗&quot;</div><div class="line">	fmt.Println(dog.Anima.Name,dog.Name)</div><div class="line">&#125;</div><div class="line">//输出结果</div><div class="line">动物类型 8 动物类型-凶猛动物-狗 公的</div><div class="line">动物类型 动物类型-凶猛动物-狗-小白狗</div></pre></td></tr></table></figure>
+<p>从上面的例子中，可以看出，访问顺序的优先级</p>
+</the></excerpt>
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2017/08/03/Go 语言学习之struct/">Go 语言学习之struct</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">One Dream</a></p>
+        <p><span>发布时间:</span>2017-08-03, 00:00:00</p>
+        <p><span>最后更新:</span>2017-08-09, 16:21:46</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2017/08/03/Go 语言学习之struct/" title="Go 语言学习之struct">http://yoursite.com/2017/08/03/Go 语言学习之struct/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/2017/08/03/Go 语言学习之struct/　　作者: One Dream" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2017/06/12/Go 语言学习之函数/">
+                    Go 语言学习之函数
+                </a>
+            </div>
+        
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#写在最前"><span class="toc-number">1.</span> <span class="toc-text">写在最前</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#struct回顾"><span class="toc-number">2.</span> <span class="toc-text">struct回顾</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#struct"><span class="toc-number">3.</span> <span class="toc-text">struct</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#struct匿名字段"><span class="toc-number">4.</span> <span class="toc-text">struct匿名字段</span></a></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"Go 语言学习之struct　| 半笑半醉间　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2017/06/12/Go 语言学习之函数/" title="上一篇: Go 语言学习之函数">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/08/03/Go 语言学习之struct/">Go 语言学习之struct</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/12/Go 语言学习之函数/">Go 语言学习之函数</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/06/iOS translucent引发的那点小事/">iOS translucent引发的那点小事</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/27/iOS 自定义键盘/">iOS 自定义键盘</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/25/Go 语言学习之流程控制/">Go 语言学习之流程控制</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/23/Go 语言学习之数组 字典/">Go 语言学习之数组 字典</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/22/Go 语言基础之常量 变量/">Go 语言基础之常量 变量</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/19/Go 语言之Mac环境配置/">Go 语言之Mac环境配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/12/iOS CoreImage之滤镜简单使用/">iOS CoreImage之滤镜简单使用</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/24/iOS UIImage常用category/">iOS Quart2D绘图之UIImage简单使用</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/05/iOS自定义转场动画/">iOS 自定义转场动画浅谈</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2016-2017 One Dream
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 4;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>
