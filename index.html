@@ -262,6 +262,73 @@
 </nav>
       <div class="body-wrap">
   
+    <article id="post-iOS __attribute__那点小事" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/08/15/iOS __attribute__那点小事/" class="article-date">
+      <time datetime="2017-08-14T16:00:00.000Z" itemprop="datePublished">2017-08-15</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/08/15/iOS __attribute__那点小事/">iOS __attribute__那点小事</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <Excerpt in index | 首页摘要>
+
+
+<blockquote>
+<p>今人不见古时月，今月曾经照古人</p>
+</blockquote>
+<h5 id="关于-attribute"><a href="#关于-attribute" class="headerlink" title="关于 attribute"></a>关于 <strong>attribute</strong></h5><p><code>__attribute__</code>机制虽然是<code>GNU C</code>的一大特色，但是在<code>iOS</code>中却也被广泛使用，随便举个例子</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">NS_CLASS_DEPRECATED_IOS(2_0, 9_0, &quot;UIAlertView is deprecated. Use UIAlertController with a preferredStyle of UIAlertControllerStyleAlert instead&quot;) __TVOS_PROHIBITED</div><div class="line"></div><div class="line">#define NS_CLASS_DEPRECATED_IOS(_iosIntro, _iosDep, ...) NS_CLASS_DEPRECATED(NA, NA, _iosIntro, _iosDep, __VA_ARGS__)</div><div class="line"></div><div class="line">#define NS_CLASS_DEPRECATED(_mac, _macDep, _ios, _iosDep, ...) __attribute__((visibility(&quot;default&quot;))) NS_DEPRECATED(_mac, _macDep, _ios, _iosDep, __VA_ARGS__)</div></pre></td></tr></table></figure>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+
+      
+      
+        <p class="article-more-link">
+          <a href="/2017/08/15/iOS __attribute__那点小事/#more">阅读全文 >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
     <article id="post-Go 语言学习之struct" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -837,72 +904,6 @@
       
         <p class="article-more-link">
           <a href="/2017/05/12/iOS CoreImage之滤镜简单使用/#more">阅读全文 >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-iOS UIImage常用category" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2017/04/24/iOS UIImage常用category/" class="article-date">
-      <time datetime="2017-04-23T16:00:00.000Z" itemprop="datePublished">2017-04-24</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/04/24/iOS UIImage常用category/">iOS Quart2D绘图之UIImage简单使用</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <Excerpt in index | 首页摘要>
-
-<blockquote>
-<p>人生得意须尽欢，莫使金樽空对月。</p>
-<p>　          　天生我材必有用，千金散尽还复来。</p>
-</blockquote>
-<h4 id="前记"><a href="#前记" class="headerlink" title="前记"></a>前记</h4><p>说到<code>UIImage</code>大家都不会感到陌生，最近在研究<code>UIImage</code>，就顺便把之前工作中用到的一些<code>category</code>总结了一下，记录记录。</p>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-
-      
-      
-        <p class="article-more-link">
-          <a href="/2017/04/24/iOS UIImage常用category/#more">阅读全文 >></a>
         </p>
       
       <div class="clearfix"></div>
