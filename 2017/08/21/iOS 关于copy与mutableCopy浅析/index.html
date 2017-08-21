@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="One Dream" />
+
+
+
+<meta name="description" content="君不见，高堂明镜悲白发，朝如青丝暮成雪  前记最近在项目中，用到了关于copy的问题，当我对自己定义的模型进行拷贝的时候，居然没有实现想要的深拷贝，于是出了点小问题，让我有点小郁闷，所以决定好好深入研究下copy与mutableCopy与NSDictionary、NSArray、model之间的小事~">
+<meta name="keywords">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS 关于copy与mutableCopy浅析">
+<meta property="og:url" content="http://yoursite.com/2017/08/21/iOS 关于copy与mutableCopy浅析/index.html">
+<meta property="og:site_name" content="半笑半醉间">
+<meta property="og:description" content="君不见，高堂明镜悲白发，朝如青丝暮成雪  前记最近在项目中，用到了关于copy的问题，当我对自己定义的模型进行拷贝的时候，居然没有实现想要的深拷贝，于是出了点小问题，让我有点小郁闷，所以决定好好深入研究下copy与mutableCopy与NSDictionary、NSArray、model之间的小事~">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2525768-e736afc92c6f6584.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2525768-cf685ac29fed1cdf.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2017-08-21T02:47:28.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iOS 关于copy与mutableCopy浅析">
+<meta name="twitter:description" content="君不见，高堂明镜悲白发，朝如青丝暮成雪  前记最近在项目中，用到了关于copy的问题，当我对自己定义的模型进行拷贝的时候，居然没有实现想要的深拷贝，于是出了点小问题，让我有点小郁闷，所以决定好好深入研究下copy与mutableCopy与NSDictionary、NSArray、model之间的小事~">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/2525768-e736afc92c6f6584.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="半笑半醉间" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/favicon.png">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/orange/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>iOS 关于copy与mutableCopy浅析 | 半笑半醉间</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: undefined
+    }
+</script>
+
+
+    <script> yiliaConfig.jquery_ui = [false]; </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/avatar.png" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">One Dream</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">人生为棋，我愿为卒，行动虽慢，可谁曾见我后退半步</p>
+        
+
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa GitHub" href="https://github.com/gao211326" title="GitHub"></a>
+                            
+                                <a class="fa 简书" href="http://www.jianshu.com/u/d772826c5def" title="简书"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://hexo.io">Hexo</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://pages.github.com/">GitHub</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://moxfive.xyz/">MOxFIVE</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">专注于前端</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">One Dream</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/avatar.png" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">One Dream</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">人生为棋，我愿为卒，行动虽慢，可谁曾见我后退半步</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa GitHub" target="_blank" href="https://github.com/gao211326" title="GitHub"></a>
+                            
+                                <a class="fa 简书" target="_blank" href="http://www.jianshu.com/u/d772826c5def" title="简书"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-iOS 关于copy与mutableCopy浅析" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/08/21/iOS 关于copy与mutableCopy浅析/" class="article-date">
+      <time datetime="2017-08-20T16:00:00.000Z" itemprop="datePublished">2017-08-21</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      iOS 关于copy与mutableCopy浅析
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+
+        
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <excerpt in="" index="" |="" 首页摘要="">
+
+<blockquote>
+<p>君不见，高堂明镜悲白发，朝如青丝暮成雪</p>
+</blockquote>
+<h5 id="前记"><a href="#前记" class="headerlink" title="前记"></a>前记</h5><p>最近在项目中，用到了关于<code>copy</code>的问题，当我对自己定义的模型进行拷贝的时候，居然没有实现想要的深拷贝，于是出了点小问题，让我有点小郁闷，所以决定好好深入研究下<code>copy</code>与<code>mutableCopy</code>与<code>NSDictionary</code>、<code>NSArray</code>、<code>model</code>之间的小事~</p>
+<a id="more"></a>
+<the rest="" of="" contents="" |="" 余下全文="">
+
+
+<h5 id="copy-、mutableCopy"><a href="#copy-、mutableCopy" class="headerlink" title="copy 、mutableCopy"></a>copy 、mutableCopy</h5><p>先来看看这两个的区别吧</p>
+<p>在分析区别之前，我们先上一段简单的代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">   //非集合类测试copy 和 mutablecopy</div><div class="line">   NSString *string = @&quot;abc&quot;;</div><div class="line">   NSString *copyString = [string copy];</div><div class="line">   //mutableCopy 后位动态string</div><div class="line">   NSString *mutableCopyString = [string mutableCopy];</div><div class="line">   </div><div class="line">   NSString *mutableCopy_copy_String = [mutableCopyString copy];</div><div class="line">   NSMutableString *mutableCopy_mutable_copy_String = [mutableCopyString mutableCopy];</div><div class="line">   </div><div class="line">   NSLog(@&quot; 打印信息:%p---%p---%p---%p---%p&quot;,string,copyString,mutableCopyString,mutableCopy_copy_String,mutableCopy_mutable_copy_String);</div><div class="line">   </div><div class="line">   </div><div class="line">   //集合类型测试copy 和 mutablecopy</div><div class="line">   NSDictionary *_dic = @&#123;@&quot;key1&quot;:@&quot;abc&quot;,@&quot;key2&quot;:@&quot;cde&quot;&#125;;</div><div class="line">   NSDictionary *copyDic = [_dic copy];</div><div class="line"></div><div class="line">   NSMutableDictionary *mutableCopyDic = [_dic mutableCopy];</div><div class="line">   [mutableCopyDic setValue:@&quot;efg&quot; forKey:@&quot;key3&quot;];</div><div class="line">   </div><div class="line">   NSMutableDictionary *mutableCopy_copy_Dic = [mutableCopyDic copy];</div><div class="line">   NSMutableDictionary *mutableCopy_mutableCopy_Dic = [mutableCopyDic mutableCopy];</div><div class="line">   </div><div class="line">   NSLog(@&quot; 打印信息字典拷贝:%p---%p---%p---%p---%p&quot;,_dic,copyDic,mutableCopyDic,mutableCopy_copy_Dic,mutableCopy_mutableCopy_Dic);</div><div class="line">   </div><div class="line">   </div><div class="line">   //打印结果</div><div class="line">   2017-08-17 15:06:33.277 GLDeepCopy[27242:8168435]  打印信息:0x10b30c0e8---0x10b30c0e8---0x608000074e00---0xa000000006362613---0x608000074e40	</div><div class="line">2017-08-17 15:06:33.278 GLDeepCopy[27242:8168435]  打印信息字典拷贝:0x600000072800---0x600000072800---0x60000005c8c0---0x600000072840---0x60000005cb30</div></pre></td></tr></table></figure>
+<p>顺便插个图片</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2525768-e736afc92c6f6584.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="copy.png"></p>
+<ul>
+<li><code>copy</code>：对我们的对象进行拷贝，返回一个非动态的对象</li>
+<li><code>mutableCopy</code>：对我们的对象进行拷贝，返回一个动态的对象</li>
+</ul>
+<p>通过上图，我们可以看到，虽然我们用的是<code>NSString</code>来接收<code>[string mutableCopy]</code>，但是实际上得到的却是一个<code>NSMutableString</code>类型的对象，这里不得不说一个比较严重的问题，就是如果我们在定义一个动态类型为<code>@property (nonatomic,copy)</code>属性后，一定不能执行<code>copy</code>操作，否则在你执行修改动态类型内容的时候，一定会<code>crash</code>，因为当你<code>copy</code>后，你的动态类型已经变成了一个不可变类型</p>
+<p>下面我们来看上面贴的代码，从代码分析，我们可以看到，非集合类型和集合类型中的非动态类型，在<code>copy</code>后，地址还是一样的，没有变化，而除此之外，地址都发生了变化，我们可以得到下面的结论</p>
+<ul>
+<li>非集合类型和集合类型非动态类型在<code>copy</code>后，执行的是<code>浅拷贝</code>（即对指针进行拷贝）</li>
+<li>非集合类型和集合类型非动态类型在<code>mutableCopy</code>后，执行的是<code>深拷贝</code>（即对对象进行拷贝），且返回动态类型</li>
+<li>非集合类型和集合类型动态类型在<code>copy</code>后，执行的是<code>深拷贝</code></li>
+<li>非集合类型和集合类型动态类型在<code>mutableCopy</code>后，执行的是<code>深拷贝</code>，且返回动态类型</li>
+</ul>
+<p>上面的结论也不是那么准确，怎么说呢？容我慢慢分析</p>
+<p>对于此处的深拷贝，我想大家一定想的是完完全全的拷贝吧，是的，我一开始也是这么想的，但是有没有想过测试下，当我们的集合有很多层的情况呢？下面就举个例子来说明吧</p>
+<p>代码走起</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div></pre></td><td class="code"><pre><div class="line">@interface PersonModel : NSObject&lt;NSCopying&gt;</div><div class="line"></div><div class="line">@property (nonatomic,copy) NSString *name;</div><div class="line">@property (nonatomic,assign) NSUInteger age;</div><div class="line"></div><div class="line">@end</div><div class="line"></div><div class="line">@implementation PersonModel</div><div class="line">- (id)copyWithZone:(NSZone *)zone&#123;</div><div class="line">    PersonModel *copy = [[PersonModel alloc] init];</div><div class="line">    </div><div class="line">    if (copy) &#123;</div><div class="line">        </div><div class="line">        copy.name = [self.name copyWithZone:zone];</div><div class="line">        copy.age = self.age;</div><div class="line">        copy.array = [self.array copyWithZone:zone];</div><div class="line">    &#125;</div><div class="line">    return copy;</div><div class="line">&#125;</div><div class="line"></div><div class="line">@end</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">&#123;</div><div class="line">    //测试加入数组中  对数组进行拷贝</div><div class="line">    PersonModel *new_PersonModel = [[PersonModel alloc] init];</div><div class="line">    new_PersonModel.name = @&quot;gaogaogao&quot;;</div><div class="line">    new_PersonModel.age = 20;</div><div class="line">    </div><div class="line">    NSLog(@&quot; 打印信息修改后 personModel :%@\n new_PersonModel:%@&quot;,personModel,new_PersonModel);</div><div class="line">    </div><div class="line">    </div><div class="line">    NSArray *array = [NSArray arrayWithObject:new_PersonModel];</div><div class="line">    NSArray *copyArray = [array copy];</div><div class="line">    NSMutableArray *mutableCopyArray = [array mutableCopy];</div><div class="line">    </div><div class="line">    NSLog(@&quot; 打印信息array:%p+%@\ncopyArray:%p+%@\nmutableCopyArray:%p+%@&quot;,array,array,copyArray,copyArray,mutableCopyArray,mutableCopyArray);</div><div class="line">    </div><div class="line">    //修改数组中的内容</div><div class="line">    PersonModel *personModel_array = array[0];</div><div class="line">    personModel_array.name = @&quot;gao_array&quot;;</div><div class="line">    personModel_array.age = 24;</div><div class="line"></div><div class="line">    </div><div class="line">    NSLog(@&quot; 打印信息修改后array:%p+%@\ncopyArray:%p+%@\nmutableCopyArray:%p+%@&quot;,array,array,copyArray,copyArray,mutableCopyArray,mutableCopyArray);</div><div class="line">    </div><div class="line">&#125;</div><div class="line"></div><div class="line">//打印结果</div><div class="line">2017-08-17 15:31:31.136 GLDeepCopy[27447:8197824]  打印信息array:0x608000017590+(</div><div class="line">    &quot;&#123;\n    age = 20;\n    name = gaogaogao;\n&#125;&quot;</div><div class="line">)</div><div class="line">copyArray:0x608000017590+(</div><div class="line">    &quot;&#123;\n    age = 20;\n    name = gaogaogao;\n&#125;&quot;</div><div class="line">)</div><div class="line">mutableCopyArray:0x608000243570+(</div><div class="line">    &quot;&#123;\n    age = 20;\n    name = gaogaogao;\n&#125;&quot;</div><div class="line">)</div><div class="line">2017-08-17 15:31:31.164 GLDeepCopy[27447:8197824]  打印信息修改后array:0x608000017590+(</div><div class="line">    &quot;&#123;\n    age = 24;\n    name = \&quot;gao_array\&quot;;\n&#125;&quot;</div><div class="line">)</div><div class="line">copyArray:0x608000017590+(</div><div class="line">    &quot;&#123;\n    age = 24;\n    name = \&quot;gao_array\&quot;;\n&#125;&quot;</div><div class="line">)</div><div class="line">mutableCopyArray:0x608000243570+(</div><div class="line">    &quot;&#123;\n    age = 24;\n    name = \&quot;gao_array\&quot;;\n&#125;&quot;</div><div class="line">)</div></pre></td></tr></table></figure>
+<p>从上面的打印信息中，我们看<code>mutableCopyArray</code>的地址，可以发现，地址是发生了改变的，说明我们现在是执行了深拷贝的，但是看<code>打印信息修改后array</code>这个位置，你会发现，后面的内容在修改后，居然变成一样的了，但是我们明明修改的是<code>array[0]</code>中的对象的值啊，什么鬼👻，是不是有点郁闷，那么下面我修改下打印信息，再来看看</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"> </div><div class="line"> NSLog(@&quot; 打印信息array:%p+%@ + %p\ncopyArray:%p+%@ + %p\nmutableCopyArray:%p+%@ + %p&quot;,array,array,array[0],copyArray,copyArray,copyArray[0],mutableCopyArray,mutableCopyArray,mutableCopyArray[0]);</div><div class="line"> </div><div class="line"> //打印信息</div><div class="line"> 2017-08-17 15:43:51.018 GLDeepCopy[27521:8211644]  打印信息array:0x6080000089f0+(</div><div class="line">    &quot;&#123;\n    age = 20;\n    name = gaogaogao;\n&#125;&quot;</div><div class="line">) + 0x6000000352e0</div><div class="line">copyArray:0x6080000089f0+(</div><div class="line">    &quot;&#123;\n    age = 20;\n    name = gaogaogao;\n&#125;&quot;</div><div class="line">) + 0x6000000352e0</div><div class="line">mutableCopyArray:0x60800005bdb0+(</div><div class="line">    &quot;&#123;\n    age = 20;\n    name = gaogaogao;\n&#125;&quot;</div><div class="line">) + 0x6000000352e0</div></pre></td></tr></table></figure>
+<p>是的，可以看到，三个数组里面的对象是同一个对象，也就是，数组虽然进行了深拷贝，但是并没有对里面的内容进行深拷贝，而是执行的指针拷贝，瞬间有种懵逼的感觉，特么搞了这么久，还是不能执行完全的深拷贝。所以，上面我们总结的<code>4</code>点中关于<code>集合类型</code>的<code>深拷贝</code>不能算是真正意义上的<code>深拷贝</code>，只能说是一种<code>单层的深拷贝</code>，即至少有一层是执行了<code>深拷贝</code>的，但是在实际中，我们往往需要的是完完全全的<code>完全深拷贝</code>，那么针对集合类型，我们又该怎么来实现<code>完全深拷贝</code>呢？</p>
+<h5 id="集合的完全深拷贝"><a href="#集合的完全深拷贝" class="headerlink" title="集合的完全深拷贝"></a>集合的完全深拷贝</h5><p>关于集合的完全深拷贝，这里有两种方法</p>
+<ul>
+<li>通过归档的方式来实现（后面会讲到）</li>
+</ul>
+<ul>
+<li>通过使用集合自带的方法来实现（并不完美）</li>
+</ul>
+<p>先来讲讲 这个并不完美的方法吧</p>
+<p>以上面的例子来将，我们可以使用<code>NSArray</code>中的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">- (instancetype)initWithArray:(NSArray&lt;ObjectType&gt; *)array copyItems:(BOOL)flag;</div></pre></td></tr></table></figure>
+<p>当<code>flag</code>参数设置为<code>YES</code>的时候，集合里的每个对象都会去执行<code>copyWithZone</code>方法，当然这就必须要求我们的对象必须遵循 <code>NSCopying</code>协议，并且实现<code>copyWithZone</code>方法，此时对象就会被深复制到新的集合。如果对象没有遵循 <code>NSCopying</code> 协议，而用这种方法进行深拷贝，就会在运行时出错</p>
+<p>来实现，当然<code>NSDictionary</code>和<code>NSSet</code>也有对应的方法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">- (instancetype)initWithDictionary:(NSDictionary&lt;KeyType, ObjectType&gt; *)otherDictionary copyItems:(BOOL)flag;</div><div class="line">- (instancetype)initWithSet:(NSSet&lt;ObjectType&gt; *)set copyItems:(BOOL)flag;</div></pre></td></tr></table></figure>
+<p>先看修改后的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  //测试加入数组中  对数组进行拷贝</div><div class="line">    PersonModel *new_PersonModel = [[PersonModel alloc] init];</div><div class="line">    new_PersonModel.name = @&quot;gaogaogao&quot;;</div><div class="line">    new_PersonModel.age = 20;</div><div class="line">    </div><div class="line">    NSLog(@&quot; 打印信息修改后 personModel :%@\n new_PersonModel:%@&quot;,personModel,new_PersonModel);</div><div class="line">    </div><div class="line">    </div><div class="line">    NSArray *array = [NSArray arrayWithObject:new_PersonModel];</div><div class="line">    NSArray *copyArray = [array copy];</div><div class="line">    NSMutableArray *mutableCopyArray = [[NSMutableArray alloc] initWithArray:array copyItems:YES];//[array mutableCopy];</div><div class="line">    </div><div class="line">    NSLog(@&quot; 打印信息array:%p+%@ + %p\ncopyArray:%p+%@ + %p\nmutableCopyArray:%p+%@ + %p&quot;,array,array,array[0],copyArray,copyArray,copyArray[0],mutableCopyArray,mutableCopyArray,mutableCopyArray[0]);</div><div class="line">    </div><div class="line">    //修改数组中的内容</div><div class="line">    PersonModel *personModel_array = array[0];</div><div class="line">    personModel_array.name = @&quot;gao_array&quot;;</div><div class="line">    personModel_array.age = 24;</div><div class="line"></div><div class="line">    NSLog(@&quot; 打印信息修改后array:%p+%@\ncopyArray:%p+%@\nmutableCopyArray:%p+%@&quot;,array,array,copyArray,copyArray,mutableCopyArray,mutableCopyArray);</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">//打印结果</div><div class="line">2017-08-17 16:03:48.954 GLDeepCopy[27694:8234722]  打印信息array:0x6080000030f0+(</div><div class="line">    &quot;&#123;\n    age = 20;\n    name = gaogaogao;\n&#125;&quot;</div><div class="line">) + 0x6080000284c0</div><div class="line">copyArray:0x6080000030f0+(</div><div class="line">    &quot;&#123;\n    age = 20;\n    name = gaogaogao;\n&#125;&quot;</div><div class="line">) + 0x6080000284c0</div><div class="line">mutableCopyArray:0x60800004cae0+(</div><div class="line">    &quot;&#123;\n    age = 20;\n    name = gaogaogao;\n&#125;&quot;</div><div class="line">) + 0x608000028420</div><div class="line">2017-08-17 16:03:48.955 GLDeepCopy[27694:8234722]  打印信息修改后array:0x6080000030f0+(</div><div class="line">    &quot;&#123;\n    age = 24;\n    name = \&quot;gao_array\&quot;;\n&#125;&quot;</div><div class="line">)</div><div class="line">copyArray:0x6080000030f0+(</div><div class="line">    &quot;&#123;\n    age = 24;\n    name = \&quot;gao_array\&quot;;\n&#125;&quot;</div><div class="line">)</div><div class="line">mutableCopyArray:0x60800004cae0+(</div><div class="line">    &quot;&#123;\n    age = 20;\n    name = gaogaogao;\n&#125;&quot;</div><div class="line">)</div></pre></td></tr></table></figure>
+<p>从上面的结果，我们可以看出，最终实现了我们想要的效果，对数组实现了<code>完全深拷贝</code>，从这里看上去，还是挺完美的嘛，然而在实际中，你知道的，肯定不止这么多层，下面我们再改造下，在<code>PersonModel</code>中增加一个<code>array</code>，并且新增一个类<code>Anima</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div></pre></td><td class="code"><pre><div class="line">@interface Anima : NSObject&lt;NSCopying&gt;</div><div class="line"></div><div class="line">@property (nonatomic,copy) NSString *address;</div><div class="line"></div><div class="line">@end</div><div class="line"></div><div class="line">@implementation Anima</div><div class="line"></div><div class="line">- (id)copyWithZone:(NSZone *)zone&#123;</div><div class="line">    Anima *copy = [[Anima alloc] init];</div><div class="line">    </div><div class="line">    if (copy) &#123;</div><div class="line">        </div><div class="line">        copy.address = [self.address copyWithZone:zone];</div><div class="line">    &#125;</div><div class="line">    return copy;</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line">@end</div><div class="line"></div><div class="line">@interface PersonModel : NSObject&lt;NSCopying,NSMutableCopying&gt;</div><div class="line"></div><div class="line">@property (nonatomic,copy) NSString *name;</div><div class="line">@property (nonatomic,assign) NSUInteger age;</div><div class="line"></div><div class="line">@property (nonatomic,strong) NSMutableArray *array;</div><div class="line"></div><div class="line">@end</div><div class="line">.</div><div class="line">.</div><div class="line">.</div><div class="line"></div><div class="line">//实现部分</div><div class="line">    //测试加入数组中  对数组进行拷贝</div><div class="line">    PersonModel *new_PersonModel = [[PersonModel alloc] init];</div><div class="line">    new_PersonModel.name = @&quot;gaogaogao&quot;;</div><div class="line">    new_PersonModel.age = 20;</div><div class="line">    Anima *anima = [[Anima alloc] init];</div><div class="line">    anima.address = @&quot;成都&quot;;</div><div class="line">    new_PersonModel.array = [NSMutableArray arrayWithObject:anima];</div><div class="line">        </div><div class="line">    NSArray *array = [NSArray arrayWithObject:new_PersonModel];</div><div class="line">    NSArray *copyArray = [array copy];</div><div class="line">    NSMutableArray *mutableCopyArray = [[NSMutableArray alloc] initWithArray:array copyItems:YES];//[array mutableCopy];//</div><div class="line">    </div><div class="line">    NSLog(@&quot; 打印信息array:%p+%@ + %p\ncopyArray:%p+%@ + %p\nmutableCopyArray:%p+%@ + %p&quot;,array,array,array[0],copyArray,copyArray,copyArray[0],mutableCopyArray,mutableCopyArray,mutableCopyArray[0]);</div><div class="line">    </div><div class="line">    </div><div class="line">    </div><div class="line">    //修改数组中的内容</div><div class="line">    PersonModel *personModel_array = array[0];</div><div class="line">    personModel_array.name = @&quot;gao_修改&quot;;</div><div class="line">    personModel_array.age = 24;</div><div class="line">    </div><div class="line">    Anima *anima_model = personModel_array.array[0];</div><div class="line">    anima_model.address = @&quot;阆中&quot;;</div><div class="line">    </div><div class="line">    //获取深拷贝数组中的model中数组中的model</div><div class="line">    PersonModel *personModel_mutable_copy_array = mutableCopyArray[0];</div><div class="line">    Anima *anima_model_mutable_copy = personModel_mutable_copy_array.array[0];</div><div class="line">    </div><div class="line">    NSLog(@&quot; 打印信息获取深拷贝数组中的model中数组中的model地址:%p ++ %p&quot;,anima_model,anima_model_mutable_copy);</div><div class="line">    </div><div class="line">    </div><div class="line">    NSLog(@&quot; 打印信息修改后array:%p+%@\ncopyArray:%p+%@\nmutableCopyArray:%p+%@&quot;,array,array,copyArray,copyArray,mutableCopyArray,mutableCopyArray);</div><div class="line">    </div><div class="line">    //打印信息 截取部分说明</div><div class="line">    2017-08-18 15:27:32.324 GLDeepCopy[69373:9095757]  打印信息获取深拷贝数组中的model中数组中的model地址:0x608000013100 ++ 0x608000013100</div></pre></td></tr></table></figure>
+<p>从上面的结果分析，当层次一多，该方法也并不能完成我们想要的<code>完全拷贝</code>，那么我们除了用<code>归档</code>的方式，难道就没有其他方式了么？答案肯定是 还有的，可以这么设想一下，集合无外乎就是装了很多东西，既然是这样，我们何必不针对集合里面的内容层层进行深拷贝呢？是的，我们可以通过遍历的方式来进行，为了方便使用，可以新建一个<code>Category</code>，于是乎就有了下面的代码，我们先以<code>NSArray</code>为例</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div></pre></td><td class="code"><pre><div class="line">#import &lt;Foundation/Foundation.h&gt;</div><div class="line"></div><div class="line">@interface NSArray (GLDeepCopy)</div><div class="line"></div><div class="line"></div><div class="line">/**</div><div class="line"> 返回当前类型</div><div class="line"></div><div class="line"> @return 返回</div><div class="line"> */</div><div class="line">- (instancetype)GLDeepCopy;</div><div class="line"></div><div class="line">@end</div><div class="line"></div><div class="line"></div><div class="line">#import &quot;NSArray+GLDeepCopy.h&quot;</div><div class="line"></div><div class="line">@implementation NSArray (GLDeepCopy)</div><div class="line"></div><div class="line">- (instancetype)GLDeepCopy</div><div class="line">&#123;</div><div class="line">    NSMutableArray *resultMutableArray = [[NSMutableArray alloc] initWithCapacity:self.count];</div><div class="line">    </div><div class="line">    for (id object in self) &#123;</div><div class="line">        </div><div class="line">        //定义一个id类型来接收拷贝后的</div><div class="line">        id copyObject = nil;</div><div class="line">        </div><div class="line">        //如果该对象有该方法 </div><div class="line">        if ([object respondsToSelector:@selector(GLDeepCopy)]) &#123;</div><div class="line">            copyObject = [object GLDeepCopy];</div><div class="line">        //判断该对象是否实现了NSCopying 协议的方法  如果是 则进行copy</div><div class="line">        &#125;else if ([object conformsToProtocol:@protocol(NSCopying)])&#123;</div><div class="line">            copyObject = [object copy];</div><div class="line">        &#125;else if ([object conformsToProtocol:@protocol(NSMutableCopying)])&#123;</div><div class="line">            copyObject = [object mutableCopy];</div><div class="line">        &#125;else&#123;</div><div class="line">            copyObject = object;</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        [resultMutableArray addObject:copyObject];</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    if ([self isKindOfClass:[NSArray class]]) &#123;</div><div class="line">        return [NSArray arrayWithArray:resultMutableArray];</div><div class="line">    &#125;else&#123;</div><div class="line">        return resultMutableArray;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">@end</div></pre></td></tr></table></figure>
+<p>在上面方法中，我们通过遍历数组中的内容来进行循环拷贝，<code>[object respondsToSelector:@selector(GLDeepCopy)]</code>，这一句是如果我们的对象实现了该方法，我们就去调用，比如当前对象是数组，字典，<code>NSSet</code>或者是自定义数据模型，针对自定义数据模型，如果包含集合类型，而且又需要进行<code>完全拷贝</code>的时候，最好实现<code>GLDeepCopy</code>方法，后面有例子。如果没有集合类型，但是需要<code>完全拷贝</code>的话，就可以通过实现<code>NSCopying</code>或者<code>NSMutableCopying</code>协议来实现。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div></pre></td><td class="code"><pre><div class="line">#import &lt;Foundation/Foundation.h&gt;</div><div class="line"></div><div class="line">@interface PersonModel : NSObject&lt;NSCopying,NSMutableCopying&gt;</div><div class="line"></div><div class="line">@property (nonatomic,copy) NSString *name;</div><div class="line">@property (nonatomic,assign) NSUInteger age;</div><div class="line"></div><div class="line">@property (nonatomic,strong) NSMutableArray *array;</div><div class="line"></div><div class="line">@end</div><div class="line"></div><div class="line">#import &quot;PersonModel.h&quot;</div><div class="line">#import &quot;NSArray+GLDeepCopy.h&quot;</div><div class="line">#import &lt;objc/runtime.h&gt;</div><div class="line"></div><div class="line">@interface PersonModel()</div><div class="line"></div><div class="line"></div><div class="line">@end</div><div class="line"></div><div class="line">@implementation PersonModel</div><div class="line"></div><div class="line"></div><div class="line">/**</div><div class="line"> 描述信息</div><div class="line"> </div><div class="line"> @return 返回描述信息  利于我们在debug 的时候方便查看</div><div class="line"> */</div><div class="line">- (NSString *)description</div><div class="line">&#123;</div><div class="line">    return [NSString stringWithFormat:@&quot;%@&quot;,[self getObjectData:self]];</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line">#pragma mark == Copying协议</div><div class="line">- (id)copyWithZone:(NSZone *)zone&#123;</div><div class="line">    PersonModel *copy = [[PersonModel alloc] init];</div><div class="line">    </div><div class="line">    if (copy) &#123;</div><div class="line">        </div><div class="line">        copy.name = [self.name copyWithZone:zone];</div><div class="line">        copy.age = self.age;</div><div class="line">        copy.array = [self.array copyWithZone:zone];</div><div class="line">    &#125;</div><div class="line">    return copy;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (id)mutableCopyWithZone:(NSZone *)zone</div><div class="line">&#123;</div><div class="line">    PersonModel *copy = [[PersonModel alloc] init];</div><div class="line">    </div><div class="line">    if (copy) &#123;</div><div class="line">        </div><div class="line">        copy.name = [self.name mutableCopyWithZone:zone];</div><div class="line">        copy.age = self.age;</div><div class="line">        copy.array = [self.array mutableCopyWithZone:zone];</div><div class="line">    &#125;</div><div class="line">    return copy;</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line">#pragma mark == 深拷贝 </div><div class="line">//（如果没有集合类型，可以不用执行）</div><div class="line">- (id)GLDeepCopy</div><div class="line">&#123;</div><div class="line">    PersonModel *personModel = [[PersonModel alloc] init];</div><div class="line">    personModel.age = self.age;</div><div class="line">    personModel.name = [self.name copy];</div><div class="line">    personModel.array = [self.array GLDeepCopy];</div><div class="line">    </div><div class="line">    return personModel;</div><div class="line">&#125;</div><div class="line"></div><div class="line">#pragma mark == 转换</div><div class="line"></div><div class="line">/**</div><div class="line"> 将对象转为NSDictionary</div><div class="line"> </div><div class="line"> @param obj 对象</div><div class="line"> @return 返回的NSDictionary</div><div class="line"> */</div><div class="line">- (NSDictionary*)getObjectData:(id)obj</div><div class="line">&#123;</div><div class="line">    NSMutableDictionary *dic = [NSMutableDictionary dictionary];</div><div class="line">    unsigned int propsCount;</div><div class="line">    objc_property_t *props = class_copyPropertyList([obj class], &amp;propsCount);</div><div class="line">    for(int i = 0;i &lt; propsCount; i++)</div><div class="line">    &#123;</div><div class="line">        objc_property_t prop = props[i];</div><div class="line">        </div><div class="line">        NSString *propName = [NSString stringWithUTF8String:property_getName(prop)];</div><div class="line">        id value = [obj valueForKey:propName];</div><div class="line">        if(value == nil)</div><div class="line">        &#123;</div><div class="line">            value = [NSNull null];</div><div class="line">        &#125;</div><div class="line">        else</div><div class="line">        &#123;</div><div class="line">            value = [self getObjectInternal:value];</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        [dic setObject:value forKey:propName];</div><div class="line">    &#125;</div><div class="line">    return dic;</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line">/**</div><div class="line"> 针对对象里面属性的不同属性 进行转换</div><div class="line"> </div><div class="line"> @param obj 对象</div><div class="line"> @return 返回</div><div class="line"> */</div><div class="line">- (id)getObjectInternal:(id)obj</div><div class="line">&#123;</div><div class="line">    if([obj isKindOfClass:[NSString class]]</div><div class="line">       || [obj isKindOfClass:[NSNumber class]]</div><div class="line">       || [obj isKindOfClass:[NSNull class]])</div><div class="line">    &#123;</div><div class="line">        return obj;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    if([obj isKindOfClass:[NSArray class]])</div><div class="line">    &#123;</div><div class="line">        NSArray *objarr = obj;</div><div class="line">        NSMutableArray *arr = [NSMutableArray arrayWithCapacity:objarr.count];</div><div class="line">        for(int i = 0;i &lt; objarr.count; i++)</div><div class="line">        &#123;</div><div class="line">            [arr setObject:[self getObjectInternal:[objarr objectAtIndex:i]] atIndexedSubscript:i];</div><div class="line">        &#125;</div><div class="line">        return arr;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    if([obj isKindOfClass:[NSDictionary class]])</div><div class="line">    &#123;</div><div class="line">        NSDictionary *objdic = obj;</div><div class="line">        NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithCapacity:[objdic count]];</div><div class="line">        for(NSString *key in objdic.allKeys)</div><div class="line">        &#123;</div><div class="line">            [dic setObject:[self getObjectInternal:[objdic objectForKey:key]] forKey:key];</div><div class="line">        &#125;</div><div class="line">        return dic;</div><div class="line">    &#125;</div><div class="line">    return [self getObjectData:obj];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>在上面的自定义模型中，我们包含<code>NSMutableArray</code>，而且我们希望实现<code>完全拷贝</code>，所以实现了<code>GLDeepCopy</code>，并且针对其中的<code>NSMutableArray</code>调用了<code>Category</code>中的 <code>GLDeepCopy</code>方法，在看另一个模型</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line">#import &lt;Foundation/Foundation.h&gt;</div><div class="line"></div><div class="line">@interface Anima : NSObject&lt;NSCopying&gt;</div><div class="line"></div><div class="line">@property (nonatomic,copy) NSString *address;</div><div class="line"></div><div class="line">@end</div><div class="line"></div><div class="line"></div><div class="line">#import &quot;Anima.h&quot;</div><div class="line"></div><div class="line">@interface Anima ()</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">@end</div><div class="line"></div><div class="line">@implementation Anima</div><div class="line"></div><div class="line">- (id)copyWithZone:(NSZone *)zone&#123;</div><div class="line">    Anima *copy = [[Anima alloc] init];</div><div class="line">    </div><div class="line">    if (copy) &#123;</div><div class="line">        copy.address = [self.address copyWithZone:zone];</div><div class="line">    &#125;</div><div class="line">    return copy;</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line">@end</div></pre></td></tr></table></figure>
+<p>由于该模型，没有包含集合类型，所以我只是简单的实现了<code>NSCopying</code>协议，下面来看使用情况</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line">//测试加入数组中  对数组进行拷贝</div><div class="line">PersonModel *new_PersonModel = [[PersonModel alloc] init];</div><div class="line">new_PersonModel.name = @&quot;gaogaogao&quot;;</div><div class="line">new_PersonModel.age = 20;</div><div class="line">Anima *anima = [[Anima alloc] init];</div><div class="line">anima.address = @&quot;成都&quot;;</div><div class="line">new_PersonModel.array = [NSMutableArray arrayWithObject:anima];</div><div class="line">[new_PersonModel.array addObject:@[@&quot;1&quot;,@&quot;2&quot;,@&quot;3&quot;]];</div><div class="line"></div><div class="line">    </div><div class="line">NSArray *array = [NSArray arrayWithObject:new_PersonModel];</div><div class="line">NSArray *copyArray = [array copy];</div><div class="line">NSMutableArray *mutableCopyArray = [NSMutableArray arrayWithArray:[array GLDeepCopy]];//[[NSMutableArray alloc] initWithArray:array copyItems:YES];//[array mutableCopy];//</div><div class="line"></div><div class="line">NSLog(@&quot; 打印信息array:%p+%@ + %p\ncopyArray:%p+%@ + %p\nmutableCopyArray:%p+%@ + %p&quot;,array,array,array[0],copyArray,copyArray,copyArray[0],mutableCopyArray,mutableCopyArray,mutableCopyArray[0]);</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">//修改数组中的内容</div><div class="line">PersonModel *personModel_array = array[0];</div><div class="line">personModel_array.name = @&quot;gao_修改&quot;;</div><div class="line">personModel_array.age = 24;</div><div class="line"></div><div class="line">Anima *anima_model = personModel_array.array[0];</div><div class="line">anima_model.address = @&quot;阆中&quot;;</div><div class="line"></div><div class="line">//获取深拷贝数组中的model中数组中的model</div><div class="line">PersonModel *personModel_mutable_copy_array = mutableCopyArray[0];</div><div class="line">Anima *anima_model_mutable_copy = personModel_mutable_copy_array.array[0];</div><div class="line"></div><div class="line">NSLog(@&quot; 打印信息获取深拷贝数组中的model中数组中的model地址:\n原数组中的PersonModel中Array中的Anima：%p \n 原数组中的PersonModel中Array中的非Anima对象%p\n++ 深拷贝数组中的PersonModel中Array中的Anima：%p \n 深拷贝数组中的PersonModel：%p \n+ 深拷贝数组中的PersonModel中Array中的非Anima对象%p&quot;,anima_model,personModel_array.array[1],anima_model_mutable_copy,personModel_mutable_copy_array,personModel_mutable_copy_array.array[1]);</div><div class="line"></div><div class="line"></div><div class="line">NSLog(@&quot; 打印信息修改后array:%p+%@\ncopyArray:%p+%@\nmutableCopyArray:%p+%@&quot;,array,array,copyArray,copyArray,mutableCopyArray,mutableCopyArray);</div></pre></td></tr></table></figure>
+<p>打印信息</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2525768-cf685ac29fed1cdf.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="完全拷贝.png"></p>
+<p>打印信息的排版有点乱，这不是重点，通过观察，我们可以发现数组中模型中的数组中的模型都是进行了<code>完全拷贝</code>，看最后一行打印信息，前面两个数组中的<code>address</code>都和第一行中的不一样，因为我们把地址改成了<code>阆中</code>，而最后一个数组中的<code>address</code>却还保持着之前的值，这说明，我们是完成了<code>完全拷贝的</code></p>
+<p>上面我用的是<code>NSArray</code>进行的举例，而其他集合类型<code>NSDictionary</code>和<code>NSSet</code>的<code>Category</code>方法也大同小异</p>
+<p>相关代码，请移步<a href="https://github.com/gao211326/GLDeepCopy" target="_blank" rel="external">demo</a>如果觉得还可以，可以给个<code>star</code>哦，不甚感激~</p>
+</the></excerpt>
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2017/08/21/iOS 关于copy与mutableCopy浅析/">iOS 关于copy与mutableCopy浅析</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">One Dream</a></p>
+        <p><span>发布时间:</span>2017-08-21, 00:00:00</p>
+        <p><span>最后更新:</span>2017-08-21, 10:47:28</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2017/08/21/iOS 关于copy与mutableCopy浅析/" title="iOS 关于copy与mutableCopy浅析">http://yoursite.com/2017/08/21/iOS 关于copy与mutableCopy浅析/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/2017/08/21/iOS 关于copy与mutableCopy浅析/　　作者: One Dream" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2017/08/15/iOS __attribute__那点小事/">
+                    iOS __attribute__那点小事
+                </a>
+            </div>
+        
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#前记"><span class="toc-number">1.</span> <span class="toc-text">前记</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#copy-、mutableCopy"><span class="toc-number">2.</span> <span class="toc-text">copy 、mutableCopy</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#集合的完全深拷贝"><span class="toc-number">3.</span> <span class="toc-text">集合的完全深拷贝</span></a></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"iOS 关于copy与mutableCopy浅析　| 半笑半醉间　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2017/08/15/iOS __attribute__那点小事/" title="上一篇: iOS __attribute__那点小事">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/08/21/iOS 关于copy与mutableCopy浅析/">iOS 关于copy与mutableCopy浅析</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/15/iOS __attribute__那点小事/">iOS __attribute__那点小事</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/03/Go 语言学习之struct/">Go 语言学习之struct</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/12/Go 语言学习之函数/">Go 语言学习之函数</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/06/iOS translucent引发的那点小事/">iOS translucent引发的那点小事</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/27/iOS 自定义键盘/">iOS 自定义键盘</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/25/Go 语言学习之流程控制/">Go 语言学习之流程控制</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/23/Go 语言学习之数组 字典/">Go 语言学习之数组 字典</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/22/Go 语言基础之常量 变量/">Go 语言基础之常量 变量</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/19/Go 语言之Mac环境配置/">Go 语言之Mac环境配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/12/iOS CoreImage之滤镜简单使用/">iOS CoreImage之滤镜简单使用</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/24/iOS UIImage常用category/">iOS Quart2D绘图之UIImage简单使用</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/05/iOS自定义转场动画/">iOS 自定义转场动画浅谈</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2016-2017 One Dream
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 4;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>
