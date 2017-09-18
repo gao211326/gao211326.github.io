@@ -15,17 +15,28 @@
 
 
 
-<meta name="description" content="水滴石穿，非一日之功  前言​    在环境变量配置好之后，正式入坑，每一门编程语言都有自己的独特语法，在一番查找资料后，对go的基础语法有一点点了解，下面就来记录记录">
+<meta name="description" content="人之初，性本善。性相近，习相远  最近在学习swift的过程中，准备通过模仿一个app来实战一下，于是我去下载了一个斗鱼直播，不是打广告…..因为模仿嘛，所以就需要获取其中的图片资源，本以为能很顺利的得到，没想到还是遇到了一个小麻烦，兴庆的是还是找到很好的办法来解决，下面就来记录下获取app中图片资源的过程">
 <meta name="keywords">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Go 语言基础之常量 变量">
-<meta property="og:url" content="http://yoursite.com/2017/05/22/Go 语言基础之常量 变量/index.html">
+<meta property="og:title" content="iOS Quart2D绘图之UIImage简单使用">
+<meta property="og:url" content="http://yoursite.com/2017/09/12/iOS提取APP中的图片资源/index.html">
 <meta property="og:site_name" content="半笑半醉间">
-<meta property="og:description" content="水滴石穿，非一日之功  前言​    在环境变量配置好之后，正式入坑，每一门编程语言都有自己的独特语法，在一番查找资料后，对go的基础语法有一点点了解，下面就来记录记录">
-<meta property="og:updated_time" content="2017-05-22T08:21:21.000Z">
+<meta property="og:description" content="人之初，性本善。性相近，习相远  最近在学习swift的过程中，准备通过模仿一个app来实战一下，于是我去下载了一个斗鱼直播，不是打广告…..因为模仿嘛，所以就需要获取其中的图片资源，本以为能很顺利的得到，没想到还是遇到了一个小麻烦，兴庆的是还是找到很好的办法来解决，下面就来记录下获取app中图片资源的过程">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2525768-b13aac54c0d982fd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2525768-9af8b34077702aa7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2525768-ad89dff07f286015.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2525768-b1119d5c52c4497d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2525768-9ce4c165375fb5b1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2525768-dfee5afab6bade53.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2525768-f9d4a1d0754a65f8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2525768-126bbda9fc202eb3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2525768-c70947e9e9508d7f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2525768-877b614cda46f9f7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2017-09-18T02:09:21.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Go 语言基础之常量 变量">
-<meta name="twitter:description" content="水滴石穿，非一日之功  前言​    在环境变量配置好之后，正式入坑，每一门编程语言都有自己的独特语法，在一番查找资料后，对go的基础语法有一点点了解，下面就来记录记录">
+<meta name="twitter:title" content="iOS Quart2D绘图之UIImage简单使用">
+<meta name="twitter:description" content="人之初，性本善。性相近，习相远  最近在学习swift的过程中，准备通过模仿一个app来实战一下，于是我去下载了一个斗鱼直播，不是打广告…..因为模仿嘛，所以就需要获取其中的图片资源，本以为能很顺利的得到，没想到还是遇到了一个小麻烦，兴庆的是还是找到很好的办法来解决，下面就来记录下获取app中图片资源的过程">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/2525768-b13aac54c0d982fd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -57,7 +68,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>Go 语言基础之常量 变量 | 半笑半醉间</title>
+<title>iOS Quart2D绘图之UIImage简单使用 | 半笑半醉间</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -257,11 +268,11 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap"><article id="post-Go 语言基础之常量 变量" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-iOS提取APP中的图片资源" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2017/05/22/Go 语言基础之常量 变量/" class="article-date">
-      <time datetime="2017-05-21T16:00:00.000Z" itemprop="datePublished">2017-05-22</time>
+      <a href="/2017/09/12/iOS提取APP中的图片资源/" class="article-date">
+      <time datetime="2017-09-11T16:00:00.000Z" itemprop="datePublished">2017-09-12</time>
 </a>
 
 
@@ -276,7 +287,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      Go 语言基础之常量 变量
+      iOS Quart2D绘图之UIImage简单使用
     </h1>
   
 
@@ -296,49 +307,31 @@
         <excerpt in="" index="" |="" 首页摘要="">
 
 <blockquote>
-<p>水滴石穿，非一日之功</p>
+<p>人之初，性本善。性相近，习相远</p>
 </blockquote>
-<h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>​    在环境变量配置好之后，正式入坑，每一门编程语言都有自己的独特语法，在一番查找资料后，对<code>go</code>的基础语法有一点点了解，下面就来记录记录</p>
+<p>最近在学习<code>swift</code>的过程中，准备通过模仿一个<code>app</code>来实战一下，于是我去下载了一个斗鱼直播，不是打广告…..因为模仿嘛，所以就需要获取其中的图片资源，本以为能很顺利的得到，没想到还是遇到了一个小麻烦，兴庆的是还是找到很好的办法来解决，下面就来记录下获取<code>app</code>中图片资源的过程</p>
 <a id="more"></a>
 <the rest="" of="" contents="" |="" 余下全文="">
 
-
-
-
-<h5 id="变量定义"><a href="#变量定义" class="headerlink" title="变量定义"></a>变量定义</h5><p>在<code>go</code>中变量的定义与<code>Objective-C</code>或者是<code>C</code>中的定义都不一样，这里引入了关键字<code>var</code>，倒是和<code>swift</code>有点类似，并且都是将变量的类型放在变量名后面</p>
-<p>如以下的定义</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">//定义一个float64类型的名为&quot;width&quot;的变量</div><div class="line">var width float64</div></pre></td></tr></table></figure>
-<p>当然我们也可以进行多变量的声明</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">//多变量声明 声明三个string类型的变量</div><div class="line">var q,w,e  string</div></pre></td></tr></table></figure>
-<p>定义变量并初始化赋值</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">var width float64 = 100.0</div></pre></td></tr></table></figure>
-<p>当然我们也可以同时初始化几个变量</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">var q,w,e  string = &quot;dd&quot;,&quot;12&quot;,&quot;300&quot;</div></pre></td></tr></table></figure>
-<p>如果觉得这样复杂的话 我们还可以不定义类型 直接像下面这样来定义</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">//不声明类型 自动识别 为int类型</div><div class="line">var dc = 234</div><div class="line">//后面三种类型需保持一致</div><div class="line">var q,w,e = &quot;dd&quot;,&quot;12&quot;,&quot;300&quot;</div></pre></td></tr></table></figure>
-<p>如果还觉得麻烦的话，那么只能….下面这样了，连<code>var</code>都省了</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">//简短声明 这是使用变量的首选形式，但是它只能被用在函数体内，而不可以用于全局变量的声明与赋值</div><div class="line">a := &quot;1234&quot;</div><div class="line"></div><div class="line">//多变量声明</div><div class="line">var q,w,e  string</div><div class="line">q,w,e = &quot;opop&quot;,&quot;ddd&quot;,&quot;cmdd&quot;</div><div class="line">//直接使用简短声明</div><div class="line">o,p,k := q,w,e</div></pre></td></tr></table></figure>
-<p><code>:=</code>这个符号直接取代了<code>var</code>和<code>type</code>,这种形式叫做简短声明。不过它有一个限制，那就是它只能用在函数内部；在函数外部使用则会无法编译通过，所以一般用<code>var</code>方式来定义全局变量</p>
-<p>不可以再次对相同名称的变量使用初始化声明，比如上面的字符串<code>o</code>我们不能再像下面这样</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">//o := &quot;gkl&quot; //错误</div><div class="line">o = &quot;gkl&quot;//可以的</div></pre></td></tr></table></figure>
-<p>全局变量，关于全局变量，我们一般使用<code>var</code>在函数体外来定义</p>
-<p>如下</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">package hellotest</div><div class="line"></div><div class="line">//定义全局变量</div><div class="line">var str string;</div><div class="line">var width float64;</div><div class="line">var height float64 = 123;</div></pre></td></tr></table></figure>
-<p>关于全局变量和局部变量，在<code>go</code>中与其他语言有点不一样的就是，如果局部变量没有被使用，那么就会报错，而全局变量不会报错，所以定义全局变量的时候，一定要使用</p>
-<p>对于全局变量，我们还可以使用<code>()</code>的方式，来将其统一管理起来，如下</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">//多个全局变量 可以用括号的方式来统一定义</div><div class="line">var (</div><div class="line">	str string;</div><div class="line">	width float64;</div><div class="line">	height float64 = 123;</div><div class="line">)</div></pre></td></tr></table></figure>
-<p>这和我们导入多个头文件挺类似的，个人感觉还不错，至少美观些，哈哈</p>
-<h5 id="常量定义"><a href="#常量定义" class="headerlink" title="常量定义"></a>常量定义</h5><p>常量的话，还是和其他语言差不多，都是使用<code>const</code>关键字来定义</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">const Pi  = 3.1415926</div><div class="line">const MaxArea float64  = 100992.0</div><div class="line">const name  = &quot;Go编程&quot;</div></pre></td></tr></table></figure>
-<p>可以省略也可以添加常量的类型，当然我们也可以使用<code>()</code>来将所有的常量包起来</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">//常量必须赋值</div><div class="line">const (</div><div class="line">	minus int = 100</div><div class="line">	plus int = 200</div><div class="line">	add float64 = 300</div><div class="line">)</div></pre></td></tr></table></figure>
-<h5 id="枚举"><a href="#枚举" class="headerlink" title="枚举"></a>枚举</h5><p>枚举的话，与其他语言又不一样了，<code>go</code>中没有<code>enum</code>这么一个关键字来定义，而是依靠<code>const</code>和<code>iota</code></p>
-<p>来定义枚举</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">//枚举  iota默认为0</div><div class="line">const (</div><div class="line">	first  = iota;//默认=0</div><div class="line">	second</div><div class="line">	three//=2</div><div class="line">	four</div><div class="line">)</div></pre></td></tr></table></figure>
-<p><code>iota</code>定义的值默认为0，后面每一行的值加一，比如<code>three</code>就为2了。</p>
-<p>如果声明多个常量时，都在同一行，那么值一样</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">//枚举  iota默认为0</div><div class="line">const (</div><div class="line">	first  = iota;//默认=0</div><div class="line">	second</div><div class="line">	three//=2</div><div class="line">	four = iota</div><div class="line">	five,six,seven = iota,iota,iota//都为4</div><div class="line">)</div></pre></td></tr></table></figure>
-<p>学习的道路是曲折的，如果有什么问题，还望大家多多指教</p>
+<h5 id="1、下载APP、"><a href="#1、下载APP、" class="headerlink" title="1、下载APP、"></a>1、下载APP、</h5><p>通过<code>iTunes</code>在商店中搜索你需要的<code>app</code>，如下图</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2525768-b13aac54c0d982fd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="search.png"><br>然后进行下载</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2525768-9af8b34077702aa7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="download.png"></p>
+<h5 id="2、打开ipa包，查看资源文件"><a href="#2、打开ipa包，查看资源文件" class="headerlink" title="2、打开ipa包，查看资源文件"></a>2、打开ipa包，查看资源文件</h5><p>在<code>iTunes</code>中的应用-&gt;<code>iPhone</code> 应用中，我们找到刚刚下载的<code>app</code>，然后右键点击在<code>Finder</code>中显示，然后选择<code>ipa</code>包，通过解压的方式，将其解压</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2525768-ad89dff07f286015.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="show.png"></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2525768-b1119d5c52c4497d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="unzip.png"></p>
+<p>最后我们就能得到一个文件夹，点击该文件夹，选择<code>Payload</code>文件，然后我们会看到如下的文件</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2525768-9ce4c165375fb5b1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="payload.png"><br>点击该文件，右键选择显示包内容，就可以进入里面看到资源文件了。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2525768-dfee5afab6bade53.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="ziyuan.png"></p>
+<h5 id="3、如何获取Assets-car中的图片资源"><a href="#3、如何获取Assets-car中的图片资源" class="headerlink" title="3、如何获取Assets.car中的图片资源"></a>3、如何获取<code>Assets.car</code>中的图片资源</h5><p>在上面操作后，进入到资源文件文件夹中，另我大失所望的是居然没有我想要的所有图片资源，只要很少的一些，比如<code>logo</code>和引导页面的图片，但是我却发现了一个我们经常用的，那就是<code>Assets.xcassets</code>打包后生成的<code>Assets.car</code>文件，由于苹果公司不提供直接查看<code>Assets.car</code>的工具，所以查了下资料，很快就找到了<a href="https://github.com/steventroughtonsmith/cartool" target="_blank" rel="external">cartool</a>这么一个工具</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2525768-f9d4a1d0754a65f8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="asset.png"></p>
+<p>通过<code>cartool</code>工具，我们便能解析出图片资源<br>下载方法：通过终端<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git clone https://github.com/steventroughtonsmith/cartool</div></pre></td></tr></table></figure></p>
+<p>将下载下来的工程打开，大概就是这样</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2525768-126bbda9fc202eb3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="cartool.png"></p>
+<p>打开该工程后，就进入最重要的一步了，通过下面的步骤<br><code>product</code>–&gt;<code>scheme</code>–&gt;<code>edit scheme</code></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2525768-c70947e9e9508d7f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="turn.png"></p>
+<p>耶！通过该步骤后，我们就可以去转化后的路径看到我们想要的图片了。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2525768-877b614cda46f9f7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="over.png"></p>
+<p>过程很简单，在这里简单记录一下，希望能帮到需要用的人☺</p>
 </the></excerpt>
       
     </div>
@@ -347,13 +340,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2017/05/22/Go 语言基础之常量 变量/">Go 语言基础之常量 变量</a></p>
+        <p><span>本文标题:</span><a href="/2017/09/12/iOS提取APP中的图片资源/">iOS Quart2D绘图之UIImage简单使用</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">One Dream</a></p>
-        <p><span>发布时间:</span>2017-05-22, 00:00:00</p>
-        <p><span>最后更新:</span>2017-05-22, 16:21:21</p>
+        <p><span>发布时间:</span>2017-09-12, 00:00:00</p>
+        <p><span>最后更新:</span>2017-09-18, 10:09:21</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2017/05/22/Go 语言基础之常量 变量/" title="Go 语言基础之常量 变量">http://yoursite.com/2017/05/22/Go 语言基础之常量 变量/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/2017/05/22/Go 语言基础之常量 变量/　　作者: One Dream" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2017/09/12/iOS提取APP中的图片资源/" title="iOS Quart2D绘图之UIImage简单使用">http://yoursite.com/2017/09/12/iOS提取APP中的图片资源/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/2017/09/12/iOS提取APP中的图片资源/　　作者: One Dream" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
@@ -366,17 +359,11 @@
     <nav id="article-nav">
         
             <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2017/05/19/Go 语言之Mac环境配置/">
-                    Go 语言之Mac环境配置
+                <a href="/2017/08/21/iOS 关于copy与mutableCopy浅析/">
+                    iOS 关于copy与mutableCopy浅析
                 </a>
             </div>
         
-        
-            <div id="article-nav-older" class="article-nav-title">
-                <a href="/2017/05/23/Go 语言学习之数组 字典/">
-                    Go 语言学习之数组 字典
-                </a>
-            </div>
         
     </nav>
 
@@ -386,7 +373,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#变量定义"><span class="toc-number">1.1.</span> <span class="toc-text">变量定义</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#常量定义"><span class="toc-number">1.2.</span> <span class="toc-text">常量定义</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#枚举"><span class="toc-number">1.3.</span> <span class="toc-text">枚举</span></a></li></ol></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#1、下载APP、"><span class="toc-number">1.</span> <span class="toc-text">1、下载APP、</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2、打开ipa包，查看资源文件"><span class="toc-number">2.</span> <span class="toc-text">2、打开ipa包，查看资源文件</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3、如何获取Assets-car中的图片资源"><span class="toc-number">3.</span> <span class="toc-text">3、如何获取Assets.car中的图片资源</span></a></li></ol>
         
     </div>
     <style>
@@ -422,7 +409,7 @@
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"Go 语言基础之常量 变量　| 半笑半醉间　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"iOS Quart2D绘图之UIImage简单使用　| 半笑半醉间　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -442,7 +429,7 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2017/05/19/Go 语言之Mac环境配置/" title="上一篇: Go 语言之Mac环境配置">
+            <a href="/2017/08/21/iOS 关于copy与mutableCopy浅析/" title="上一篇: iOS 关于copy与mutableCopy浅析">
                 <i class="fa fa-angle-left"></i>
             </a>
         
@@ -450,9 +437,7 @@
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2017/05/23/Go 语言学习之数组 字典/" title="下一篇: Go 语言学习之数组 字典">
-                <i class="fa fa-angle-right"></i>
-            </a>
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
         
     </div>
 
