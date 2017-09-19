@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="One Dream" />
+
+
+
+<meta name="description" content="教之道  贵以专  昔孟母  择邻处  子不学  断机杼  随着苹果新品iPhone x的发布，正式版iOS 11也就马上要推送过来了，在正式版本到来之前比较好奇，于是就去下载了个Beat版本刷了下，感觉还不错。WWDC 2017推出了机器学习框架和ARKit两个比较有意思的东西，本想先来学习学习AR，无奈手机刚好不在版本中…..真受伤，只好来学习学习机器学习了，下面进入正题吧。">
+<meta name="keywords">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS Core ML与Vision初识">
+<meta property="og:url" content="http://yoursite.com/2017/09/12/iOS Core ML与Vision初识 /index.html">
+<meta property="og:site_name" content="半笑半醉间">
+<meta property="og:description" content="教之道  贵以专  昔孟母  择邻处  子不学  断机杼  随着苹果新品iPhone x的发布，正式版iOS 11也就马上要推送过来了，在正式版本到来之前比较好奇，于是就去下载了个Beat版本刷了下，感觉还不错。WWDC 2017推出了机器学习框架和ARKit两个比较有意思的东西，本想先来学习学习AR，无奈手机刚好不在版本中…..真受伤，只好来学习学习机器学习了，下面进入正题吧。">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2525768-263e92bd07bfc4a2.gif?imageMogr2/auto-orient/strip">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2525768-0e528b543f6d2943.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2525768-24e0331344eb6ee7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2525768-1b9f27497dd5a056.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2525768-ced1e1c93abdde7b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2525768-c6c64b64958884d0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2525768-0969d0341c49f19b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2525768-fe85f2845b88f460.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2525768-ab1f2e8c590b6352.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2525768-10eaa8c345b56343.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2525768-0bdcbb1bf60104be.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2525768-d85710a9dac6055e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2017-09-19T02:01:39.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iOS Core ML与Vision初识">
+<meta name="twitter:description" content="教之道  贵以专  昔孟母  择邻处  子不学  断机杼  随着苹果新品iPhone x的发布，正式版iOS 11也就马上要推送过来了，在正式版本到来之前比较好奇，于是就去下载了个Beat版本刷了下，感觉还不错。WWDC 2017推出了机器学习框架和ARKit两个比较有意思的东西，本想先来学习学习AR，无奈手机刚好不在版本中…..真受伤，只好来学习学习机器学习了，下面进入正题吧。">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/2525768-263e92bd07bfc4a2.gif?imageMogr2/auto-orient/strip">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="半笑半醉间" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/favicon.png">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/orange/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>iOS Core ML与Vision初识 | 半笑半醉间</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: undefined
+    }
+</script>
+
+
+    <script> yiliaConfig.jquery_ui = [false]; </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/avatar.png" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">One Dream</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">人生为棋，我愿为卒，行动虽慢，可谁曾见我后退半步</p>
+        
+
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa GitHub" href="https://github.com/gao211326" title="GitHub"></a>
+                            
+                                <a class="fa 简书" href="http://www.jianshu.com/u/d772826c5def" title="简书"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://hexo.io">Hexo</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://pages.github.com/">GitHub</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://moxfive.xyz/">MOxFIVE</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">专注于前端</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">One Dream</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/avatar.png" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">One Dream</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">人生为棋，我愿为卒，行动虽慢，可谁曾见我后退半步</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa GitHub" target="_blank" href="https://github.com/gao211326" title="GitHub"></a>
+                            
+                                <a class="fa 简书" target="_blank" href="http://www.jianshu.com/u/d772826c5def" title="简书"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-iOS Core ML与Vision初识 " class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/09/12/iOS Core ML与Vision初识 /" class="article-date">
+      <time datetime="2017-09-11T16:00:00.000Z" itemprop="datePublished">2017-09-12</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      iOS Core ML与Vision初识
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+
+        
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <excerpt in="" index="" |="" 首页摘要="">
+
+<blockquote>
+<p>教之道  贵以专  昔孟母  择邻处  子不学  断机杼</p>
+</blockquote>
+<p>随着苹果新品<code>iPhone x</code>的发布，正式版<code>iOS 11</code>也就马上要推送过来了，在正式版本到来之前比较好奇，于是就去下载了个<code>Beat</code>版本刷了下，感觉还不错。<code>WWDC 2017</code>推出了机器学习框架和<code>ARKit</code>两个比较有意思的东西，本想先来学习学习<code>AR</code>，无奈手机刚好不在版本中…..真受伤，只好来学习学习机器学习了，下面进入正题吧。</p>
+<a id="more"></a>
+<the rest="" of="" contents="" |="" 余下全文="">
+
+<p>先看看大概效果吧</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2525768-263e92bd07bfc4a2.gif?imageMogr2/auto-orient/strip" alt="coreml1.gif"></p>
+<h5 id="什么是机器学习？"><a href="#什么是机器学习？" class="headerlink" title="什么是机器学习？"></a>什么是机器学习？</h5><p>在<code>Core ML</code>出现之前，机器学习应该还是比较难学的，然而这一出现，直接大大降低了学习的门槛，可见苹果在这方面花的精力还是不少。那么机器学习到底是什么呢？简单来说，就是用大量的数据去采集物体的特性特征，将其装入模型，当我们用的时候，可以通过查询模型，来快速区别出当前物体属于什么类，有什么特性等等。而<code>Core ML</code>实际做的事情就是使用事先训练好的模型，在使用时，对相关模块进行预测，最终返回结果，这种在本地进行预测的方式可以不依赖网络，也可以降低处理时间。可以这么说，<code>Core ML</code> 让我们更容易在 <code>App</code>中使用训练过的模型，而<code>Vision</code>让我们轻松访问苹果的模型，用于面部检测、面部特征点、文字、矩形、条形码和物体。</p>
+<h5 id="Core-ML-和-Vision使用"><a href="#Core-ML-和-Vision使用" class="headerlink" title="Core ML 和  Vision使用"></a>Core ML 和  Vision使用</h5><p>在使用之前，你必须要保证你的环境是在<code>xcode 9.0</code> + <code>iOS 11</code>，然后你可以去<a href="https://developer.apple.com/machine-learning/" target="_blank" rel="external">官网</a>下载<code>Core ML</code>模型，目前已经有6种模型了，分别如下</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2525768-0e528b543f6d2943.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="1.png"></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2525768-24e0331344eb6ee7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="2.png"></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2525768-1b9f27497dd5a056.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="3.png"></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2525768-ced1e1c93abdde7b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="4.png"></p>
+<p>从其介绍我们可以看出分别的功能<br><code>MobileNet</code>:大意是从一组1000个类别中检测出图像中的占主导地位的物体，如树、动物、食物、车辆、人等等。<br><code>SqueezeNet</code>：同上<br><code>Places205-GoogLeNet</code>:大意是从205个类别中检测到图像的场景，如机场终端、卧室、森林、海岸等。<br><code>ResNet50</code>：大意是从一组1000个类别中检测出图像中的占主导地位的物体，如树、动物、食物、车辆、人等等<br><code>Inception v3</code>:同上<br><code>VGG16</code>：同上</p>
+<p>当然这都是苹果提供的模型，如果你有自己的模型的话，可以通过工具将其转换，<a href="https://developer.apple.com/documentation/coreml/converting_trained_models_to_core_ml" target="_blank" rel="external">参考文档</a><br>在了解上面的模型功能后，我们可以选择性的对其进行下载，目前我这里下载了四种模型</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2525768-c6c64b64958884d0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="model.png"><br>将下载好的模型，直接拖入工程中，这里需要注意的问题是，需要检查下</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2525768-0969d0341c49f19b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="check.png"><br>这个位置是否有该模型，我不知道是不是我这个<code>xcode</code>版本的<code>bug</code>，当我拖入的时候，后面并没有，这个时候就需要手动进行添加一次，在这之后，我们还需要检查下模型类是否生成，点击你需要用的模型，然后查看下面位置是否有箭头</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2525768-fe85f2845b88f460.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="modelOk.png"><br>当这个位置箭头生成好后，我们就可以进行代码的编写了</p>
+<h5 id="代码部分"><a href="#代码部分" class="headerlink" title="代码部分"></a>代码部分</h5><p>在写代码之前，我们还需要了解一些东西，那就是模型生成的类中都有什么方法，这里我们就以<code>Resnet50</code>为类，在<code>ViewController</code>中导入头文件<code>#import &quot;Resnet50.h&quot;</code>，当我们在输入<code>Res</code>的时候，就会自动补全，导入其它模型的时候，也可以这么来模仿。在进入<code>Resnet50</code>头文件中，我们可以看到其中分为三个类，分别为：<code>Resnet50Input</code>、<code>Resnet50Output</code>、<code>Resnet50</code>，看其意思也能猜到，分别为输入、输出、和主要使用类。<br>在<code>Resnet50</code>中，我们可以看到三个方法，分别如下:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">- (nullable instancetype)initWithContentsOfURL:(NSURL *)url error:(NSError * _Nullable * _Nullable)error;</div><div class="line"></div><div class="line">/**</div><div class="line">    Make a prediction using the standard interface</div><div class="line">    @param input an instance of Resnet50Input to predict from</div><div class="line">    @param error If an error occurs, upon return contains an NSError object that describes the problem. If you are not interested in possible errors, pass in NULL.</div><div class="line">    @return the prediction as Resnet50Output</div><div class="line">*/</div><div class="line">- (nullable Resnet50Output *)predictionFromFeatures:(Resnet50Input *)input error:(NSError * _Nullable * _Nullable)error;</div><div class="line"></div><div class="line">/**</div><div class="line">    Make a prediction using the convenience interface</div><div class="line">    @param image Input image of scene to be classified as color (kCVPixelFormatType_32BGRA) image buffer, 224 pixels wide by 224 pixels high:</div><div class="line">    @param error If an error occurs, upon return contains an NSError object that describes the problem. If you are not interested in possible errors, pass in NULL.</div><div class="line">    @return the prediction as Resnet50Output</div><div class="line">*/</div><div class="line">- (nullable Resnet50Output *)predictionFromImage:(CVPixelBufferRef)image error:(NSError * _Nullable * _Nullable)error;</div></pre></td></tr></table></figure></p>
+<p>第一个应该是初始化方法，后面两个应该是输出对象的方法，看到这里，不由的马上开始动手了。都说心急吃不了热豆腐，果然是这样，后面遇到一堆堆坑，容我慢慢道来。</p>
+<p>一开始我的初始化方法是这样的<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Resnet50* resnet50 = [[Resnet50 alloc] initWithContentsOfURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@&quot;Resnet50&quot; ofType:@&quot;mlmodel&quot;]] error:nil];</div></pre></td></tr></table></figure></p>
+<p>咋一看，恩，应该是相当的<code>perfect</code>，然而现实是残酷的，出意外的崩溃了…<br>日志如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Terminating app due to uncaught exception &apos;NSInvalidArgumentException&apos;, reason: &apos;*** -[NSURL initFileURLWithPath:]: nil string parameter&apos;</div></pre></td></tr></table></figure></p>
+<p>为了找准位置，我决定打个全局断点，信心倍增的开始下一次运行，然而还是一样的效果，气的我，果断直接只写了下面的初始化方法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Resnet50* resnet50 = [[Resnet50 alloc] init];</div></pre></td></tr></table></figure></p>
+<p>这次没有崩溃，而是直接进入了下面的图</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2525768-ab1f2e8c590b6352.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="bb.png"><br>偶然的机会，见识到了<code>Resnet50</code>内部的实现方法，首先映入眼帘的是<code>mlmodelc</code>这个类型….想必大家也明白了吧！但是咋就进入了这个地方了？幸运的是让断点继续执行两次就<code>ok</code>了，于是我大胆猜想，是不是断点引起的，马上取消断点，重新<code>Run</code>，耶，果然正确，一切顺利进行中…此时的我是泪崩的。<br>这一系列经过说明：<br>1、模型的后缀为<code>mlmodelc</code><br>2、调试的时候可以取消断点，方便调试，省的点来点去，当然如果想看看内部实现，可以加上断点</p>
+<p>在这里调通后，就是下一步输出的问题了，上面也看到了有两个方法，一个是根据<code>Resnet50Input</code>一个是根据<code>CVPixelBufferRef</code>，而在<code>Resnet50Input</code>中又有这么一个初始化方法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">- (instancetype)initWithImage:(CVPixelBufferRef)image;</div></pre></td></tr></table></figure></p>
+<p>看来这个<code>CVPixelBufferRef</code>是必不可少的了<br>关于这个，我在网上找了一个方法，方法如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div></pre></td><td class="code"><pre><div class="line">- (CVPixelBufferRef)pixelBufferFromCGImage:(CGImageRef)image&#123;</div><div class="line">    </div><div class="line">    NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:</div><div class="line">                             [NSNumber numberWithBool:YES], kCVPixelBufferCGImageCompatibilityKey,</div><div class="line">                             [NSNumber numberWithBool:YES], kCVPixelBufferCGBitmapContextCompatibilityKey,</div><div class="line">                             nil];</div><div class="line">    </div><div class="line">    CVPixelBufferRef pxbuffer = NULL;</div><div class="line">    </div><div class="line">    CGFloat frameWidth = CGImageGetWidth(image);</div><div class="line">    CGFloat frameHeight = CGImageGetHeight(image);</div><div class="line">    </div><div class="line">    CVReturn status = CVPixelBufferCreate(kCFAllocatorDefault,</div><div class="line">                                          frameWidth,</div><div class="line">                                          frameHeight,</div><div class="line">                                          kCVPixelFormatType_32ARGB,</div><div class="line">                                          (__bridge CFDictionaryRef) options,</div><div class="line">                                          &amp;pxbuffer);</div><div class="line">    </div><div class="line">    NSParameterAssert(status == kCVReturnSuccess &amp;&amp; pxbuffer != NULL);</div><div class="line">    </div><div class="line">    CVPixelBufferLockBaseAddress(pxbuffer, 0);</div><div class="line">    void *pxdata = CVPixelBufferGetBaseAddress(pxbuffer);</div><div class="line">    NSParameterAssert(pxdata != NULL);</div><div class="line">    </div><div class="line">    CGColorSpaceRef rgbColorSpace = CGColorSpaceCreateDeviceRGB();</div><div class="line">    </div><div class="line">    CGContextRef context = CGBitmapContextCreate(pxdata,</div><div class="line">                                                 frameWidth,</div><div class="line">                                                 frameHeight,</div><div class="line">                                                 8,</div><div class="line">                                                 CVPixelBufferGetBytesPerRow(pxbuffer),</div><div class="line">                                                 rgbColorSpace,</div><div class="line">                                                 (CGBitmapInfo)kCGImageAlphaNoneSkipFirst);</div><div class="line">    NSParameterAssert(context);</div><div class="line">    CGContextConcatCTM(context, CGAffineTransformIdentity);</div><div class="line">    CGContextDrawImage(context, CGRectMake(0,</div><div class="line">                                           0,</div><div class="line">                                           frameWidth,</div><div class="line">                                           frameHeight),</div><div class="line">                       image);</div><div class="line">    CGColorSpaceRelease(rgbColorSpace);</div><div class="line">    CGContextRelease(context);</div><div class="line">    </div><div class="line">    CVPixelBufferUnlockBaseAddress(pxbuffer, 0);</div><div class="line">    </div><div class="line">    return pxbuffer;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>在这个方法写完之后，我将之前的方法进行了完善，得到下面的代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">- (NSString*)predictionWithResnet50:(CVPixelBufferRef )buffer</div><div class="line">&#123;</div><div class="line">    Resnet50* resnet50 = [[Resnet50 alloc] init];</div><div class="line">    </div><div class="line">    NSError *predictionError = nil;</div><div class="line">    Resnet50Output *resnet50Output = [resnet50 predictionFromImage:buffer error:&amp;predictionError];</div><div class="line">    if (predictionError) &#123;</div><div class="line">        return predictionError.description;</div><div class="line">    &#125; else &#123;</div><div class="line">        return [NSString stringWithFormat:@&quot;识别结果:%@,匹配率:%.2f&quot;,resnet50Output.classLabel, [[resnet50Output.classLabelProbs valueForKey:resnet50Output.classLabel]floatValue]];</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>怀着激动的心情，添加了<code>imageview</code>和<code>lable</code>，和下面的代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">CGImageRef cgImageRef = [imageview.image CGImage];</div><div class="line">lable.text = [self predictionWithResnet50:[self pixelBufferFromCGImage:cgImageRef]];</div></pre></td></tr></table></figure></p>
+<p><code>Run</code>…</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2525768-10eaa8c345b56343.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="error1.png"></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2525768-0bdcbb1bf60104be.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="error.png"></p>
+<p>看到这个结果，失落的半天不想说话，幸好有日志，仔细看日志，你会发现，好像是图片的大小不对…提示说是要<code>224</code>，好吧，那就改改尺寸看看<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">- (UIImage *)scaleToSize:(CGSize)size image:(UIImage *)image &#123;</div><div class="line">    UIGraphicsBeginImageContext(size);</div><div class="line">    [image drawInRect:CGRectMake(0, 0, size.width, size.height)];</div><div class="line">    UIImage* scaledImage = UIGraphicsGetImageFromCurrentImageContext();</div><div class="line">    UIGraphicsEndImageContext();</div><div class="line">    return scaledImage;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">UIImage *scaledImage = [self scaleToSize:CGSizeMake(224, 224) image:imageview.image];</div><div class="line">CGImageRef cgImageRef = [scaledImage CGImage];</div><div class="line">lable.text = [self predictionWithResnet50:[self pixelBufferFromCGImage:cgImageRef]];</div></pre></td></tr></table></figure>
+<p>再<code>Run</code>…</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2525768-d85710a9dac6055e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="success.png"></p>
+<p>终于成功了!!!，至于结果嘛，还可以算满意，毕竟狼王加内特就是打篮球的 ，哈哈。</p>
+<p>后面我又尝试了其它类，我原以为尺寸都是<code>224</code>，然而在<code>Inceptionv3</code>的时候，提示我是要用<code>229</code>，于是我就仔细查看了下类代码，发现其中已经有这方面的说明….<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">/// Input image to be classified as color (kCVPixelFormatType_32BGRA) image buffer, 299 pixels wide by 299 pixels high</div><div class="line"></div><div class="line">/// Input image of scene to be classified as color (kCVPixelFormatType_32BGRA) image buffer, 224 pixels wide by 224 pixels high</div></pre></td></tr></table></figure></p>
+<p>到此突然想到，在上面，我们查看模型的图中，也有说明，就是<code>inputs</code>相关参数那列。<br>到这里，好像我们还有一个类没有用到，那就是<code>Vision</code>，那么通过<code>Vision</code>又怎么和<code>Core ML</code>来一起实现呢？</p>
+<h5 id="Vision使用"><a href="#Vision使用" class="headerlink" title="Vision使用"></a>Vision使用</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">@interface VNCoreMLModel : NSObject</div><div class="line"></div><div class="line">- (instancetype) init  NS_UNAVAILABLE;</div><div class="line"></div><div class="line">/*!</div><div class="line">	@brief Create a model container to be used with VNCoreMLRequest based on a Core ML model. This can fail if the model is not supported. Examples for a model that is not supported is a model that does not take an image as any of its inputs.</div><div class="line"> </div><div class="line">	@param model	The MLModel from CoreML to be used.</div><div class="line">	</div><div class="line">	@param	error	Returns the error code and description, if the model is not supported.</div><div class="line"> */</div><div class="line"></div><div class="line">+ (nullable instancetype) modelForMLModel:(MLModel*)model error:(NSError**)error;</div><div class="line"></div><div class="line">@end</div></pre></td></tr></table></figure>
+<p>在上面<code>VNCoreMLModel</code>类中，我们可以看到其初始化方法之一一个<code>modelForMLModel</code>，而<code>init</code>是无效的，在<code>modelForMLModel</code>中，有<code>MLModel</code>这么一个对象的参数，而在<code>Core ML</code>模型类中，我们也发现有这么一个属性，看来我们可以通过这个关系将其联系起来。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">@interface Resnet50 : NSObject</div><div class="line">@property (readonly, nonatomic, nullable) MLModel * model;</div></pre></td></tr></table></figure></p>
+<p>在当前类继续往下翻，就能看到类<code>VNCoreMLRequest</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">@interface VNCoreMLRequest : VNImageBasedRequest</div><div class="line"></div><div class="line">/*!</div><div class="line"> @brief The model from CoreML wrapped in a VNCoreMLModel.</div><div class="line"> */</div><div class="line">@property (readonly, nonatomic, nonnull) VNCoreMLModel *model;</div><div class="line"></div><div class="line">@property (nonatomic)VNImageCropAndScaleOption imageCropAndScaleOption;</div><div class="line"></div><div class="line"></div><div class="line">/*!</div><div class="line">	@brief Create a new request with a model.</div><div class="line"> </div><div class="line">	@param model		The VNCoreMLModel to be used.</div><div class="line"> */</div><div class="line">- (instancetype) initWithModel:(VNCoreMLModel *)model;</div><div class="line"></div><div class="line">/*!</div><div class="line">	@brief Create a new request with a model.</div><div class="line"> </div><div class="line">	@param model		The VNCoreMLModel to be used.</div><div class="line">	</div><div class="line">	@param	completionHandler	The block that is invoked when the request has been performed.</div><div class="line"> */</div><div class="line">- (instancetype) initWithModel:(VNCoreMLModel *)model completionHandler:(nullable VNRequestCompletionHandler)completionHandler NS_DESIGNATED_INITIALIZER;</div><div class="line"></div><div class="line"></div><div class="line">- (instancetype) init  NS_UNAVAILABLE;</div><div class="line">- (instancetype) initWithCompletionHandler:(nullable VNRequestCompletionHandler)completionHandler NS_UNAVAILABLE;</div><div class="line"></div><div class="line">@end</div></pre></td></tr></table></figure></p>
+<p>在其中，我们看到方法<code>initWithModel</code>和<code>VNCoreMLModel</code>类相关联，于是就有了下面的代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">- (void)predictionWithResnet50WithImage:(CIImage * )image</div><div class="line">&#123;</div><div class="line">    //两种初始化方法均可</div><div class="line">//    Resnet50* resnet50 = [[Resnet50 alloc] initWithContentsOfURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@&quot;Resnet50&quot; ofType:@&quot;mlmodelc&quot;]] error:nil];</div><div class="line">    </div><div class="line">    Resnet50* resnet50 = [[Resnet50 alloc] init];</div><div class="line">    NSError *error = nil;</div><div class="line">    //创建VNCoreMLModel</div><div class="line">    VNCoreMLModel *vnCoreMMModel = [VNCoreMLModel modelForMLModel:resnet50.model error:&amp;error];</div><div class="line">    </div><div class="line">    // 创建request</div><div class="line">    VNCoreMLRequest *request = [[VNCoreMLRequest alloc] initWithModel:vnCoreMMModel completionHandler:^(VNRequest * _Nonnull request, NSError * _Nullable error) &#123;</div><div class="line"></div><div class="line">    &#125;];</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>到这里，好像还差点什么，是的，貌似我们的图片没有关联上来，只好去查找资料，最后发现一个最重要的类，那就是<code>VNImageRequestHandler</code>，在这个类中，我还发现一个非常重要的方法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">- (BOOL)performRequests:(NSArray&lt;VNRequest *&gt; *)requests error:(NSError **)error;</div></pre></td></tr></table></figure></p>
+<p>瞬间就将<code>VNCoreMLRequest</code>类关联起来了，因为<code>VNCoreMLRequest</code>最终还是继承<code>VNRequest</code>，在相关文档的帮助下，最终有了下面的代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line">- (void)predictionWithResnet50WithImage:(CIImage * )image</div><div class="line">&#123;</div><div class="line">    //两种初始化方法均可</div><div class="line">//    Resnet50* resnet50 = [[Resnet50 alloc] initWithContentsOfURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@&quot;Resnet50&quot; ofType:@&quot;mlmodelc&quot;]] error:nil];</div><div class="line">    </div><div class="line">    Resnet50* resnet50 = [[Resnet50 alloc] init];</div><div class="line">    NSError *error = nil;</div><div class="line">    //创建VNCoreMLModel</div><div class="line">    VNCoreMLModel *vnCoreMMModel = [VNCoreMLModel modelForMLModel:resnet50.model error:&amp;error];</div><div class="line">    </div><div class="line">    // 创建处理requestHandler</div><div class="line">    VNImageRequestHandler *handler = [[VNImageRequestHandler alloc] initWithCIImage:image options:@&#123;&#125;];</div><div class="line">    </div><div class="line">    NSLog(@&quot; 打印信息:%@&quot;,handler);</div><div class="line">    // 创建request</div><div class="line">    VNCoreMLRequest *request = [[VNCoreMLRequest alloc] initWithModel:vnCoreMMModel completionHandler:^(VNRequest * _Nonnull request, NSError * _Nullable error) &#123;</div><div class="line"></div><div class="line">        CGFloat confidence = 0.0f;</div><div class="line">        </div><div class="line">        VNClassificationObservation *tempClassification = nil;</div><div class="line">        </div><div class="line">        for (VNClassificationObservation *classification in request.results) &#123;</div><div class="line">            if (classification.confidence &gt; confidence) &#123;</div><div class="line">                confidence = classification.confidence;</div><div class="line">                tempClassification = classification;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        self.descriptionLable.text = [NSString stringWithFormat:@&quot;识别结果:%@,匹配率:%.2f&quot;,tempClassification.identifier,tempClassification.confidence];</div><div class="line">    &#125;];</div><div class="line">    </div><div class="line">    // 发送识别请求</div><div class="line">    [handler performRequests:@[request] error:&amp;error];</div><div class="line">    if (error) &#123;</div><div class="line">        NSLog(@&quot;%@&quot;,error.localizedDescription);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>通过这个方法，我们就可以不用再去考虑图片的大小了，所有的处理和查询<code>Vision</code>已经帮我们解决了。<br>到这里为止，还有几个疑问<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">- (instancetype)initWithCIImage:(CIImage *)image options:(NSDictionary&lt;VNImageOption, id&gt; *)options;</div><div class="line"></div><div class="line"></div><div class="line">/*!</div><div class="line"> @brief initWithCIImage:options:orientation creates a VNImageRequestHandler to be used for performing requests against the image passed in as a CIImage.</div><div class="line"> </div><div class="line"> @param image A CIImage containing the image to be used for performing the requests. The content of the image cannot be modified.</div><div class="line"> @param orientation The orientation of the image/buffer based on the EXIF specification. For details see kCGImagePropertyOrientation. The value has to be an integer from 1 to 8. This superceeds every other orientation information.</div><div class="line"> @param options A dictionary with options specifying auxilary information for the buffer/image like VNImageOptionCameraIntrinsics</div><div class="line"></div><div class="line"> </div><div class="line"> @note:  Request results may not be accurate in simulator due to CI&apos;s inability to render certain pixel formats in the simulator</div><div class="line"> */</div><div class="line">- (instancetype)initWithCIImage:(CIImage *)image orientation:(CGImagePropertyOrientation)orientation options:(NSDictionary&lt;VNImageOption, id&gt; *)options;</div></pre></td></tr></table></figure></p>
+<p>就是在<code>VNImageRequestHandler</code>还有许多初始化函数，而且还有些参数，暂时还没去研究，后续研究好了，再来补充。</p>
+<p>下面还是奉上<a href="https://github.com/gao211326/CorMLDemo-/tree/master" target="_blank" rel="external">demo</a>，有什么错误，还望各位多多指教。</p>
+<p><a href="https://mp.weixin.qq.com/s/OWD5UEiVu5JpYArcd2H9ig" target="_blank" rel="external">参考文章</a></p>
+</the></excerpt>
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2017/09/12/iOS Core ML与Vision初识 /">iOS Core ML与Vision初识</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">One Dream</a></p>
+        <p><span>发布时间:</span>2017-09-12, 00:00:00</p>
+        <p><span>最后更新:</span>2017-09-19, 10:01:39</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2017/09/12/iOS Core ML与Vision初识 /" title="iOS Core ML与Vision初识">http://yoursite.com/2017/09/12/iOS Core ML与Vision初识 /</a>
+            <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/2017/09/12/iOS Core ML与Vision初识 /　　作者: One Dream" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2017/08/21/iOS 关于copy与mutableCopy浅析/">
+                    iOS 关于copy与mutableCopy浅析
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2017/09/12/iOS提取APP中的图片资源/">
+                    iOS提取APP中的图片资源
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#什么是机器学习？"><span class="toc-number">1.</span> <span class="toc-text">什么是机器学习？</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Core-ML-和-Vision使用"><span class="toc-number">2.</span> <span class="toc-text">Core ML 和  Vision使用</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#代码部分"><span class="toc-number">3.</span> <span class="toc-text">代码部分</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Vision使用"><span class="toc-number">4.</span> <span class="toc-text">Vision使用</span></a></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"iOS Core ML与Vision初识　| 半笑半醉间　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2017/08/21/iOS 关于copy与mutableCopy浅析/" title="上一篇: iOS 关于copy与mutableCopy浅析">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2017/09/12/iOS提取APP中的图片资源/" title="下一篇: iOS提取APP中的图片资源">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/09/12/iOS Core ML与Vision初识 /">iOS Core ML与Vision初识</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/12/iOS提取APP中的图片资源/">iOS提取APP中的图片资源</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/21/iOS 关于copy与mutableCopy浅析/">iOS 关于copy与mutableCopy浅析</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/15/iOS __attribute__那点小事/">iOS __attribute__那点小事</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/03/Go 语言学习之struct/">Go 语言学习之struct</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/12/Go 语言学习之函数/">Go 语言学习之函数</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/06/iOS translucent引发的那点小事/">iOS translucent引发的那点小事</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/27/iOS 自定义键盘/">iOS 自定义键盘</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/25/Go 语言学习之流程控制/">Go 语言学习之流程控制</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/23/Go 语言学习之数组 字典/">Go 语言学习之数组 字典</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/22/Go 语言基础之常量 变量/">Go 语言基础之常量 变量</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/19/Go 语言之Mac环境配置/">Go 语言之Mac环境配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/12/iOS CoreImage之滤镜简单使用/">iOS CoreImage之滤镜简单使用</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/24/iOS UIImage常用category/">iOS Quart2D绘图之UIImage简单使用</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/05/iOS自定义转场动画/">iOS 自定义转场动画浅谈</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2016-2017 One Dream
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 4;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>
