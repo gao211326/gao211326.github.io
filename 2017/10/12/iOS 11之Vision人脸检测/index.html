@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="One Dream" />
+
+
+
+<meta name="description" content="大道如青天，我独不得出  #####前言在上一篇iOS Core ML与Vision初识中，初步了解到了vision的作用，并在文章最后留了个疑问，就是类似下面的一些函数有什么用123- (instancetype)initWithCIImage:(CIImage *)image options:(NSDictionary&amp;lt;VNImageOption, id&amp;gt; *)options">
+<meta name="keywords">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS 11之Vision人脸检测">
+<meta property="og:url" content="http://yoursite.com/2017/10/12/iOS 11之Vision人脸检测/index.html">
+<meta property="og:site_name" content="半笑半醉间">
+<meta property="og:description" content="大道如青天，我独不得出  #####前言在上一篇iOS Core ML与Vision初识中，初步了解到了vision的作用，并在文章最后留了个疑问，就是类似下面的一些函数有什么用123- (instancetype)initWithCIImage:(CIImage *)image options:(NSDictionary&amp;lt;VNImageOption, id&amp;gt; *)options">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2525768-c45ee7c16299c64a.gif?imageMogr2/auto-orient/strip">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2525768-cc3cd22263666ea1.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2525768-deced22145c609ef.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2525768-a5febef321afbcaf.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2525768-8560904c9eaf5f52.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2525768-66b667e7e5d9a9e5.gif?imageMogr2/auto-orient/strip">
+<meta property="og:updated_time" content="2017-10-12T09:47:57.007Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iOS 11之Vision人脸检测">
+<meta name="twitter:description" content="大道如青天，我独不得出  #####前言在上一篇iOS Core ML与Vision初识中，初步了解到了vision的作用，并在文章最后留了个疑问，就是类似下面的一些函数有什么用123- (instancetype)initWithCIImage:(CIImage *)image options:(NSDictionary&amp;lt;VNImageOption, id&amp;gt; *)options">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/2525768-c45ee7c16299c64a.gif?imageMogr2/auto-orient/strip">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="半笑半醉间" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/favicon.png">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/orange/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>iOS 11之Vision人脸检测 | 半笑半醉间</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: undefined
+    }
+</script>
+
+
+    <script> yiliaConfig.jquery_ui = [false]; </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/avatar.png" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">One Dream</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">人生为棋，我愿为卒，行动虽慢，可谁曾见我后退半步</p>
+        
+
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa GitHub" href="https://github.com/gao211326" title="GitHub"></a>
+                            
+                                <a class="fa 简书" href="http://www.jianshu.com/u/d772826c5def" title="简书"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://hexo.io">Hexo</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://pages.github.com/">GitHub</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://moxfive.xyz/">MOxFIVE</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">专注于前端</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">One Dream</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/avatar.png" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">One Dream</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">人生为棋，我愿为卒，行动虽慢，可谁曾见我后退半步</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa GitHub" target="_blank" href="https://github.com/gao211326" title="GitHub"></a>
+                            
+                                <a class="fa 简书" target="_blank" href="http://www.jianshu.com/u/d772826c5def" title="简书"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-iOS 11之Vision人脸检测" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/10/12/iOS 11之Vision人脸检测/" class="article-date">
+      <time datetime="2017-10-11T16:00:00.000Z" itemprop="datePublished">2017-10-12</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      iOS 11之Vision人脸检测
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+
+        
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <excerpt in="" index="" |="" 首页摘要="">
+
+<blockquote>
+<p>大道如青天，我独不得出</p>
+</blockquote>
+<p>#####前言<br>在上一篇<a href="http://www.jianshu.com/p/b0e5f2944b3d" target="_blank" rel="external">iOS Core ML与Vision初识</a>中，初步了解到了<code>vision</code>的作用，并在文章最后留了个疑问，就是类似下面的一些函数有什么用<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">- (instancetype)initWithCIImage:(CIImage *)image options:(NSDictionary&lt;VNImageOption, id&gt; *)options;</div><div class="line"></div><div class="line">- (instancetype)initWithCVPixelBuffer:(CVPixelBufferRef)pixelBuffer options:(NSDictionary&lt;VNImageOption, id&gt; *)options;</div></pre></td></tr></table></figure></p>
+<p>在查阅一些资料后，最终通过这些函数得到了如下的效果</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2525768-c45ee7c16299c64a.gif?imageMogr2/auto-orient/strip" alt="face.gif"><br>对，没错，这就是通过<code>initWithCVPixelBuffer</code>函数来实现的。当然<code>vision</code>的作用远不于此，还有如下的效果<br><a id="more"></a></p>
+<the rest="" of="" contents="" |="" 余下全文="">
+
+<p>1、图像匹配（上篇文章中的效果）<br>2、矩形检测<br>3、二维码、条码检测<br>4、目标跟踪<br>5、文字检测<br>6、人脸检测<br>7、人脸面部特征检测<br>由于对人脸识别比较感兴趣，所以这里就主要简单了解了下人脸部分，下面就针对人脸检测和面部检测写写</p>
+<p>#####Vision支持的图片类型<br>通过查看<code>VNRequestHandler.h</code>文件，我们可以看到里面的所有初始化函数，通过这些初始化函数，我们可以了解到支持的类型有：<br>1、<code>CVPixelBufferRef</code><br>2、<code>CGImageRef</code><br>3、<code>CIImage</code><br>4、<code>NSURL</code><br>5、<code>NSData</code></p>
+<p>#####Vision使用<br>在使用<code>vision</code>的时候，我们首先需要明确自己需要什么效果，然后根据想要的效果来选择不同的类，最后实现自己的效果<br>1、需要一个<code>RequestHandler</code>，在创建<code>RequestHandler</code>的时候，需要一个合适的输入源，及<code>图片</code>类型<br>2、需要一个<code>Request</code>，在创建<code>Request</code>的时候，也需要根据实际情况来选择，<code>Request</code>大概有如下这么些</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2525768-cc3cd22263666ea1.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="request.jpeg"><br>3、通过<code>requestHandler</code>将<code>request</code>联系起来，然后得到结果<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[handler performRequests:@[requset] error:&amp;error];</div></pre></td></tr></table></figure></p>
+<p>4、处理结果<code>VNObservation</code>，在<code>VNRequest</code>的<code>results</code>数组中，包含了<code>VNObservation</code>结果，<code>VNObservation</code>也分很多种，这和你<code>Request</code>的类型是相关联的</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2525768-deced22145c609ef.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Vision结果继承关系.png"></p>
+<p>在完成上述步骤后，我们就可以根据结果来实现一些我们想要的效果</p>
+<p>#####人脸矩形检测<br>这里我们需要用到<code>VNDetectFaceRectanglesRequest</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">requset = [[VNDetectFaceRectanglesRequest alloc] initWithCompletionHandler:completionHandler];</div></pre></td></tr></table></figure></p>
+<p>在得到结果后，我们需要处理下坐标<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">for (VNFaceObservation *faceObservation in observations) &#123;</div><div class="line">    //boundingBox</div><div class="line">    CGRect transFrame = [self convertRect:faceObservation.boundingBox imageSize:image.size];</div><div class="line">    [rects addObject:[NSValue valueWithCGRect:transFrame]];</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">// 转换Rect</div><div class="line">- (CGRect)convertRect:(CGRect)boundingBox imageSize:(CGSize)imageSize&#123;</div><div class="line">    CGFloat w = boundingBox.size.width * imageSize.width;</div><div class="line">    CGFloat h = boundingBox.size.height * imageSize.height;</div><div class="line">    CGFloat x = boundingBox.origin.x * imageSize.width;</div><div class="line">    CGFloat y = imageSize.height * (1 - boundingBox.origin.y - boundingBox.size.height);//- (boundingBox.origin.y * imageSize.height) - h;</div><div class="line">    return CGRectMake(x, y, w, h);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>在返回结果中的<code>boundingBox</code>中的坐标，我们并不能立即使用，而是需要进行转换，因为这里是相对于<code>image</code>的一个比例，这里需要注意的是<code>y</code>坐标的转换，因为坐标系的<code>y</code>轴和<code>UIView</code>的<code>y</code>轴是相反的。<br>最后就是通过返回的坐标进行矩形的绘制<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line">+ (UIImage *)gl_drawImage:(UIImage *)image withRects:(NSArray *)rects</div><div class="line">&#123;</div><div class="line">    UIImage *newImage = nil;</div><div class="line">    UIGraphicsBeginImageContextWithOptions(image.size, NO, [UIScreen mainScreen].scale);</div><div class="line">    CGContextRef context = UIGraphicsGetCurrentContext();</div><div class="line">    CGContextSetLineCap(context,kCGLineCapRound); //边缘样式</div><div class="line">    CGContextSetLineJoin(context, kCGLineJoinRound);</div><div class="line">    CGContextSetLineWidth(context,2); //线宽</div><div class="line">    CGContextSetAllowsAntialiasing(context,YES); //打开抗锯齿</div><div class="line">    CGContextSetStrokeColorWithColor(context, [UIColor redColor].CGColor);</div><div class="line">    CGContextSetFillColorWithColor(context, [UIColor clearColor].CGColor);</div><div class="line">    </div><div class="line">    //绘制图片</div><div class="line">    [image drawInRect:CGRectMake(0, 0,image.size.width, image.size.height)];</div><div class="line">    CGContextBeginPath(context);</div><div class="line">    for (int i = 0; i &lt; rects.count; i ++) &#123;</div><div class="line">        CGRect rect = [rects[i] CGRectValue];</div><div class="line">        CGPoint sPoints[4];//坐标点</div><div class="line">        sPoints[0] = CGPointMake(rect.origin.x, rect.origin.y);//坐标1</div><div class="line">        sPoints[1] = CGPointMake(rect.origin.x + rect.size.width, rect.origin.y);//坐标2</div><div class="line">        sPoints[2] = CGPointMake(rect.origin.x + rect.size.width, rect.origin.y + rect.size.height);//坐标3</div><div class="line">        sPoints[3] = CGPointMake(rect.origin.x , rect.origin.y + rect.size.height);</div><div class="line">        </div><div class="line">        CGContextAddLines(context, sPoints, 4);//添加线</div><div class="line">        CGContextClosePath(context); //封闭</div><div class="line">    &#125;</div><div class="line">    CGContextDrawPath(context, kCGPathFillStroke); //根据坐标绘制路径</div><div class="line">    </div><div class="line">    newImage = UIGraphicsGetImageFromCurrentImageContext();</div><div class="line">    UIGraphicsEndImageContext();</div><div class="line">    return newImage;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>效果如下</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2525768-a5febef321afbcaf.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="faceRect.jpg"></p>
+<p>#####人脸特征识别<br>这里我们需要用到<code>VNDetectFaceLandmarksRequest</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">requset = [[VNDetectFaceLandmarksRequest alloc] initWithCompletionHandler:completionHandler];</div></pre></td></tr></table></figure></p>
+<p>处理结果<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line">    for (VNFaceObservation *faceObservation in observations) &#123;</div><div class="line">        //boundingBox</div><div class="line">        CGRect transFrame = [self convertRect:faceObservation.boundingBox imageSize:image.size];</div><div class="line">        [rects addObject:[NSValue valueWithCGRect:transFrame]];</div><div class="line">    &#125;</div><div class="line">    pointModel.faceRectPoints = rects;</div><div class="line">    return pointModel;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (GLDiscernPointModel *)handlerFaceLandMark:(NSArray *)observations image:(UIImage *)image</div><div class="line">&#123;</div><div class="line">    GLDiscernPointModel *pointModel = [[GLDiscernPointModel alloc] init];</div><div class="line">    NSMutableArray *rects = @[].mutableCopy;</div><div class="line"></div><div class="line">    for (VNFaceObservation *faceObservation in observations) &#123;</div><div class="line">        </div><div class="line">        VNFaceLandmarks2D *faceLandMarks2D = faceObservation.landmarks;</div><div class="line">        </div><div class="line">        [self getKeysWithClass:[VNFaceLandmarks2D class] block:^(NSString *key) &#123;</div><div class="line">            if ([key isEqualToString:@&quot;allPoints&quot;]) &#123;</div><div class="line">                return ;</div><div class="line">            &#125;</div><div class="line">            VNFaceLandmarkRegion2D *faceLandMarkRegion2D = [faceLandMarks2D valueForKey:key];</div><div class="line">            </div><div class="line">            NSMutableArray *sPoints = [[NSMutableArray alloc] initWithCapacity:faceLandMarkRegion2D.pointCount];</div><div class="line">            </div><div class="line">            for (int i = 0; i &lt; faceLandMarkRegion2D.pointCount; i ++) &#123;</div><div class="line">                CGPoint point = faceLandMarkRegion2D.normalizedPoints[i];</div><div class="line">                </div><div class="line">                CGFloat rectWidth = image.size.width * faceObservation.boundingBox.size.width;</div><div class="line">                CGFloat rectHeight = image.size.height * faceObservation.boundingBox.size.height;</div><div class="line">                CGPoint p = CGPointMake(point.x * rectWidth + faceObservation.boundingBox.origin.x * image.size.width, faceObservation.boundingBox.origin.y * image.size.height + point.y * rectHeight);</div><div class="line">                [sPoints addObject:[NSValue valueWithCGPoint:p]];</div><div class="line">            &#125;</div><div class="line">            </div><div class="line">            [rects addObject:sPoints];</div><div class="line">        &#125;];</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p>在这里，我们需要注意到<code>landmarks</code>这个属性，这是一个<code>VNFaceLandmarks2D</code>类型的对象，里面包含着许多面部特征的<code>VNFaceLandmarkRegion2D</code>对象，如：<code>faceContour</code>，<code>leftEye</code>，<code>nose</code>….分别表示面部轮廓、左眼、鼻子。这些对象中，又包含下面这么一个属性<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">@property (readonly, assign, nullable) const CGPoint* normalizedPoints</div></pre></td></tr></table></figure></p>
+<p>这是一个包含该面部特征的的数组，所以我们可以通过下面的方式取出里面的坐标<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">CGPoint point = faceLandMarkRegion2D.normalizedPoints[i];</div></pre></td></tr></table></figure></p>
+<p>当然这里面也存在坐标的转换，见上面代码<br>最后也是画线，代码如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line">+ (UIImage *)gl_drawImage:(UIImage *)image faceLandMarkPoints:(NSArray *)landMarkPoints</div><div class="line">&#123;</div><div class="line">    UIImage * newImage = image;</div><div class="line">    for (NSMutableArray *points in landMarkPoints) &#123;</div><div class="line">        </div><div class="line">        CGPoint sPoints [points.count];</div><div class="line">        </div><div class="line">        for (int i = 0;i &lt;points.count;i++) &#123;</div><div class="line">            NSValue *pointValue = points[i];</div><div class="line">            CGPoint point = pointValue.CGPointValue;</div><div class="line">            sPoints[i] = point;</div><div class="line">        &#125;</div><div class="line">        //画线</div><div class="line">        UIGraphicsBeginImageContextWithOptions(newImage.size, NO, [UIScreen mainScreen].scale);</div><div class="line">        CGContextRef context = UIGraphicsGetCurrentContext();</div><div class="line">        CGContextSetLineCap(context,kCGLineCapRound); //边缘样式</div><div class="line">        CGContextSetLineJoin(context, kCGLineJoinRound);</div><div class="line">        CGContextSetLineWidth(context,2); //线宽</div><div class="line">        CGContextSetAllowsAntialiasing(context,YES); //打开抗锯齿</div><div class="line">        // 设置翻转</div><div class="line">        CGContextTranslateCTM(context, 0, newImage.size.height);</div><div class="line">        CGContextScaleCTM(context, 1.0, -1.0);</div><div class="line">        </div><div class="line">        CGContextSetStrokeColorWithColor(context, [UIColor redColor].CGColor);</div><div class="line">        CGContextSetFillColorWithColor(context, [UIColor clearColor].CGColor);</div><div class="line">        </div><div class="line">        CGContextDrawImage(context, CGRectMake(0, 0,newImage.size.width,newImage.size.height), newImage.CGImage);</div><div class="line">        </div><div class="line">        CGContextBeginPath(context);</div><div class="line">        CGContextAddLines(context, sPoints,points.count);//添加线</div><div class="line">        CGContextClosePath(context); //封闭</div><div class="line">        CGContextDrawPath(context, kCGPathFillStroke); //根据坐标绘制路径</div><div class="line">        newImage = UIGraphicsGetImageFromCurrentImageContext();</div><div class="line">        UIGraphicsEndImageContext();</div><div class="line">    &#125;</div><div class="line">    return newImage;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>效果如下</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2525768-8560904c9eaf5f52.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="faceLandmark.png"></p>
+<p>#####动态人脸矩形检测<br>要动态来检测，那么我们肯定需要通过相机来实时取出资源，然后再实现，所以我们这里选择了<code>AVCapture</code>，关于相机的初始化及使用方法这里就不在累赘了，我们直接上代码<br>在<code>AVCaptureVideoDataOutputSampleBufferDelegate</code>中，通过下面的方法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">- (void)captureOutput:(AVCaptureOutput *)output didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer fromConnection:(AVCaptureConnection *)connection</div></pre></td></tr></table></figure></p>
+<p>我们可以进行这么一个转换<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">CVPixelBufferRef cvpixeBufferRef = CMSampleBufferGetImageBuffer(sampleBuffer);</div></pre></td></tr></table></figure></p>
+<p>然后通过<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">VNImageRequestHandler *handler = [[VNImageRequestHandler alloc] initWithCVPixelBuffer:cvpixeBufferRef options:@&#123;&#125;];</div></pre></td></tr></table></figure></p>
+<p>将相机返回的图片与<code>request</code>进行关联了。<br>后续操作如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">request = [[VNDetectFaceRectanglesRequest alloc] initWithCompletionHandler:^(VNRequest * _Nonnull request, NSError * _Nullable error) &#123;</div><div class="line">    </div><div class="line">    NSLog(@&quot; 打印信息:%lu&quot;,request.results.count);</div><div class="line">    NSArray *vnobservations = request.results;</div><div class="line">    </div><div class="line">    dispatch_async(dispatch_get_main_queue(), ^&#123;</div><div class="line">        //先移除之前的矩形框</div><div class="line">        [self.rectLayers makeObjectsPerformSelector:@selector(removeFromSuperlayer)];</div><div class="line"></div><div class="line">        AVCaptureDevicePosition position = [[self.avInput device] position];</div><div class="line"></div><div class="line">        </div><div class="line">        </div><div class="line">        for (VNFaceObservation *faceObservation in vnobservations) &#123;</div><div class="line">            //boundingBox</div><div class="line">            CGRect transFrame = [[GLTools sharedInstance] convertRect:faceObservation.boundingBox imageSize:self.view.frame.size];</div><div class="line">            //前置摄像头的时候 记得转换</div><div class="line">            if (position == AVCaptureDevicePositionFront)&#123;</div><div class="line">                transFrame.origin.x = self.view.frame.size.width - transFrame.origin.x - transFrame.size.width;</div><div class="line">            &#125;</div><div class="line">            </div><div class="line">            CALayer *rectLayer = [CALayer layer];</div><div class="line">            rectLayer.frame = transFrame;</div><div class="line">            rectLayer.borderColor = [UIColor purpleColor].CGColor;</div><div class="line">            rectLayer.borderWidth = 2;</div><div class="line">            [self.view.layer addSublayer:rectLayer];</div><div class="line">            </div><div class="line">            [self.rectLayers addObject:rectLayer];</div><div class="line">        &#125;</div><div class="line">    &#125;);</div><div class="line">&#125;];</div></pre></td></tr></table></figure></p>
+<p>在这里存在一个问题，就是摄像头分为前后摄像头，所以在前置摄像头和后置摄像头切换的时候，需要重新配置下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">//需要重新进行配置输出 特别是下面的输出方向</div><div class="line">AVCaptureConnection *captureConnection = [self.avOutput connectionWithMediaType:AVMediaTypeVideo];</div><div class="line">if ([captureConnection isVideoOrientationSupported]) &#123;</div><div class="line">    [captureConnection setVideoOrientation:AVCaptureVideoOrientationPortrait];</div><div class="line">&#125;</div><div class="line">// 视频稳定设置</div><div class="line">if ([captureConnection isVideoStabilizationSupported]) &#123;</div><div class="line">    captureConnection.preferredVideoStabilizationMode = AVCaptureVideoStabilizationModeAuto;</div><div class="line">&#125;</div><div class="line">// 设置输出图片方向</div><div class="line">captureConnection.videoOrientation = AVCaptureVideoOrientationPortrait;</div></pre></td></tr></table></figure></p>
+<p>还有个问题就是在坐标转化的时候，前置摄像头的<code>x</code>轴和<code>UIView</code>的<code>x</code>轴也是相反的，所以这里也需要在进行一次转化<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">transFrame.origin.x = self.view.frame.size.width - transFrame.origin.x - transFrame.size.width;</div></pre></td></tr></table></figure></p>
+<p>效果如下</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2525768-66b667e7e5d9a9e5.gif?imageMogr2/auto-orient/strip" alt="动态1.gif"></p>
+<p>#####动态添加场景<br>关于动态添加场景，其实就像我们平时用的美颜相机那样，在适当的位置添加些帽子、眼镜等各种搞笑的图片。这里我们还是需要用到<code>AVCapture</code>，并且和动态添加矩形的方法类似，只是在<code>request</code>上和处理方式上不一样<br>下面我们先看代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div></pre></td><td class="code"><pre><div class="line">            request = [[VNDetectFaceLandmarksRequest alloc] initWithCompletionHandler:^(VNRequest * _Nonnull request, NSError * _Nullable error) &#123;</div><div class="line">                NSArray *vnobservations = request.results;</div><div class="line">                </div><div class="line">                </div><div class="line">                for (VNFaceObservation *faceObservation in vnobservations) &#123;</div><div class="line">                    </div><div class="line">                    </div><div class="line">                    VNFaceLandmarks2D *faceLandMarks2D = faceObservation.landmarks;</div><div class="line">                    </div><div class="line">                    VNFaceLandmarkRegion2D *leftEyefaceLandMarkRegion2D = faceLandMarks2D.leftEye;</div><div class="line">                    VNFaceLandmarkRegion2D *rightEyefaceLandMarkRegion2D = faceLandMarks2D.rightEye;</div><div class="line">                    </div><div class="line">                    dispatch_async(dispatch_get_main_queue(), ^&#123;</div><div class="line">                        </div><div class="line">//                        //先移除之前的矩形框</div><div class="line">//                        [self.rectLayers makeObjectsPerformSelector:@selector(removeFromSuperlayer)];</div><div class="line">//</div><div class="line">//                        AVCaptureDevicePosition position = [[self.avInput device] position];</div><div class="line">//</div><div class="line">//                        CGRect transFrame = [[GLTools sharedInstance] convertRect:faceObservation.boundingBox imageSize:self.view.frame.size];</div><div class="line">//                        //前置摄像头的时候 记得转换</div><div class="line">//                        if (position == AVCaptureDevicePositionFront)&#123;</div><div class="line">//                            transFrame.origin.x = self.view.frame.size.width - transFrame.origin.x - transFrame.size.width;</div><div class="line">//                        &#125;</div><div class="line">//</div><div class="line">//                        CALayer *rectLayer = [CALayer layer];</div><div class="line">//                        rectLayer.frame = transFrame;</div><div class="line">//                        rectLayer.borderColor = [UIColor purpleColor].CGColor;</div><div class="line">//                        rectLayer.borderWidth = 2;</div><div class="line">//                        [self.view.layer addSublayer:rectLayer];</div><div class="line">//</div><div class="line">//                        [self.rectLayers addObject:rectLayer];</div><div class="line">                        </div><div class="line">                        AVCaptureDevicePosition position = [[self.avInput device] position];</div><div class="line"></div><div class="line">                        </div><div class="line">                        CGPoint sPoints[leftEyefaceLandMarkRegion2D.pointCount + rightEyefaceLandMarkRegion2D.pointCount];</div><div class="line">                        </div><div class="line">                        NSMutableArray *pointXs = [[NSMutableArray alloc] init];</div><div class="line">                        NSMutableArray *pointYs = [[NSMutableArray alloc] init];</div><div class="line">                        </div><div class="line">                        for (int i = 0; i &lt; leftEyefaceLandMarkRegion2D.pointCount; i ++) &#123;</div><div class="line">                            CGPoint point = leftEyefaceLandMarkRegion2D.normalizedPoints[i];</div><div class="line">                            </div><div class="line">                            CGFloat rectWidth = self.view.bounds.size.width * faceObservation.boundingBox.size.width;</div><div class="line">                            CGFloat rectHeight = self.view.bounds.size.height * faceObservation.boundingBox.size.height;</div><div class="line">                            </div><div class="line">                            CGFloat boundingBoxY = self.view.bounds.size.height * (1 - faceObservation.boundingBox.origin.y - faceObservation.boundingBox.size.height);</div><div class="line">                            </div><div class="line">                            CGPoint p = CGPointZero;</div><div class="line">                            if (position == AVCaptureDevicePositionFront)&#123;</div><div class="line">                                </div><div class="line">                                CGFloat boundingX = self.view.frame.size.width - faceObservation.boundingBox.origin.x * self.view.bounds.size.width - rectWidth;</div><div class="line">                                </div><div class="line">                                p = CGPointMake(point.x * rectWidth + boundingX, boundingBoxY + (1-point.y) * rectHeight);</div><div class="line"></div><div class="line">                            &#125;else&#123;</div><div class="line">                              p = CGPointMake(point.x * rectWidth + faceObservation.boundingBox.origin.x * self.view.bounds.size.width, boundingBoxY + (1-point.y) * rectHeight);</div><div class="line">                            &#125;</div><div class="line"></div><div class="line">                            sPoints[i] = p;</div><div class="line">                            </div><div class="line">                            [pointXs addObject:[NSNumber numberWithFloat:p.x]];</div><div class="line">                            [pointYs addObject:[NSNumber numberWithFloat:p.y]];</div><div class="line">                        &#125;</div><div class="line">                        </div><div class="line">                        for (int j = 0; j &lt; rightEyefaceLandMarkRegion2D.pointCount; j ++) &#123;</div><div class="line">                            CGPoint point = rightEyefaceLandMarkRegion2D.normalizedPoints[j];</div><div class="line"></div><div class="line">                            CGFloat rectWidth = self.view.bounds.size.width * faceObservation.boundingBox.size.width;</div><div class="line">                            CGFloat rectHeight = self.view.bounds.size.height * faceObservation.boundingBox.size.height;</div><div class="line"></div><div class="line">                            CGFloat boundingBoxY = self.view.bounds.size.height * (1 - faceObservation.boundingBox.origin.y - faceObservation.boundingBox.size.height);</div><div class="line"></div><div class="line">                            CGPoint p = CGPointZero;</div><div class="line">                            if (position == AVCaptureDevicePositionFront)&#123;</div><div class="line">                                </div><div class="line">                                CGFloat boundingX = self.view.frame.size.width - faceObservation.boundingBox.origin.x * self.view.bounds.size.width - rectWidth;</div><div class="line">                                </div><div class="line">                                p = CGPointMake(point.x * rectWidth + boundingX, boundingBoxY + (1-point.y) * rectHeight);</div><div class="line">                                </div><div class="line">                            &#125;else&#123;</div><div class="line">                                p = CGPointMake(point.x * rectWidth + faceObservation.boundingBox.origin.x * self.view.bounds.size.width, boundingBoxY + (1-point.y) * rectHeight);</div><div class="line">                            &#125;</div><div class="line">                            </div><div class="line">                            sPoints[leftEyefaceLandMarkRegion2D.pointCount + j] = p;</div><div class="line">                            </div><div class="line">                            [pointXs addObject:[NSNumber numberWithFloat:p.x]];</div><div class="line">                            [pointYs addObject:[NSNumber numberWithFloat:p.y]];</div><div class="line">                        &#125;</div><div class="line">                        </div><div class="line">//                        for (UIView *view in self.view.subviews) &#123;</div><div class="line">//                            if ([view isKindOfClass:[UIImageView class]]) &#123;</div><div class="line">//                                [view removeFromSuperview];</div><div class="line">//                            &#125;</div><div class="line">//                        &#125;</div><div class="line">//</div><div class="line">//                        for (int i = 0; i &lt; rightEyefaceLandMarkRegion2D.pointCount + leftEyefaceLandMarkRegion2D.pointCount; i++) &#123;</div><div class="line">//                            CGFloat x = sPoints[i].x;</div><div class="line">//                            CGFloat y = sPoints[i].y;</div><div class="line">//                            UIImageView *view = [[UIImageView alloc] initWithFrame:CGRectMake(x, y, 2, 2)];</div><div class="line">//                            view.backgroundColor = [UIColor redColor];</div><div class="line">//                            [self.view addSubview:view];</div><div class="line">//                        &#125;</div><div class="line">                        </div><div class="line">                        //排序 得到最小的x和最大的x</div><div class="line">                        NSArray *sortPointXs = [pointXs sortedArrayWithOptions:NSSortStable usingComparator:</div><div class="line">                                                ^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) &#123;</div><div class="line">                                                    int value1 = [obj1 floatValue];</div><div class="line">                                                    int value2 = [obj2 floatValue];</div><div class="line">                                                    if (value1 &gt; value2) &#123;</div><div class="line">                                                        return NSOrderedDescending;</div><div class="line">                                                    &#125;else if (value1 == value2)&#123;</div><div class="line">                                                        return NSOrderedSame;</div><div class="line">                                                    &#125;else&#123;</div><div class="line">                                                        return NSOrderedAscending;</div><div class="line">                                                    &#125;</div><div class="line">                                                &#125;];</div><div class="line"></div><div class="line">                        NSArray *sortPointYs = [pointYs sortedArrayWithOptions:NSSortStable usingComparator:</div><div class="line">                                                ^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) &#123;</div><div class="line">                                                    int value1 = [obj1 floatValue];</div><div class="line">                                                    int value2 = [obj2 floatValue];</div><div class="line">                                                    if (value1 &gt; value2) &#123;</div><div class="line">                                                        return NSOrderedDescending;</div><div class="line">                                                    &#125;else if (value1 == value2)&#123;</div><div class="line">                                                        return NSOrderedSame;</div><div class="line">                                                    &#125;else&#123;</div><div class="line">                                                        return NSOrderedAscending;</div><div class="line">                                                    &#125;</div><div class="line">                                                &#125;];</div><div class="line">                        </div><div class="line">                        UIImage *image =[UIImage imageNamed:@&quot;eyes&quot;];</div><div class="line">                        CGFloat imageWidth = [sortPointXs.lastObject floatValue] - [sortPointXs.firstObject floatValue] + 40;</div><div class="line">                        CGFloat imageHeight = (imageWidth * image.size.height)/image.size.width;</div><div class="line">                        </div><div class="line">                        self.glassesImageView.frame = CGRectMake([sortPointXs.firstObject floatValue]-20, [sortPointYs.firstObject floatValue]-5, imageWidth, imageHeight);</div><div class="line">                    &#125;);</div><div class="line">                &#125;</div><div class="line">            &#125;];</div></pre></td></tr></table></figure></p>
+<p>由于时间关系，代码有点乱，将就将就</p>
+<p>先说说思路，我是想动态添加一个眼镜的，所以我必须先得到两个眼睛的位置，然后在计算出两个眼睛的宽高，最后适当的调整眼镜的大小，再动态的添加上去</p>
+<p>这里必须要说的一个问题，就是我在实现过程中遇到的—<code>坐标</code></p>
+<p>首先是<code>y</code>坐标，如果还是按照静态图片的那种获取方式，那么得到的结果将会是完全相反的。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">faceObservation.boundingBox.origin.y * image.size.height + point.y * rectHeight</div></pre></td></tr></table></figure></p>
+<p>这里我做了 一个假设，估计是由于摄像机成像的原因造成的，所以必须反其道而行，于是我如下改造了下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">CGFloat boundingBoxY = self.view.bounds.size.height * (1 - faceObservation.boundingBox.origin.y - faceObservation.boundingBox.size.height);</div><div class="line"></div><div class="line">p = CGPointMake(point.x * rectWidth + faceObservation.boundingBox.origin.x * self.view.bounds.size.width, boundingBoxY + (1-point.y) * rectHeight);</div></pre></td></tr></table></figure></p>
+<p>从中可以看到，所有的<code>point.y</code>都用<code>1</code>减去了，这个试验的过程有点恼火，我还没怎么相通，若有知道的，希望可以告诉我下，当然我也会再研究研究。<br>再说完<code>y</code>坐标后，就是<code>x</code>坐标了，<code>x</code>坐标在<code>前置摄像头</code>的时候一切正常，然而在切换成<code>后置摄像头</code>的时候，又反了。😔！心累啊，所以没办法，我就只要加判断，然后进行测试，有了如下代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">CGFloat boundingX = self.view.frame.size.width - faceObservation.boundingBox.origin.x * self.view.bounds.size.width - rectWidth;</div></pre></td></tr></table></figure></p>
+<p>最后终于大功告成！<br>效果就是文章最顶的那个效果</p>
+<p>#####注意<br>1、在使用过程中，我发现当检测图片的时候内存和<code>cpu</code>的消耗还是很高的，比如我的<code>5s</code>就成功的崩溃过…..<br>2、图片方向是有要求的….<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">- (instancetype)initWithCVPixelBuffer:(CVPixelBufferRef)pixelBuffer options:(NSDictionary&lt;VNImageOption, id&gt; *)options;</div><div class="line"></div><div class="line">/*!</div><div class="line"> @brief initWithCVPixelBuffer:options creates a VNImageRequestHandler to be used for performing requests against the image passed in as buffer.</div><div class="line"> </div><div class="line"> @param pixelBuffer A CVPixelBuffer containing the image to be used for performing the requests. The content of the buffer cannot be modified for the lifetime of the VNImageRequestHandler.</div><div class="line"> @param orientation The orientation of the image/buffer based on the EXIF specification. For details see kCGImagePropertyOrientation. The value has to be an integer from 1 to 8. This superceeds every other orientation information.</div><div class="line"> @param options A dictionary with options specifying auxilary information for the buffer/image like VNImageOptionCameraIntrinsics</div><div class="line"> */</div><div class="line">- (instancetype)initWithCVPixelBuffer:(CVPixelBufferRef)pixelBuffer orientation:(CGImagePropertyOrientation)orientation options:(NSDictionary&lt;VNImageOption, id&gt; *)options;</div></pre></td></tr></table></figure></p>
+<p>通过对比上面两个函数，我们可以发现，多了一个<code>CGImagePropertyOrientation</code>类型的参数，没错，这就是指定传入图片的方向，如果指定了方向，而图片方向却不一致，那么恭喜你，检测不出来….这里我用的都是第一个方法，及没有参数，好像默认是<code>up</code>的。</p>
+<p>#####最后<br>还是附上<a href="https://github.com/gao211326/VisionDemo" target="_blank" rel="external">Demo</a>，如果觉得还行的话，欢迎大家给个<code>star</code>！有什么问题，可以多多沟通</p>
+</the></excerpt>
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2017/10/12/iOS 11之Vision人脸检测/">iOS 11之Vision人脸检测</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">One Dream</a></p>
+        <p><span>发布时间:</span>2017-10-12, 00:00:00</p>
+        <p><span>最后更新:</span>2017-10-12, 17:47:57</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2017/10/12/iOS 11之Vision人脸检测/" title="iOS 11之Vision人脸检测">http://yoursite.com/2017/10/12/iOS 11之Vision人脸检测/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/2017/10/12/iOS 11之Vision人脸检测/　　作者: One Dream" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2017/09/12/iOS Core ML与Vision初识 /">
+                    iOS Core ML与Vision初识
+                </a>
+            </div>
+        
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"iOS 11之Vision人脸检测　| 半笑半醉间　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2017/09/12/iOS Core ML与Vision初识 /" title="上一篇: iOS Core ML与Vision初识">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/10/12/iOS 11之Vision人脸检测/">iOS 11之Vision人脸检测</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/12/iOS提取APP中的图片资源/">iOS提取APP中的图片资源</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/12/iOS Core ML与Vision初识 /">iOS Core ML与Vision初识</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/21/iOS 关于copy与mutableCopy浅析/">iOS 关于copy与mutableCopy浅析</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/15/iOS __attribute__那点小事/">iOS __attribute__那点小事</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/03/Go 语言学习之struct/">Go 语言学习之struct</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/12/Go 语言学习之函数/">Go 语言学习之函数</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/06/iOS translucent引发的那点小事/">iOS translucent引发的那点小事</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/27/iOS 自定义键盘/">iOS 自定义键盘</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/25/Go 语言学习之流程控制/">Go 语言学习之流程控制</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/23/Go 语言学习之数组 字典/">Go 语言学习之数组 字典</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/22/Go 语言基础之常量 变量/">Go 语言基础之常量 变量</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/19/Go 语言之Mac环境配置/">Go 语言之Mac环境配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/12/iOS CoreImage之滤镜简单使用/">iOS CoreImage之滤镜简单使用</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/24/iOS UIImage常用category/">iOS Quart2D绘图之UIImage简单使用</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/05/iOS自定义转场动画/">iOS 自定义转场动画浅谈</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2016-2017 One Dream
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 4;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>
