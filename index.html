@@ -296,7 +296,7 @@
 <blockquote>
 <p>大道如青天，我独不得出</p>
 </blockquote>
-<p>#####前言<br>在上一篇<a href="http://www.jianshu.com/p/b0e5f2944b3d">iOS Core ML与Vision初识</a>中，初步了解到了<code>vision</code>的作用，并在文章最后留了个疑问，就是类似下面的一些函数有什么用<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">- (instancetype)initWithCIImage:(CIImage *)image options:(NSDictionary&lt;VNImageOption, id&gt; *)options;</div><div class="line"></div><div class="line">- (instancetype)initWithCVPixelBuffer:(CVPixelBufferRef)pixelBuffer options:(NSDictionary&lt;VNImageOption, id&gt; *)options;</div></pre></td></tr></table></figure></p>
+<h5 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h5><p>在上一篇<a href="http://www.jianshu.com/p/b0e5f2944b3d">iOS Core ML与Vision初识</a>中，初步了解到了<code>vision</code>的作用，并在文章最后留了个疑问，就是类似下面的一些函数有什么用<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">- (instancetype)initWithCIImage:(CIImage *)image options:(NSDictionary&lt;VNImageOption, id&gt; *)options;</div><div class="line"></div><div class="line">- (instancetype)initWithCVPixelBuffer:(CVPixelBufferRef)pixelBuffer options:(NSDictionary&lt;VNImageOption, id&gt; *)options;</div></pre></td></tr></table></figure></p>
 <p>在查阅一些资料后，最终通过这些函数得到了如下的效果</p>
 <p><img src="http://upload-images.jianshu.io/upload_images/2525768-c45ee7c16299c64a.gif?imageMogr2/auto-orient/strip" alt="face.gif"><br>对，没错，这就是通过<code>initWithCVPixelBuffer</code>函数来实现的。当然<code>vision</code>的作用远不于此，还有如下的效果<br>
           
@@ -311,71 +311,6 @@
       
         <p class="article-more-link">
           <a href="/2017/10/12/iOS 11之Vision人脸检测/#more">阅读全文 >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-iOS Core ML与Vision初识 " class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2017/09/12/iOS Core ML与Vision初识 /" class="article-date">
-      <time datetime="2017-09-11T16:00:00.000Z" itemprop="datePublished">2017-09-12</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/09/12/iOS Core ML与Vision初识 /">iOS Core ML与Vision初识</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <Excerpt in index | 首页摘要>
-
-<blockquote>
-<p>教之道  贵以专  昔孟母  择邻处  子不学  断机杼</p>
-</blockquote>
-<p>随着苹果新品<code>iPhone x</code>的发布，正式版<code>iOS 11</code>也就马上要推送过来了，在正式版本到来之前比较好奇，于是就去下载了个<code>Beat</code>版本刷了下，感觉还不错。<code>WWDC 2017</code>推出了机器学习框架和<code>ARKit</code>两个比较有意思的东西，本想先来学习学习<code>AR</code>，无奈手机刚好不在版本中…..真受伤，只好来学习学习机器学习了，下面进入正题吧。</p>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-
-      
-      
-        <p class="article-more-link">
-          <a href="/2017/09/12/iOS Core ML与Vision初识 /#more">阅读全文 >></a>
         </p>
       
       <div class="clearfix"></div>
@@ -441,6 +376,71 @@
       
         <p class="article-more-link">
           <a href="/2017/09/12/iOS提取APP中的图片资源/#more">阅读全文 >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-iOS Core ML与Vision初识 " class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/09/12/iOS Core ML与Vision初识 /" class="article-date">
+      <time datetime="2017-09-11T16:00:00.000Z" itemprop="datePublished">2017-09-12</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/09/12/iOS Core ML与Vision初识 /">iOS Core ML与Vision初识</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <Excerpt in index | 首页摘要>
+
+<blockquote>
+<p>教之道  贵以专  昔孟母  择邻处  子不学  断机杼</p>
+</blockquote>
+<p>随着苹果新品<code>iPhone x</code>的发布，正式版<code>iOS 11</code>也就马上要推送过来了，在正式版本到来之前比较好奇，于是就去下载了个<code>Beat</code>版本刷了下，感觉还不错。<code>WWDC 2017</code>推出了机器学习框架和<code>ARKit</code>两个比较有意思的东西，本想先来学习学习<code>AR</code>，无奈手机刚好不在版本中…..真受伤，只好来学习学习机器学习了，下面进入正题吧。</p>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+
+      
+      
+        <p class="article-more-link">
+          <a href="/2017/09/12/iOS Core ML与Vision初识 /#more">阅读全文 >></a>
         </p>
       
       <div class="clearfix"></div>
