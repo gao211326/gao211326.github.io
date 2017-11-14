@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="One Dream" />
+
+
+
+<meta name="description" content="天道酬勤  前言作为一名iOS开发者，每当使用APP的时候，总难免会情不自禁的去想想，这个怎么做的？该怎么实现呢？很久之前，就想写一个关于音乐方面的播放器，最近刚好得空，就趁机摸索着写了下，写的不好，还望多多指教。 前提准备为了能够有明确的思路来做这个demo，我下载了QQ音乐和网易云音乐，然后分别对比，最终选择了QQ音乐来参照，先是获取了其中的所有资源文件，如果有不知道怎么提取资源文件的，">
+<meta name="keywords">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS之基于FreeStreamer的简单音乐播放器">
+<meta property="og:url" content="http://yoursite.com/2017/11/14/iOS之基于FreeStreamer的简单音乐播放器/index.html">
+<meta property="og:site_name" content="半笑半醉间">
+<meta property="og:description" content="天道酬勤  前言作为一名iOS开发者，每当使用APP的时候，总难免会情不自禁的去想想，这个怎么做的？该怎么实现呢？很久之前，就想写一个关于音乐方面的播放器，最近刚好得空，就趁机摸索着写了下，写的不好，还望多多指教。 前提准备为了能够有明确的思路来做这个demo，我下载了QQ音乐和网易云音乐，然后分别对比，最终选择了QQ音乐来参照，先是获取了其中的所有资源文件，如果有不知道怎么提取资源文件的，">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2525768-654ae6500334ffcd.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2525768-6cda02e1ba2164dd.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2525768-1faddf805350707f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2525768-06538a086aff2bd6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2525768-a91132596133e761.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2017-11-14T09:35:18.192Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iOS之基于FreeStreamer的简单音乐播放器">
+<meta name="twitter:description" content="天道酬勤  前言作为一名iOS开发者，每当使用APP的时候，总难免会情不自禁的去想想，这个怎么做的？该怎么实现呢？很久之前，就想写一个关于音乐方面的播放器，最近刚好得空，就趁机摸索着写了下，写的不好，还望多多指教。 前提准备为了能够有明确的思路来做这个demo，我下载了QQ音乐和网易云音乐，然后分别对比，最终选择了QQ音乐来参照，先是获取了其中的所有资源文件，如果有不知道怎么提取资源文件的，">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/2525768-654ae6500334ffcd.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="半笑半醉间" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/favicon.png">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/orange/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>iOS之基于FreeStreamer的简单音乐播放器 | 半笑半醉间</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: undefined
+    }
+</script>
+
+
+    <script> yiliaConfig.jquery_ui = [false]; </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/avatar.png" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">One Dream</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">人生为棋，我愿为卒，行动虽慢，可谁曾见我后退半步</p>
+        
+
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa GitHub" href="https://github.com/gao211326" title="GitHub"></a>
+                            
+                                <a class="fa 简书" href="http://www.jianshu.com/u/d772826c5def" title="简书"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://hexo.io">Hexo</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://pages.github.com/">GitHub</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://moxfive.xyz/">MOxFIVE</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">专注于前端</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">One Dream</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/avatar.png" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">One Dream</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">人生为棋，我愿为卒，行动虽慢，可谁曾见我后退半步</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa GitHub" target="_blank" href="https://github.com/gao211326" title="GitHub"></a>
+                            
+                                <a class="fa 简书" target="_blank" href="http://www.jianshu.com/u/d772826c5def" title="简书"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-iOS之基于FreeStreamer的简单音乐播放器" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/11/14/iOS之基于FreeStreamer的简单音乐播放器/" class="article-date">
+      <time datetime="2017-11-13T16:00:00.000Z" itemprop="datePublished">2017-11-14</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      iOS之基于FreeStreamer的简单音乐播放器
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+
+        
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <excerpt in="" index="" |="" 首页摘要="">
+
+<blockquote>
+<p>天道酬勤</p>
+</blockquote>
+<h5 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h5><p>作为一名<code>iOS</code>开发者，每当使用<code>APP</code>的时候，总难免会情不自禁的去想想，这个怎么做的？该怎么实现呢？很久之前，就想写一个关于音乐方面的播放器，最近刚好得空，就趁机摸索着写了下，写的不好，还望多多指教。</p>
+<h5 id="前提准备"><a href="#前提准备" class="headerlink" title="前提准备"></a>前提准备</h5><p>为了能够有明确的思路来做这个<code>demo</code>，我下载了<code>QQ音乐</code>和<code>网易云音乐</code>，然后分别对比，最终选择了<code>QQ音乐</code>来参照，先是获取了其中的所有资源文件，如果有不知道怎么提取资源文件的，可以参考 <a href="http://www.jianshu.com/p/d63b6e18324c" target="_blank" rel="external">iOS提取APP中的图片资源</a>，在这之后就是研究使用技术，这里我选择了<code>FreeStreamer</code>，虽然系统也有，但是该框架可能更好用点。</p>
+<a id="more"></a>
+<the rest="" of="" contents="" |="" 余下全文="">
+
+<h5 id="实现部分"><a href="#实现部分" class="headerlink" title="实现部分"></a>实现部分</h5><p>在这之前，先来看看大概效果图吧<br><img src="http://upload-images.jianshu.io/upload_images/2525768-654ae6500334ffcd.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="IMG_6210.PNG"></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2525768-6cda02e1ba2164dd.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="IMG_6211.PNG"></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2525768-1faddf805350707f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="list.png"></p>
+<p>再看完效果图之后，我们就来看看这其中涉及到的几个难点吧（在我看开~）</p>
+<ul>
+<li>1、先让播放器跑起来<br> 这里我使用的是<code>pods</code>来管理三方库，代码如下<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">platform:ios,’8.0’</div><div class="line">target &quot;GLMusicBox&quot; do</div><div class="line">pod &apos;FreeStreamer&apos;, &apos;~&gt; 3.7.3&apos;</div><div class="line">pod &apos;SDWebImage&apos;, &apos;~&gt; 4.0.0’</div><div class="line">pod &apos;MJRefresh&apos;, &apos;~&gt; 3.1.11’</div><div class="line">pod &apos;Masonry&apos;, &apos;~&gt; 1.0.2&apos;</div><div class="line">pod &apos;Reachability&apos;, &apos;~&gt; 3.2&apos;</div><div class="line">pod &apos;AFNetworking&apos;, &apos;~&gt; 3.0&apos;</div><div class="line">pod &apos;IQKeyboardManager&apos;, &apos;~&gt; 3.3.2’</div><div class="line">end</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>针对<code>FreeStreamer</code>我简单进行了封装下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div></pre></td><td class="code"><pre><div class="line">#import &quot;FSAudioStream.h&quot;</div><div class="line"></div><div class="line">@class GLMusicLRCModel;</div><div class="line"></div><div class="line">typedef NS_ENUM(NSInteger,GLLoopState)&#123;</div><div class="line">    GLSingleLoop = 0,//单曲循环</div><div class="line">    GLForeverLoop,//重复循环</div><div class="line">    GLRandomLoop,//随机播放</div><div class="line">    GLOnceLoop//列表一次顺序播放</div><div class="line">&#125;;</div><div class="line"></div><div class="line"></div><div class="line">@protocol GLMusicPlayerDelegate&lt;NSObject&gt;</div><div class="line"></div><div class="line">/**</div><div class="line"> *</div><div class="line"> 实时更新</div><div class="line"> *</div><div class="line"> **/</div><div class="line">- (void)updateProgressWithCurrentPosition:(FSStreamPosition)currentPosition endPosition:(FSStreamPosition)endPosition;</div><div class="line"></div><div class="line">- (void)updateMusicLrc;</div><div class="line"></div><div class="line">@end</div><div class="line"></div><div class="line">@interface GLMusicPlayer : FSAudioStream</div><div class="line"></div><div class="line">/**</div><div class="line"> *</div><div class="line"> 播放列表</div><div class="line"> *</div><div class="line"> **/</div><div class="line">@property (nonatomic,strong) NSMutableArray *musicListArray;</div><div class="line"></div><div class="line"></div><div class="line">/**</div><div class="line"> 当前播放歌曲的歌词</div><div class="line"> */</div><div class="line">@property (nonatomic,strong) NSMutableArray &lt;GLMusicLRCModel*&gt;*musicLRCArray;</div><div class="line"></div><div class="line">/**</div><div class="line"> *</div><div class="line"> 当前播放</div><div class="line"> *</div><div class="line"> **/</div><div class="line">@property (nonatomic,assign,readonly) NSUInteger currentIndex;</div><div class="line"></div><div class="line">/**</div><div class="line"> *</div><div class="line"> 当前播放的音乐的标题</div><div class="line"> *</div><div class="line"> **/</div><div class="line">@property (nonatomic,strong) NSString *currentTitle;</div><div class="line"></div><div class="line"></div><div class="line">/**</div><div class="line"> 是否是暂停状态</div><div class="line"> */</div><div class="line">@property (nonatomic,assign) BOOL isPause;</div><div class="line"></div><div class="line">@property (nonatomic,weak) id&lt;GLMusicPlayerDelegate&gt;glPlayerDelegate;</div><div class="line"></div><div class="line">//默认 重复循环 GLForeverLoop</div><div class="line">@property (nonatomic,assign) GLLoopState loopState;</div><div class="line"></div><div class="line">/**</div><div class="line"> *</div><div class="line"> 单例播放器</div><div class="line"> *</div><div class="line"> **/</div><div class="line">+ (instancetype)defaultPlayer;</div><div class="line"></div><div class="line">/**</div><div class="line"> 播放队列中的指定的文件 </div><div class="line"></div><div class="line"> @param index 序号</div><div class="line"> */</div><div class="line">- (void)playMusicAtIndex:(NSUInteger)index;</div><div class="line"></div><div class="line">/**</div><div class="line"> 播放前一首</div><div class="line"> */</div><div class="line">- (void)playFont;</div><div class="line"></div><div class="line">/**</div><div class="line"> 播放下一首</div><div class="line"> */</div><div class="line">- (void)playNext;</div><div class="line"></div><div class="line">@end</div></pre></td></tr></table></figure></p>
+<p>这里继承了<code>FSAudioStream</code>，并且采用了单例模式<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div></pre></td><td class="code"><pre><div class="line">+ (instancetype)defaultPlayer</div><div class="line">&#123;</div><div class="line">    static GLMusicPlayer *player = nil;</div><div class="line">    static dispatch_once_t onceToken;</div><div class="line">    dispatch_once(&amp;onceToken, ^&#123;</div><div class="line">        FSStreamConfiguration *config = [[FSStreamConfiguration alloc] init];</div><div class="line">        config.httpConnectionBufferSize *=2;</div><div class="line">        config.enableTimeAndPitchConversion = YES;</div><div class="line">        </div><div class="line">        </div><div class="line">        player = [[super alloc] initWithConfiguration:config];</div><div class="line">        player.delegate = (id)self;</div><div class="line">        player.onFailure = ^(FSAudioStreamError error, NSString *errorDescription) &#123;</div><div class="line">            //播放错误</div><div class="line">            //有待解决</div><div class="line">        &#125;;</div><div class="line">        player.onCompletion = ^&#123;</div><div class="line">            //播放完成</div><div class="line">                NSLog(@&quot; 打印信息: 播放完成1&quot;);</div><div class="line">        &#125;;</div><div class="line">    </div><div class="line">        </div><div class="line">        player.onStateChange = ^(FSAudioStreamState state) &#123;</div><div class="line">            switch (state) &#123;</div><div class="line">                case kFsAudioStreamPlaying:</div><div class="line">                &#123;</div><div class="line">                    NSLog(@&quot; 打印信息  playing.....&quot;);</div><div class="line">                    player.isPause = NO;</div><div class="line">                    </div><div class="line">                    [GLMiniMusicView shareInstance].palyButton.selected = YES;</div><div class="line">                &#125;</div><div class="line">                    break;</div><div class="line">                case kFsAudioStreamStopped:</div><div class="line">                &#123;</div><div class="line">                    NSLog(@&quot; 打印信息  stop.....%@&quot;,player.url.absoluteString);</div><div class="line">                &#125;</div><div class="line">                    break;</div><div class="line">                case kFsAudioStreamPaused:</div><div class="line">                &#123;</div><div class="line">                    //pause</div><div class="line">                    player.isPause = YES;</div><div class="line">                    [GLMiniMusicView shareInstance].palyButton.selected = NO;</div><div class="line">                        NSLog(@&quot; 打印信息: pause&quot;);</div><div class="line">                &#125;</div><div class="line">                    break;</div><div class="line">                case kFsAudioStreamPlaybackCompleted:</div><div class="line">                &#123;</div><div class="line">                    NSLog(@&quot; 打印信息: 播放完成2&quot;);</div><div class="line">                    [player playMusicForState];</div><div class="line">                &#125;</div><div class="line">                    break;</div><div class="line">                default:</div><div class="line">                    break;</div><div class="line">            &#125;</div><div class="line">        &#125;;</div><div class="line">        //设置音量</div><div class="line">        [player setVolume:0.5];</div><div class="line">        //设置播放速率</div><div class="line">        [player setPlayRate:1];</div><div class="line">        player.loopState = GLForeverLoop;</div><div class="line">    &#125;);</div><div class="line">    return player;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>然后实现了播放方法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div></pre></td><td class="code"><pre><div class="line">- (void)playFromURL:(NSURL *)url</div><div class="line">&#123;</div><div class="line">    //根据地址 在本地找歌词</div><div class="line">    NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@&quot;musiclist&quot; ofType:@&quot;plist&quot;]];</div><div class="line">    for (NSString *playStringKey in dic.allKeys) &#123;</div><div class="line">        if ([[dic valueForKey:playStringKey] isEqualToString:url.absoluteString]) &#123;</div><div class="line">            self.currentTitle = playStringKey;</div><div class="line">            break;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    [self stop];</div><div class="line"></div><div class="line">    if (![url.absoluteString isEqualToString:self.url.absoluteString]) &#123;</div><div class="line">        [super playFromURL:url];</div><div class="line">    &#125;else&#123;</div><div class="line">        [self play];</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    NSLog(@&quot; 当前播放歌曲:%@&quot;,self.currentTitle);</div><div class="line">    </div><div class="line">    [GLMiniMusicView shareInstance].titleLable.text = self.currentTitle;</div><div class="line">    </div><div class="line">    //获取歌词</div><div class="line">    NSString *lrcFile = [NSString stringWithFormat:@&quot;%@.lrc&quot;,self.currentTitle];</div><div class="line">    self.musicLRCArray = [NSMutableArray arrayWithArray:[GLMusicLRCModel musicLRCModelsWithLRCFileName:lrcFile]];</div><div class="line">    </div><div class="line">    if (![self.musicListArray containsObject:url]) &#123;</div><div class="line">        [self.musicListArray addObject:url];</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    //更新主界面歌词UI</div><div class="line">    if (self.glPlayerDelegate &amp;&amp; [self.glPlayerDelegate respondsToSelector:@selector(updateMusicLrc)])</div><div class="line">    &#123;</div><div class="line">        [self.glPlayerDelegate updateMusicLrc];</div><div class="line">    &#125;</div><div class="line">    _currentIndex = [self.musicListArray indexOfObject:url];</div><div class="line">    </div><div class="line">    if (!_progressTimer) &#123;</div><div class="line">        _progressTimer = [CADisplayLink displayLinkWithTarget:self selector:@selector(updateProgress)];</div><div class="line">        [_progressTimer addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSRunLoopCommonModes];</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>在上面的代码中，有许多逻辑是后面加的，比如更新<code>UI</code>界面，获取歌词等处理，如果要实现简单的播放，则可以不用重写该方法，直接通过<code>playFromURL</code>就可以实现我们的播放功能。</p>
+<ul>
+<li>2、更新UI<br>这里的<code>UI</code>暂不包括歌词的更新，而只是进度条的更新，要更新进度条，比不可少的是定时器，这里我没有选择<code>NSTimer</code>,而是选择了<code>CADisplayLink</code>，至于为什么，我想大家应该都比较了解，可以这么来对比，下面引用一段其他博客的对比：<br><code>iOS</code>设备的屏幕刷新频率是固定的，<code>CADisplayLink</code>在正常情况下会在每次刷新结束都被调用，精确度相当高。<br><code>NSTimer</code>的精确度就显得低了点，比如<code>NSTimer</code>的触发时间到的时候，<code>runloop</code>如果在阻塞状态，触发时间就会推迟到下一个<code>runloop</code>周期。并且 <code>NSTimer</code>新增了<code>tolerance</code>属性，让用户可以设置可以容忍的触发的时间的延迟范围。<br><code>CADisplayLink</code>使用场合相对专一，适合做<code>UI</code>的不停重绘，比如自定义动画引擎或者视频播放的渲染。<code>NSTimer</code>的使用范围要广泛的多，各种需要单次或者循环定时处理的任务都可以使用。在<code>UI</code>相关的动画或者显示内容使用 <code>CADisplayLink</code>比起用<code>NSTimer</code>的好处就是我们不需要在格外关心屏幕的刷新频率了，因为它本身就是跟屏幕刷新同步的<br>使用方法<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">if (!_progressTimer) &#123;</div><div class="line">    _progressTimer = [CADisplayLink displayLinkWithTarget:self selector:@selector(updateProgress)];</div><div class="line">    [_progressTimer addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSRunLoopCommonModes];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>更新进度<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">- (void)updateProgress</div><div class="line">&#123;</div><div class="line">    if (self.glPlayerDelegate &amp;&amp; [self.glPlayerDelegate respondsToSelector:@selector(updateProgressWithCurrentPosition:endPosition:)])</div><div class="line">    &#123;</div><div class="line">        [self.glPlayerDelegate updateProgressWithCurrentPosition:self.currentTimePlayed endPosition:self.duration];</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    [self showLockScreenCurrentTime:(self.currentTimePlayed.second + self.currentTimePlayed.minute * 60) totalTime:(self.duration.second + self.duration.minute * 60)];</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>在这里有两个属性：<code>currentTimePlayed</code>和<code>duration</code>，分别保存着当前播放时间和总时间，是如下的结构体<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">typedef struct &#123;</div><div class="line">    unsigned minute;</div><div class="line">    unsigned second;</div><div class="line">    </div><div class="line">    /**</div><div class="line">     * Playback time in seconds.</div><div class="line">     */</div><div class="line">    float playbackTimeInSeconds;</div><div class="line">    </div><div class="line">    /**</div><div class="line">     * Position within the stream, where 0 is the beginning</div><div class="line">     * and 1.0 is the end.</div><div class="line">     */</div><div class="line">    float position;</div><div class="line">&#125; FSStreamPosition;</div></pre></td></tr></table></figure></p>
+<p>我们在更新<code>UI</code>的时候，主要可以根据其中的<code>minute</code>和<code>second</code>来，如果播放了<code>90s</code>，那么<code>minute</code>就为<code>1</code>，而<code>second</code>为<code>30</code>，所以我们在计算的时候，应该是这样的<code>(self.currentTimePlayed.second + self.currentTimePlayed.minute * 60)</code><br>当然在更新进度条的时候，我们也可以通过<code>position</code>直接来给<code>slider</code>进行赋值，这表示当前播放的比例<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">#pragma mark == GLMusicPlayerDelegate</div><div class="line">- (void)updateProgressWithCurrentPosition:(FSStreamPosition)currentPosition endPosition:(FSStreamPosition)endPosition</div><div class="line">&#123;</div><div class="line">    //更新进度条</div><div class="line">    self.playerControlView.slider.value = currentPosition.position;</div><div class="line">    </div><div class="line">    self.playerControlView.leftTimeLable.text = [NSString translationWithMinutes:currentPosition.minute seconds:currentPosition.second];</div><div class="line">    self.playerControlView.rightTimeLable.text = [NSString translationWithMinutes:endPosition.minute seconds:endPosition.second];</div><div class="line">    </div><div class="line">    //更新歌词</div><div class="line">    [self updateMusicLrcForRowWithCurrentTime:currentPosition.position *(endPosition.minute *60 + endPosition.second)];</div><div class="line"></div><div class="line">    self.playerControlView.palyMusicButton.selected = [GLMusicPlayer defaultPlayer].isPause;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>本项目中，<code>slider</code>控件没有用系统的，而是简单的写了一个，大概如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">@interface GLSlider : UIControl</div><div class="line"></div><div class="line">//进度条颜色</div><div class="line">@property (nonatomic,strong) UIColor *progressColor;</div><div class="line">//缓存条颜色</div><div class="line">@property (nonatomic,strong) UIColor *progressCacheColor;</div><div class="line">//滑块颜色</div><div class="line">@property (nonatomic,strong) UIColor *thumbColor;</div><div class="line"></div><div class="line">//设置进度值 0-1</div><div class="line">@property (nonatomic,assign) CGFloat value;</div><div class="line">//设置缓存进度值 0-1</div><div class="line">@property (nonatomic,assign) CGFloat cacheValue;</div><div class="line">@end</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">static CGFloat const kProgressHeight = 2;</div><div class="line">static CGFloat const kProgressLeftPadding = 2;</div><div class="line">static CGFloat const kThumbHeight = 16;</div><div class="line">@interface GLSlider()</div><div class="line"></div><div class="line">//滑块 默认</div><div class="line">@property (nonatomic,strong) CALayer *thumbLayer;</div><div class="line">//进度条</div><div class="line">@property (nonatomic,strong) CALayer *progressLayer;</div><div class="line">//缓存进度条</div><div class="line">@property (nonatomic,strong) CALayer *progressCacheLayer;</div><div class="line"></div><div class="line">@property (nonatomic,assign) BOOL isTouch;</div><div class="line"></div><div class="line">@end</div><div class="line"></div><div class="line">@implementation GLSlider</div><div class="line"></div><div class="line">- (id)initWithFrame:(CGRect)frame</div><div class="line">&#123;</div><div class="line">    self = [super initWithFrame:frame];</div><div class="line">    if (self) &#123;</div><div class="line">        [self addSubLayers];</div><div class="line">    &#125;</div><div class="line">    return self;</div><div class="line">&#125;</div><div class="line">....</div></pre></td></tr></table></figure>
+<p>这里是添加了缓存进度条的，但是由于时间关系，代码中还未实时更新缓存进度</p>
+<ul>
+<li>3、更新歌词界面<br>说到歌词界面，我们看到<code>QQ音乐</code>的效果是这样的，逐行逐字进行更新，注意不是逐行更新。考虑到逐字进行更新，那么我们必须要对<code>lable</code>进行干点什么，这里对其进行了继承，并添加了些方法<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">@interface GLMusicLrcLable : UILabel</div><div class="line"></div><div class="line">//进度</div><div class="line">@property (nonatomic,assign) CGFloat progress;</div><div class="line"></div><div class="line">@end</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">#import &quot;GLMusicLrcLable.h&quot;</div><div class="line"></div><div class="line">@implementation GLMusicLrcLable</div><div class="line"></div><div class="line">- (void)setProgress:(CGFloat)progress</div><div class="line">&#123;</div><div class="line">    _progress = progress;</div><div class="line">    //重绘</div><div class="line">    [self setNeedsDisplay];</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (void)drawRect:(CGRect)rect</div><div class="line">&#123;</div><div class="line">    [super drawRect:rect];</div><div class="line">    </div><div class="line">    CGRect fillRect = CGRectMake(0, 0, self.bounds.size.width * _progress, self.bounds.size.height);</div><div class="line">    </div><div class="line">    [UICOLOR_FROM_RGB(45, 185, 105) set];</div><div class="line">    </div><div class="line">    UIRectFillUsingBlendMode(fillRect, kCGBlendModeSourceIn);</div><div class="line">&#125;</div><div class="line">@end</div></pre></td></tr></table></figure>
+<p>注意<code>UIRectFillUsingBlendMode</code>该方法能够实现逐字进行渐变的效果<br>逐字的问题解决了，那么就剩下逐行问题了，逐行的问题应该不难，是的。我们只需要在指定的时间内将其滚动就行，如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[self.lrcTableView scrollToRowAtIndexPath:currentIndexPath atScrollPosition:UITableViewScrollPositionMiddle animated:YES]</div></pre></td></tr></table></figure></p>
+<p>但是这中要注意一个问题，那就是必须做到，在下一行进行展示的时候，取消上一行的效果，如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">//设置当前行的状态</div><div class="line">[currentCell reloadCellForSelect:YES];</div><div class="line">//取消上一行的选中状态</div><div class="line">[previousCell reloadCellForSelect:NO];</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">- (void)reloadCellForSelect:(BOOL)select</div><div class="line">&#123;</div><div class="line">    if (select) &#123;</div><div class="line">        _lrcLable.font = [UIFont systemFontOfSize:17];</div><div class="line">    &#125;else&#123;</div><div class="line">        _lrcLable.font = [UIFont systemFontOfSize:14];</div><div class="line">        _lrcLable.progress = 0;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>其中<code>_lrcLable.progress = 0;</code>必须要，否则我们的文字颜色不会改变<br>在大问题已经解决的情况下，我们就需要关心另一个重要的问题了，那就是歌词。这里先介绍一个网站，可以获取歌曲名和歌词的<br>(找了好久….)<a href="http://www.5nd.com/paihang/jingdian.htm" target="_blank" rel="external">歌曲歌词获取</a>，不过好多好听的歌曲居然播放不了，你懂得，大天朝版权问题….找一首歌，播放就能看到看到歌词了。关于歌词，有许多格式，这里我用的是<code>lrc</code>格式，应该还算比较主流，格式大概如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">[ti:老人与海]</div><div class="line">[ar:海鸣威 ]</div><div class="line">[al:单曲]</div><div class="line">[by:www.5nd.com From 那时花开]</div><div class="line">[00:04.08]老人与海 海鸣威</div><div class="line">[00:08.78]海鸣威</div><div class="line">[00:37.06]秋天的夜凋零在漫天落叶里面</div><div class="line">[00:42.43]泛黄世界一点一点随风而渐远</div><div class="line">[00:47.58]冬天的雪白色了你我的情人节</div><div class="line">[00:53.24]消失不见 爱的碎片</div><div class="line">[00:57.87]Rap:</div><div class="line">[00:59.32]翻开尘封的相片</div><div class="line">[01:00.87]想起和你看过 的那些老旧默片</div><div class="line">[01:02.50]老人与海的情节</div><div class="line">[01:04.23]画面中你却依稀 在浮现</div></pre></td></tr></table></figure></p>
+<p>在有了格式后，我们就需要一个模型，来分离歌曲信息了，下面是我建的模型</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">#import &lt;Foundation/Foundation.h&gt;</div><div class="line"></div><div class="line"></div><div class="line">@interface GLMusicLRCModel : NSObject</div><div class="line"></div><div class="line">//该段歌词对应的时间</div><div class="line">@property (nonatomic,assign) NSTimeInterval time;</div><div class="line">//歌词</div><div class="line">@property (nonatomic,strong) NSString *title;</div><div class="line"></div><div class="line"></div><div class="line">/**</div><div class="line"> *</div><div class="line"> 将特点的歌词格式进行转换</div><div class="line"> *</div><div class="line"> **/</div><div class="line">+ (id)musicLRCWithString:(NSString *)string;</div><div class="line"></div><div class="line">/**</div><div class="line"> *</div><div class="line"> 根据歌词的路径返回歌词模型数组</div><div class="line"> *</div><div class="line"> **/</div><div class="line">+ (NSArray &lt;GLMusicLRCModel *&gt;*)musicLRCModelsWithLRCFileName:(NSString *)name;</div><div class="line"></div><div class="line">@end</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">#import &quot;GLMusicLRCModel.h&quot;</div><div class="line"></div><div class="line">@implementation GLMusicLRCModel</div><div class="line"></div><div class="line">+(id)musicLRCWithString:(NSString *)string</div><div class="line">&#123;</div><div class="line">    GLMusicLRCModel *model = [[GLMusicLRCModel alloc] init];</div><div class="line">    NSArray *lrcLines =[string componentsSeparatedByString:@&quot;]&quot;];</div><div class="line">    if (lrcLines.count == 2) &#123;</div><div class="line">        model.title = lrcLines[1];</div><div class="line">        NSString *timeString = lrcLines[0];</div><div class="line">        timeString = [timeString stringByReplacingOccurrencesOfString:@&quot;[&quot; withString:@&quot;&quot;];</div><div class="line">        timeString = [timeString stringByReplacingOccurrencesOfString:@&quot;]&quot; withString:@&quot;&quot;];</div><div class="line">        NSArray *times = [timeString componentsSeparatedByString:@&quot;:&quot;];</div><div class="line">        if (times.count == 2) &#123;</div><div class="line">            NSTimeInterval time = [times[0] integerValue]*60 + [times[1] floatValue];</div><div class="line">            model.time = time;</div><div class="line">        &#125;</div><div class="line">    &#125;else if(lrcLines.count == 1)&#123;</div><div class="line">        </div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    return model;</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line">+(NSArray &lt;GLMusicLRCModel *&gt;*)musicLRCModelsWithLRCFileName:(NSString *)name</div><div class="line">&#123;</div><div class="line">    NSString *lrcPath = [[NSBundle mainBundle] pathForResource:name ofType:nil];</div><div class="line">    NSString *lrcString = [NSString stringWithContentsOfFile:lrcPath encoding:NSUTF8StringEncoding error:nil];</div><div class="line">    NSArray *lrcLines = [lrcString componentsSeparatedByString:@&quot;\n&quot;];</div><div class="line"></div><div class="line">    NSMutableArray *lrcModels = [NSMutableArray array];</div><div class="line">    for (NSString *lrcLineString in lrcLines) &#123;</div><div class="line"></div><div class="line">        if ([lrcLineString hasPrefix:@&quot;[ti&quot;] || [lrcLineString hasPrefix:@&quot;[ar&quot;] || [lrcLineString hasPrefix:@&quot;[al&quot;] || ![lrcLineString hasPrefix:@&quot;[&quot;]) &#123;</div><div class="line">            continue;</div><div class="line">        &#125;</div><div class="line">        GLMusicLRCModel *lrcModel = [GLMusicLRCModel musicLRCWithString:lrcLineString];</div><div class="line">        [lrcModels addObject:lrcModel];</div><div class="line">    &#125;</div><div class="line">    return lrcModels;</div><div class="line">&#125;</div><div class="line"></div><div class="line">@end</div></pre></td></tr></table></figure>
+<p>在歌词模型准备好之后，我们要展示歌词，这里我选择的是<code>tableview</code>，通过每一个<code>cell</code>来加载不同的歌词，然后通过歌词的时间信息来更新和滚动<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">#pragma mark == UITableViewDataSource</div><div class="line">- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section</div><div class="line">&#123;</div><div class="line">    return [GLMusicPlayer defaultPlayer].musicLRCArray.count;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath</div><div class="line">&#123;</div><div class="line">    MusicLRCTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@&quot;musicLrc&quot; forIndexPath:indexPath];</div><div class="line">    cell.selectionStyle = UITableViewCellSelectionStyleNone;</div><div class="line">    cell.backgroundColor = [UIColor clearColor];</div><div class="line">    cell.contentView.backgroundColor = [UIColor clearColor];</div><div class="line">    </div><div class="line">    cell.lrcModel = [GLMusicPlayer defaultPlayer].musicLRCArray[indexPath.row];</div><div class="line">    </div><div class="line">    if (indexPath.row == self.currentLcrIndex) &#123;</div><div class="line">        [cell reloadCellForSelect:YES];</div><div class="line">    &#125;else&#123;</div><div class="line">        [cell reloadCellForSelect:NO];</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    return cell;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这里面唯一比较麻烦的可能就是更新歌词了，在上面的定时器中，我们也通过代理来更新了进度条，所以我也将更新歌词的部分放在了代理中，这样可以达到实时更新的目的，下面看看方法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div></pre></td><td class="code"><pre><div class="line">//逐行更新歌词</div><div class="line">- (void)updateMusicLrcForRowWithCurrentTime:(NSTimeInterval)currentTime</div><div class="line">&#123;</div><div class="line">    for (int i = 0; i &lt; [GLMusicPlayer defaultPlayer].musicLRCArray.count; i ++) &#123;</div><div class="line">        GLMusicLRCModel *model = [GLMusicPlayer defaultPlayer].musicLRCArray[i];</div><div class="line">        </div><div class="line">        NSInteger next = i + 1;</div><div class="line">        </div><div class="line">        GLMusicLRCModel *nextLrcModel = nil;</div><div class="line">        if (next &lt; [GLMusicPlayer defaultPlayer].musicLRCArray.count) &#123;</div><div class="line">            nextLrcModel = [GLMusicPlayer defaultPlayer].musicLRCArray[next];</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        if (self.currentLcrIndex != i &amp;&amp; currentTime &gt;= model.time)</div><div class="line">        &#123;</div><div class="line">            BOOL show = NO;</div><div class="line">            if (nextLrcModel) &#123;</div><div class="line">                if (currentTime &lt; nextLrcModel.time) &#123;</div><div class="line">                    show = YES;</div><div class="line">                &#125;</div><div class="line">            &#125;else&#123;</div><div class="line">                show = YES;</div><div class="line">            &#125;</div><div class="line">            </div><div class="line">            if (show) &#123;</div><div class="line">                NSIndexPath *currentIndexPath = [NSIndexPath indexPathForRow:i inSection:0];</div><div class="line">                NSIndexPath *previousIndexPath = [NSIndexPath indexPathForRow:self.currentLcrIndex inSection:0];</div><div class="line">                </div><div class="line">                self.currentLcrIndex = i;</div><div class="line">                </div><div class="line">                MusicLRCTableViewCell *currentCell = [self.lrcTableView cellForRowAtIndexPath:currentIndexPath];</div><div class="line">                MusicLRCTableViewCell *previousCell = [self.lrcTableView cellForRowAtIndexPath:previousIndexPath];</div><div class="line">                </div><div class="line">                //设置当前行的状态</div><div class="line">                [currentCell reloadCellForSelect:YES];</div><div class="line">                //取消上一行的选中状态</div><div class="line">                [previousCell reloadCellForSelect:NO];</div><div class="line">    </div><div class="line">    </div><div class="line">                if (!self.isDrag) &#123;</div><div class="line">                    [self.lrcTableView scrollToRowAtIndexPath:currentIndexPath atScrollPosition:UITableViewScrollPositionMiddle animated:YES];</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        if (self.currentLcrIndex == i) &#123;</div><div class="line">            MusicLRCTableViewCell *cell = [self.lrcTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0]];</div><div class="line">            </div><div class="line">            CGFloat totalTime = 0;</div><div class="line">            if (nextLrcModel) &#123;</div><div class="line">                totalTime = nextLrcModel.time - model.time;</div><div class="line">            &#125;else&#123;</div><div class="line">                totalTime = [GLMusicPlayer defaultPlayer].duration.minute * 60 +  [GLMusicPlayer defaultPlayer].duration.second - model.time;</div><div class="line">            &#125;</div><div class="line">            CGFloat progressTime = currentTime - model.time;</div><div class="line">            cell.lrcLable.progress = progressTime / totalTime;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>到此为止，我们一个简单的播放器就差不多实现了，但是这…并没有完，相比<code>QQ音乐</code>而言，它还差一个播放顺序切换的功能和锁屏播放功能</p>
+<ul>
+<li>4、切换播放顺序<br>这个比较简单，只是需要注意在切换的时候，注意数组的越界和不同模式的处理<br>这里，我定义了如下几种模式<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">typedef NS_ENUM(NSInteger,GLLoopState)&#123;</div><div class="line">    GLSingleLoop = 0,//单曲循环</div><div class="line">    GLForeverLoop,//重复循环</div><div class="line">    GLRandomLoop,//随机播放</div><div class="line">    GLOnceLoop//列表一次顺序播放</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>切换代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line">//不同状态下 播放歌曲</div><div class="line">- (void)playMusicForState</div><div class="line">&#123;</div><div class="line">    switch (self.loopState) &#123;</div><div class="line">        case GLSingleLoop:</div><div class="line">        &#123;</div><div class="line">            [self playMusicAtIndex:self.currentIndex];</div><div class="line">        &#125;</div><div class="line">            break;</div><div class="line">        case GLForeverLoop:</div><div class="line">        &#123;</div><div class="line">            if (self.currentIndex == self.musicListArray.count-1) &#123;</div><div class="line">                [self playMusicAtIndex:0];</div><div class="line">            &#125;else&#123;</div><div class="line">                [self playMusicAtIndex:self.currentIndex + 1];</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">            break;</div><div class="line">        case GLRandomLoop:</div><div class="line">        &#123;</div><div class="line">            //取随机值</div><div class="line">            int index = arc4random() % self.musicListArray.count;</div><div class="line">            [self playMusicAtIndex:index];</div><div class="line">        &#125;</div><div class="line">            break;</div><div class="line">        case GLOnceLoop:</div><div class="line">        &#123;</div><div class="line">            if (self.currentIndex == self.musicListArray.count-1) &#123;</div><div class="line">                [self stop];</div><div class="line">            &#125;else&#123;</div><div class="line">                [self playMusicAtIndex:self.currentIndex + 1];</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">            break;</div><div class="line">            </div><div class="line">        default:</div><div class="line">            break;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<ul>
+<li>5、锁屏播放<br>就如上图2中那样，由于在<code>iOS 11</code>中好像不能支持背景图片和歌词展示，可能是为了界面更加简洁吧，所以我这里也就没有加该功功能，只是简答的有个播放界面和几个控制按钮<br>首先需要在工程中这样设置，保证在后台播放<br><img src="http://upload-images.jianshu.io/upload_images/2525768-06538a086aff2bd6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="setting.png"><br>然后就是在<code>appdelegate</code>中添加如下代码<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">    AVAudioSession *session = [AVAudioSession sharedInstance];</div><div class="line">//    [session setActive:YES error:nil];</div><div class="line">    [session setActive:YES withOptions:AVAudioSessionSetActiveOptionNotifyOthersOnDeactivation error:nil];</div><div class="line">    [session setCategory:AVAudioSessionCategoryPlayback error:nil];</div><div class="line">    </div><div class="line">    [[UIApplication sharedApplication] beginReceivingRemoteControlEvents];</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>并且添加控制事件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div></pre></td><td class="code"><pre><div class="line">#pragma mark == event response</div><div class="line">-(void)remoteControlReceivedWithEvent:(UIEvent *)event&#123;</div><div class="line">    </div><div class="line">    NSLog(@&quot;%ld&quot;,event.subtype);</div><div class="line">    </div><div class="line">    if (event.type == UIEventTypeRemoteControl) &#123;</div><div class="line">        switch (event.subtype) &#123;</div><div class="line">            case UIEventSubtypeRemoteControlPlay:</div><div class="line">            &#123;</div><div class="line">                //点击播放按钮或者耳机线控中间那个按钮</div><div class="line">                [[GLMusicPlayer defaultPlayer] pause];</div><div class="line">            &#125;</div><div class="line">                break;</div><div class="line">            case UIEventSubtypeRemoteControlPause:</div><div class="line">            &#123;</div><div class="line">                //点击暂停按钮</div><div class="line">                [[GLMusicPlayer defaultPlayer] pause];</div><div class="line">            &#125;</div><div class="line">                break;</div><div class="line">            case UIEventSubtypeRemoteControlStop :</div><div class="line">            &#123;</div><div class="line">                //点击停止按钮</div><div class="line">                [[GLMusicPlayer defaultPlayer] stop];</div><div class="line">            &#125;</div><div class="line">                break;</div><div class="line">            case UIEventSubtypeRemoteControlTogglePlayPause:</div><div class="line">            &#123;</div><div class="line">                //点击播放与暂停开关按钮(iphone抽屉中使用这个)</div><div class="line">                [[GLMusicPlayer defaultPlayer] pause];</div><div class="line">            &#125;</div><div class="line">                break;</div><div class="line">            case UIEventSubtypeRemoteControlNextTrack:</div><div class="line">            &#123;</div><div class="line">                //点击下一曲按钮或者耳机中间按钮两下</div><div class="line">                [[GLMusicPlayer defaultPlayer] playNext];</div><div class="line">            &#125;</div><div class="line">                break;</div><div class="line">            case  UIEventSubtypeRemoteControlPreviousTrack:</div><div class="line">            &#123;</div><div class="line">                //点击上一曲按钮或者耳机中间按钮三下</div><div class="line">                [[GLMusicPlayer defaultPlayer] playFont];</div><div class="line">            &#125;</div><div class="line">                break;</div><div class="line">            case UIEventSubtypeRemoteControlBeginSeekingBackward:</div><div class="line">            &#123;</div><div class="line">                //快退开始 点击耳机中间按钮三下不放开</div><div class="line">            &#125;</div><div class="line">                break;</div><div class="line">            case UIEventSubtypeRemoteControlEndSeekingBackward:</div><div class="line">            &#123;</div><div class="line">                //快退结束 耳机快退控制松开后</div><div class="line">            &#125;</div><div class="line">                break;</div><div class="line">            case UIEventSubtypeRemoteControlBeginSeekingForward:</div><div class="line">            &#123;</div><div class="line">                //开始快进 耳机中间按钮两下不放开</div><div class="line">            &#125;</div><div class="line">                break;</div><div class="line">            case UIEventSubtypeRemoteControlEndSeekingForward:</div><div class="line">            &#123;</div><div class="line">                //快进结束 耳机快进操作松开后</div><div class="line">            &#125;</div><div class="line">                break;</div><div class="line">                </div><div class="line">            default:</div><div class="line">                break;</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p><code>beginReceivingRemoteControlEvents</code>为允许传递远程控制事件，<code>remoteControlReceivedWithEvent</code>为接收一个远程控制事件，关于控制事件的类型，在代码中，已经注释过，这里就不再说了。<br>控制事件搞定了，剩下的就是界面的展示了，主要是歌曲信息的展示，通过如下的代码就能实现<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">NSMutableDictionary *musicInfoDict = [[NSMutableDictionary alloc] init];</div><div class="line">//设置歌曲题目</div><div class="line">[musicInfoDict setObject:self.currentTitle forKey:MPMediaItemPropertyTitle];</div><div class="line">//设置歌手名</div><div class="line">[musicInfoDict setObject:@&quot;&quot; forKey:MPMediaItemPropertyArtist];</div><div class="line">//设置专辑名</div><div class="line">[musicInfoDict setObject:@&quot;&quot; forKey:MPMediaItemPropertyAlbumTitle];</div><div class="line">//设置歌曲时长</div><div class="line">[musicInfoDict setObject:[NSNumber numberWithFloat:totalTime]</div><div class="line">                  forKey:MPMediaItemPropertyPlaybackDuration];</div><div class="line">//设置已经播放时长</div><div class="line">[musicInfoDict setObject:[NSNumber numberWithFloat:currentTime]</div><div class="line">                  forKey:MPNowPlayingInfoPropertyElapsedPlaybackTime];</div><div class="line"></div><div class="line">[[MPNowPlayingInfoCenter defaultCenter] setNowPlayingInfo:musicInfoDict];</div></pre></td></tr></table></figure></p>
+<p>关于歌曲信息的设置，可以不按照我这样，定时器中时刻进行刷新，只需要在<code>播放</code>、<code>暂停</code>、<code>快进快退</code>这些时间有变化的地方传入当前歌曲的关键信息就可以，系统会自动去根据播放情况去更新锁屏界面上的进度条，而不需要我们时刻传入当前播放时间。这里我为了偷懒，就加在里面了。为了防止频繁操作，我采取了个方法，在其他地方看到的，就是监听锁屏情况<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">//监听锁屏状态 lock=1则为锁屏状态</div><div class="line">uint64_t locked;</div><div class="line">__block int token = 0;</div><div class="line">notify_register_dispatch(&quot;com.apple.springboard.lockstate&quot;,&amp;token,dispatch_get_main_queue(),^(int t)&#123;</div><div class="line">&#125;);</div><div class="line">notify_get_state(token, &amp;locked);</div><div class="line"></div><div class="line">//监听屏幕点亮状态 screenLight = 1则为变暗关闭状态</div><div class="line">uint64_t screenLight;</div><div class="line">__block int lightToken = 0;</div><div class="line">notify_register_dispatch(&quot;com.apple.springboard.hasBlankedScreen&quot;,&amp;lightToken,dispatch_get_main_queue(),^(int t)&#123;</div><div class="line">&#125;);</div><div class="line">notify_get_state(lightToken, &amp;screenLight);</div></pre></td></tr></table></figure></p>
+<p>通过该情况来设置。</p>
+<p>在上面锁屏播放的过程中，出现一个问题，就是当我切换歌曲的时候，不管是在锁屏情况下，还是在<code>app</code>内<br><img src="http://upload-images.jianshu.io/upload_images/2525768-a91132596133e761.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="bug.jpg"><br>通过各种查找，大概找到问题，首先在<code>appdelegate</code>中将<code>[session setActive:YES error:nil]</code>改成了<code>[session setActive:YES withOptions:AVAudioSessionSetActiveOptionNotifyOthersOnDeactivation error:nil]</code>，然后再播放的地方加了一个<code>[self stop]</code>，先停止播放<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">- (void)playFromURL:(NSURL *)url</div><div class="line">&#123;</div><div class="line">    //根据地址 在本地找歌词</div><div class="line">    NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@&quot;musiclist&quot; ofType:@&quot;plist&quot;]];</div><div class="line">    for (NSString *playStringKey in dic.allKeys) &#123;</div><div class="line">        if ([[dic valueForKey:playStringKey] isEqualToString:url.absoluteString]) &#123;</div><div class="line">            self.currentTitle = playStringKey;</div><div class="line">            break;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    [self stop];</div><div class="line"></div><div class="line">    if (![url.absoluteString isEqualToString:self.url.absoluteString]) &#123;</div><div class="line">        [super playFromURL:url];</div><div class="line">    &#125;else&#123;</div><div class="line">        [self play];</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p>到此为止，一个简单的播放器就差不多了，由于时间关系，可能还有些<code>bug</code>，希望大家能多多提出来，我好进行修正。下面还是附上<a href="https://github.com/gao211326/GLMusicBox" target="_blank" rel="external">demo</a>，后续我还将加一个功能，因为这两天公司有个很老的项目，有个下载问题，有点蛋疼，所以准备些一个队列下载，然后顺便加到播放器上。</p>
+</the></excerpt>
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2017/11/14/iOS之基于FreeStreamer的简单音乐播放器/">iOS之基于FreeStreamer的简单音乐播放器</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">One Dream</a></p>
+        <p><span>发布时间:</span>2017-11-14, 00:00:00</p>
+        <p><span>最后更新:</span>2017-11-14, 17:35:18</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2017/11/14/iOS之基于FreeStreamer的简单音乐播放器/" title="iOS之基于FreeStreamer的简单音乐播放器">http://yoursite.com/2017/11/14/iOS之基于FreeStreamer的简单音乐播放器/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/2017/11/14/iOS之基于FreeStreamer的简单音乐播放器/　　作者: One Dream" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2017/10/12/iOS 11之Vision人脸检测/">
+                    iOS 11之Vision人脸检测
+                </a>
+            </div>
+        
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#前提准备"><span class="toc-number">2.</span> <span class="toc-text">前提准备</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#实现部分"><span class="toc-number">3.</span> <span class="toc-text">实现部分</span></a></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"iOS之基于FreeStreamer的简单音乐播放器　| 半笑半醉间　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2017/10/12/iOS 11之Vision人脸检测/" title="上一篇: iOS 11之Vision人脸检测">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/11/14/iOS之基于FreeStreamer的简单音乐播放器/">iOS之基于FreeStreamer的简单音乐播放器</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/12/iOS 11之Vision人脸检测/">iOS 11之Vision人脸检测</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/12/iOS提取APP中的图片资源/">iOS提取APP中的图片资源</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/12/iOS Core ML与Vision初识 /">iOS Core ML与Vision初识</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/21/iOS 关于copy与mutableCopy浅析/">iOS 关于copy与mutableCopy浅析</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/15/iOS __attribute__那点小事/">iOS __attribute__那点小事</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/03/Go 语言学习之struct/">Go 语言学习之struct</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/12/Go 语言学习之函数/">Go 语言学习之函数</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/06/iOS translucent引发的那点小事/">iOS translucent引发的那点小事</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/27/iOS 自定义键盘/">iOS 自定义键盘</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/25/Go 语言学习之流程控制/">Go 语言学习之流程控制</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/23/Go 语言学习之数组 字典/">Go 语言学习之数组 字典</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/22/Go 语言基础之常量 变量/">Go 语言基础之常量 变量</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/19/Go 语言之Mac环境配置/">Go 语言之Mac环境配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/12/iOS CoreImage之滤镜简单使用/">iOS CoreImage之滤镜简单使用</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/24/iOS UIImage常用category/">iOS Quart2D绘图之UIImage简单使用</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/05/iOS自定义转场动画/">iOS 自定义转场动画浅谈</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2016-2017 One Dream
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 4;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>
