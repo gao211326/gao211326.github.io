@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="One Dream" />
+
+
+
+<meta name="description" content="碧玉妆成一树高，万条垂下绿丝绦。不知细叶谁裁出，二月春风似剪刀  前言岁月无情，转眼间年已过完，本打算在年前写一篇视频编辑处理方面的文章，奈何时间…旧事未完，新事又来，在最近的项目中，需要实现如下图中的效果由于时间紧迫，本打算找个现成的..居然没找到，好吧！那就自己动手，丰衣足食吧。">
+<meta name="keywords">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS 图片文字组合头像那点事">
+<meta property="og:url" content="http://yoursite.com/2018/03/12/iOS 图片文字组合头像那点事/index.html">
+<meta property="og:site_name" content="半笑半醉间">
+<meta property="og:description" content="碧玉妆成一树高，万条垂下绿丝绦。不知细叶谁裁出，二月春风似剪刀  前言岁月无情，转眼间年已过完，本打算在年前写一篇视频编辑处理方面的文章，奈何时间…旧事未完，新事又来，在最近的项目中，需要实现如下图中的效果由于时间紧迫，本打算找个现成的..居然没找到，好吧！那就自己动手，丰衣足食吧。">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/2525768-1997c72e041633fc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/2525768-359d0fd147286843.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/2525768-8cca5a462ffc35dc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/2525768-77f6a4326edd9f22.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/2525768-5393329b90f0a719.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/2525768-966756d9cc1d7830.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-03-12T09:12:49.280Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iOS 图片文字组合头像那点事">
+<meta name="twitter:description" content="碧玉妆成一树高，万条垂下绿丝绦。不知细叶谁裁出，二月春风似剪刀  前言岁月无情，转眼间年已过完，本打算在年前写一篇视频编辑处理方面的文章，奈何时间…旧事未完，新事又来，在最近的项目中，需要实现如下图中的效果由于时间紧迫，本打算找个现成的..居然没找到，好吧！那就自己动手，丰衣足食吧。">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/2525768-1997c72e041633fc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="半笑半醉间" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/favicon.png">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/orange/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>iOS 图片文字组合头像那点事 | 半笑半醉间</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: undefined
+    }
+</script>
+
+
+    <script> yiliaConfig.jquery_ui = [false]; </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/avatar.png" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">One Dream</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">人生为棋，我愿为卒，行动虽慢，可谁曾见我后退半步</p>
+        
+
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa GitHub" href="https://github.com/gao211326" title="GitHub"></a>
+                            
+                                <a class="fa 简书" href="http://www.jianshu.com/u/d772826c5def" title="简书"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://hexo.io">Hexo</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://pages.github.com/">GitHub</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://moxfive.xyz/">MOxFIVE</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">专注于前端</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">One Dream</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/avatar.png" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">One Dream</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">人生为棋，我愿为卒，行动虽慢，可谁曾见我后退半步</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa GitHub" target="_blank" href="https://github.com/gao211326" title="GitHub"></a>
+                            
+                                <a class="fa 简书" target="_blank" href="http://www.jianshu.com/u/d772826c5def" title="简书"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-iOS 图片文字组合头像那点事" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2018/03/12/iOS 图片文字组合头像那点事/" class="article-date">
+      <time datetime="2018-03-11T16:00:00.000Z" itemprop="datePublished">2018-03-12</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      iOS 图片文字组合头像那点事
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+
+        
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <excerpt in="" index="" |="" 首页摘要="">
+
+
+<blockquote>
+<p>碧玉妆成一树高，万条垂下绿丝绦。<br>不知细叶谁裁出，二月春风似剪刀</p>
+</blockquote>
+<h5 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h5><p>岁月无情，转眼间年已过完，本打算在年前写一篇视频编辑处理方面的文章，奈何时间…旧事未完，新事又来，在最近的项目中，需要实现如下图中的效果<br><img src="https://upload-images.jianshu.io/upload_images/2525768-1997c72e041633fc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="xiaoguo.png"><br>由于时间紧迫，本打算找个现成的..居然没找到，好吧！那就自己动手，丰衣足食吧。</p>
+<a id="more"></a>
+<the rest="" of="" contents="" |="" 余下全文="">
+
+<h5 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h5><p>由于服务器只返回图片或者人员名字，所以想全部通过图片来拼接的方式不可行，为了性能，就采取了<code>Quartz 2D</code>中<code>CGContextRef</code>的方式来进行绘制。最开始我的思路是先绘制一个大圆圈，然后再绘制几条白色的线条，来实现目标，但是问题来了，就是文字的背景颜色，于是放弃该方案，最终选择通过返回的数据的个数来绘制不同的弧面（最多4个），在绘制弧面的时候，让弧度之间的空白处作为白色线条。</p>
+<h5 id="first"><a href="#first" class="headerlink" title="first"></a>first</h5><p>在思路确定好后，就准备开始动手进行敲键盘了，为了先试试效果，先写了一个纯文字来绘制图片的<code>API</code>，如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">+ (UIImage *)gl_creatImageWithString:(NSAttributedString *)string imageSize:(CGSize)imageSize imageColor:(UIColor *)imageColor</div><div class="line">&#123;</div><div class="line">    //通过自己创建一个context来绘制，通常用于对图片的处理</div><div class="line">    UIGraphicsBeginImageContextWithOptions(imageSize, NO, [UIScreen mainScreen].scale);</div><div class="line">    //获取上下文</div><div class="line">    CGContextRef context = UIGraphicsGetCurrentContext();</div><div class="line">    //设置填充颜色</div><div class="line">    CGContextSetFillColorWithColor(context, imageColor.CGColor);</div><div class="line">    //直接按rect的范围覆盖</div><div class="line">    CGContextAddEllipseInRect(context, CGRectMake(0, 0, imageSize.width, imageSize.height));</div><div class="line">    CGContextFillPath(context);</div><div class="line"></div><div class="line">    CGSize stringSize = [string size];</div><div class="line">    CGFloat x = (imageSize.width - stringSize.width)/2.0;</div><div class="line">    CGFloat y = (imageSize.height - stringSize.height)/2.0;</div><div class="line">    </div><div class="line">    [string drawInRect:CGRectMake(x, y, stringSize.width, stringSize.height)];</div><div class="line">    </div><div class="line">    UIImage *newimg = UIGraphicsGetImageFromCurrentImageContext();</div><div class="line">    UIGraphicsEndImageContext();</div><div class="line">    return newimg;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>来，看看效果<br><img src="https://upload-images.jianshu.io/upload_images/2525768-359d0fd147286843.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="wenzi.jpeg"><br>恩！感觉不错，心里一阵窃喜！这里入参为<code>NSAttributedString</code>变量类型，方便自己设置大小颜色等效果</p>
+<h5 id="second"><a href="#second" class="headerlink" title="second"></a>second</h5><p>绘制圆形图片，这个在之前的文章中已经实现该功能，所以就节省了步骤，代码如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">+ (UIImage *)gl_circleImage:(UIImage *)image</div><div class="line">&#123;</div><div class="line">    UIGraphicsBeginImageContextWithOptions(CGSizeMake(image.size.width, image.size.height), NO, [UIScreen mainScreen].scale);</div><div class="line">    //获取上下文</div><div class="line">    CGContextRef context = UIGraphicsGetCurrentContext();</div><div class="line">    CGRect rect = CGRectMake(0, 0, image.size.width, image.size.height);</div><div class="line"></div><div class="line">    //画椭圆 当宽和高一样的时候 为圆</div><div class="line">    CGContextAddEllipseInRect(context, rect);</div><div class="line">    //剪切可视范围</div><div class="line">    CGContextClip(context);</div><div class="line">    </div><div class="line">    //绘制图片</div><div class="line">    [image drawInRect:rect];</div><div class="line">    </div><div class="line">    UIImage *newimg = UIGraphicsGetImageFromCurrentImageContext();</div><div class="line">    UIGraphicsEndImageContext();</div><div class="line">    return newimg;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>怀抱激动的心情，于是写下了如下代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line">//通过自己创建一个context来绘制，通常用于对图片的处理</div><div class="line">UIGraphicsBeginImageContextWithOptions(size, NO, [UIScreen mainScreen].scale);</div><div class="line">//获取上下文</div><div class="line">CGContextRef context = UIGraphicsGetCurrentContext();</div><div class="line"></div><div class="line"></div><div class="line">CGFloat radius = size.width/2.0 - 1;</div><div class="line">CGPoint center = CGPointMake(size.width/2.0 - 1, size.height/2.0);</div><div class="line">UIBezierPath *path = [UIBezierPath bezierPathWithArcCenter:center radius:radius startAngle:M_PI_2 endAngle:M_PI +  M_PI_2 clockwise:YES];</div><div class="line">[path addLineToPoint:center];</div><div class="line"></div><div class="line">CGPoint center_n = CGPointMake(size.width/2.0 + 1, size.height/2.0);</div><div class="line">UIBezierPath *path_n = [UIBezierPath bezierPathWithArcCenter:center_n radius:radius startAngle:M_PI + M_PI_2 endAngle:2 * M_PI + M_PI_2 clockwise:YES];</div><div class="line">[path_n addLineToPoint:center_n];</div><div class="line"></div><div class="line"></div><div class="line">CGContextAddPath(context, path_n.CGPath);</div><div class="line"></div><div class="line">CGContextSetFillColorWithColor(context, [UIColor redColor].CGColor);</div><div class="line">CGContextAddPath(context, path.CGPath);</div><div class="line"></div><div class="line">CGContextFillPath(context);</div><div class="line"></div><div class="line">NSAttributedString *string = (NSAttributedString*)contents[0];</div><div class="line">CGSize stringSize = [string size];</div><div class="line">CGFloat x = (path.bounds.size.width - stringSize.width)/2.0;</div><div class="line">CGFloat y = (path.bounds.size.height - stringSize.height)/2.0;</div><div class="line"></div><div class="line">[string drawInRect:CGRectMake(x, y, stringSize.width, stringSize.height)];</div><div class="line"></div><div class="line"></div><div class="line">CGContextClip(context);</div><div class="line"></div><div class="line">if ([contents[1] isKindOfClass:[UIImage class]]) &#123;</div><div class="line">    UIImage *img = (UIImage *)contents[1];</div><div class="line">    [img drawInRect:path_n.bounds];</div><div class="line">&#125;</div><div class="line">UIImage *newimg = UIGraphicsGetImageFromCurrentImageContext();</div><div class="line">UIGraphicsEndImageContext();</div><div class="line">return newimg;</div></pre></td></tr></table></figure></p>
+<p>然而在运行的那一刻，瞬间泪崩<br><img src="https://upload-images.jianshu.io/upload_images/2525768-8cca5a462ffc35dc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Simulator Screen Shot - iPhone X - 2018-03-12 at 16.39.34.png"><br>什么鬼，不是说好的半圆么….这个问题让我真是苦恼，仔细检查代码，发现没啥问题呀，路径也是半圆的路径，正在一筹莫展的时候，突然在网上看到一个问题<code>CGContextStrokePath, CGContextFillPath, CGContextEOFillPath, CGContext- DrawPath. 描边或者填充操作都会清除这个路径</code>，清除路径，也就是说当我执行<code>CGContextClip</code>的时候，路径已经不在了，所以我想要的半圆也就没了。看到这，我立刻改了下代码，如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line">//通过自己创建一个context来绘制，通常用于对图片的处理</div><div class="line">UIGraphicsBeginImageContextWithOptions(size, NO, [UIScreen mainScreen].scale);</div><div class="line">//获取上下文</div><div class="line">CGContextRef context = UIGraphicsGetCurrentContext();</div><div class="line"></div><div class="line"></div><div class="line">CGFloat radius = size.width/2.0 - 1;</div><div class="line">CGPoint center = CGPointMake(size.width/2.0 - 1, size.height/2.0);</div><div class="line">UIBezierPath *path = [UIBezierPath bezierPathWithArcCenter:center radius:radius startAngle:M_PI_2 endAngle:M_PI +  M_PI_2 clockwise:YES];</div><div class="line">[path addLineToPoint:center];</div><div class="line"></div><div class="line">CGPoint center_n = CGPointMake(size.width/2.0 + 1, size.height/2.0);</div><div class="line">UIBezierPath *path_n = [UIBezierPath bezierPathWithArcCenter:center_n radius:radius startAngle:M_PI + M_PI_2 endAngle:2 * M_PI + M_PI_2 clockwise:YES];</div><div class="line">[path_n addLineToPoint:center_n];</div><div class="line"></div><div class="line"></div><div class="line">CGContextSetFillColorWithColor(context, [UIColor redColor].CGColor);</div><div class="line">CGContextAddPath(context, path.CGPath);</div><div class="line"></div><div class="line">CGContextFillPath(context);</div><div class="line"></div><div class="line">NSAttributedString *string = (NSAttributedString*)contents[0];</div><div class="line">CGSize stringSize = [string size];</div><div class="line">CGFloat x = (path.bounds.size.width - stringSize.width)/2.0;</div><div class="line">CGFloat y = (path.bounds.size.height - stringSize.height)/2.0;</div><div class="line"></div><div class="line">[string drawInRect:CGRectMake(x, y, stringSize.width, stringSize.height)];</div><div class="line"></div><div class="line">CGContextAddPath(context, path_n.CGPath);</div><div class="line"></div><div class="line">CGContextClip(context);</div><div class="line"></div><div class="line">if ([contents[1] isKindOfClass:[UIImage class]]) &#123;</div><div class="line">    UIImage *img = (UIImage *)contents[1];</div><div class="line">    [img drawInRect:path_n.bounds];</div><div class="line">&#125;</div><div class="line">UIImage *newimg = UIGraphicsGetImageFromCurrentImageContext();</div><div class="line">UIGraphicsEndImageContext();</div><div class="line">return newimg;</div></pre></td></tr></table></figure></p>
+<p>将<code>CGContextAddPath(context, path_n.CGPath);</code>添加半圆的路径移动到<code>CGContextFillPath(context);</code>后面<code>CGContextClip(context);</code>前面，再一执行，瞬间效果就对了<br><img src="https://upload-images.jianshu.io/upload_images/2525768-77f6a4326edd9f22.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Simulator Screen Shot - iPhone X - 2018-03-12 at 16.39.54.png"></p>
+<h5 id="last"><a href="#last" class="headerlink" title="last"></a>last</h5><p>在上面的问题都解决好之后，剩余的问题就都不是问题了，就是一些简单逻辑和坐标的计算，代码如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div><div class="line">163</div><div class="line">164</div><div class="line">165</div><div class="line">166</div><div class="line">167</div><div class="line">168</div><div class="line">169</div><div class="line">170</div><div class="line">171</div><div class="line">172</div><div class="line">173</div><div class="line">174</div><div class="line">175</div><div class="line">176</div><div class="line">177</div><div class="line">178</div><div class="line">179</div><div class="line">180</div><div class="line">181</div><div class="line">182</div><div class="line">183</div><div class="line">184</div><div class="line">185</div><div class="line">186</div><div class="line">187</div><div class="line">188</div><div class="line">189</div><div class="line">190</div><div class="line">191</div><div class="line">192</div><div class="line">193</div><div class="line">194</div><div class="line">195</div><div class="line">196</div><div class="line">197</div><div class="line">198</div><div class="line">199</div><div class="line">200</div><div class="line">201</div><div class="line">202</div><div class="line">203</div><div class="line">204</div><div class="line">205</div><div class="line">206</div><div class="line">207</div><div class="line">208</div><div class="line">209</div><div class="line">210</div><div class="line">211</div><div class="line">212</div><div class="line">213</div><div class="line">214</div><div class="line">215</div><div class="line">216</div><div class="line">217</div><div class="line">218</div><div class="line">219</div><div class="line">220</div><div class="line">221</div><div class="line">222</div><div class="line">223</div><div class="line">224</div><div class="line">225</div><div class="line">226</div><div class="line">227</div><div class="line">228</div><div class="line">229</div><div class="line">230</div><div class="line">231</div><div class="line">232</div><div class="line">233</div><div class="line">234</div><div class="line">235</div><div class="line">236</div><div class="line">237</div><div class="line">238</div><div class="line">239</div><div class="line">240</div><div class="line">241</div><div class="line">242</div><div class="line">243</div><div class="line">244</div><div class="line">245</div><div class="line">246</div><div class="line">247</div><div class="line">248</div><div class="line">249</div><div class="line">250</div><div class="line">251</div><div class="line">252</div><div class="line">253</div><div class="line">254</div><div class="line">255</div><div class="line">256</div><div class="line">257</div><div class="line">258</div><div class="line">259</div><div class="line">260</div><div class="line">261</div><div class="line">262</div><div class="line">263</div><div class="line">264</div><div class="line">265</div><div class="line">266</div><div class="line">267</div><div class="line">268</div><div class="line">269</div><div class="line">270</div><div class="line">271</div><div class="line">272</div><div class="line">273</div><div class="line">274</div><div class="line">275</div><div class="line">276</div><div class="line">277</div><div class="line">278</div><div class="line">279</div><div class="line">280</div><div class="line">281</div><div class="line">282</div><div class="line">283</div><div class="line">284</div><div class="line">285</div><div class="line">286</div><div class="line">287</div><div class="line">288</div><div class="line">289</div><div class="line">290</div><div class="line">291</div><div class="line">292</div><div class="line">293</div><div class="line">294</div><div class="line">295</div><div class="line">296</div><div class="line">297</div><div class="line">298</div><div class="line">299</div><div class="line">300</div><div class="line">301</div><div class="line">302</div><div class="line">303</div><div class="line">304</div><div class="line">305</div><div class="line">306</div><div class="line">307</div><div class="line">308</div><div class="line">309</div><div class="line">310</div><div class="line">311</div><div class="line">312</div><div class="line">313</div><div class="line">314</div><div class="line">315</div><div class="line">316</div><div class="line">317</div><div class="line">318</div><div class="line">319</div><div class="line">320</div><div class="line">321</div><div class="line">322</div><div class="line">323</div><div class="line">324</div><div class="line">325</div><div class="line">326</div><div class="line">327</div><div class="line">328</div><div class="line">329</div><div class="line">330</div><div class="line">331</div><div class="line">332</div><div class="line">333</div><div class="line">334</div><div class="line">335</div><div class="line">336</div><div class="line">337</div><div class="line">338</div><div class="line">339</div><div class="line">340</div><div class="line">341</div><div class="line">342</div><div class="line">343</div><div class="line">344</div><div class="line">345</div><div class="line">346</div><div class="line">347</div><div class="line">348</div><div class="line">349</div><div class="line">350</div><div class="line">351</div><div class="line">352</div><div class="line">353</div><div class="line">354</div><div class="line">355</div><div class="line">356</div><div class="line">357</div><div class="line">358</div><div class="line">359</div><div class="line">360</div><div class="line">361</div><div class="line">362</div><div class="line">363</div><div class="line">364</div><div class="line">365</div><div class="line">366</div><div class="line">367</div><div class="line">368</div><div class="line">369</div><div class="line">370</div><div class="line">371</div><div class="line">372</div><div class="line">373</div><div class="line">374</div><div class="line">375</div><div class="line">376</div><div class="line">377</div><div class="line">378</div><div class="line">379</div><div class="line">380</div><div class="line">381</div><div class="line">382</div><div class="line">383</div><div class="line">384</div><div class="line">385</div><div class="line">386</div><div class="line">387</div><div class="line">388</div><div class="line">389</div><div class="line">390</div><div class="line">391</div><div class="line">392</div><div class="line">393</div><div class="line">394</div><div class="line">395</div><div class="line">396</div><div class="line">397</div><div class="line">398</div><div class="line">399</div><div class="line">400</div><div class="line">401</div><div class="line">402</div><div class="line">403</div><div class="line">404</div><div class="line">405</div><div class="line">406</div><div class="line">407</div><div class="line">408</div><div class="line">409</div><div class="line">410</div><div class="line">411</div><div class="line">412</div><div class="line">413</div><div class="line">414</div><div class="line">415</div><div class="line">416</div><div class="line">417</div><div class="line">418</div><div class="line">419</div><div class="line">420</div><div class="line">421</div><div class="line">422</div><div class="line">423</div><div class="line">424</div><div class="line">425</div><div class="line">426</div><div class="line">427</div><div class="line">428</div><div class="line">429</div><div class="line">430</div><div class="line">431</div><div class="line">432</div><div class="line">433</div><div class="line">434</div><div class="line">435</div><div class="line">436</div><div class="line">437</div><div class="line">438</div><div class="line">439</div><div class="line">440</div><div class="line">441</div><div class="line">442</div><div class="line">443</div><div class="line">444</div><div class="line">445</div><div class="line">446</div><div class="line">447</div><div class="line">448</div></pre></td><td class="code"><pre><div class="line">+ (UIImage *)gl_groupHeadPortraitWithContents:(NSArray *)contents size:(CGSize)size</div><div class="line">&#123;</div><div class="line">    NSAssert(contents.count &lt;=4 &amp;&amp; contents.count &gt;0, @&quot;contents can not be empty array&quot;);</div><div class="line">    switch (contents.count) &#123;</div><div class="line">        case 1:</div><div class="line">        &#123;</div><div class="line">            if ([contents[0] isKindOfClass:[UIImage class]]) &#123;</div><div class="line">                return [self gl_circleImage:(UIImage *)contents[0]];</div><div class="line">            &#125;else if ([contents[0] isKindOfClass:[NSAttributedString class]])&#123;</div><div class="line">                return [self gl_creatImageWithString:contents[0] imageSize:size imageColor:[UIColor grayColor]];</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">            break;</div><div class="line">        case 2:</div><div class="line">        &#123;</div><div class="line">            //通过自己创建一个context来绘制，通常用于对图片的处理</div><div class="line">            UIGraphicsBeginImageContextWithOptions(size, NO, [UIScreen mainScreen].scale);</div><div class="line">            //获取上下文</div><div class="line">            CGContextRef context = UIGraphicsGetCurrentContext();</div><div class="line"></div><div class="line"></div><div class="line">            CGFloat radius = size.width/2.0 - 1;</div><div class="line">            CGPoint center = CGPointMake(size.width/2.0 - 1, size.height/2.0);</div><div class="line">            UIBezierPath *path = [UIBezierPath bezierPathWithArcCenter:center radius:radius startAngle:M_PI_2 endAngle:M_PI +  M_PI_2 clockwise:YES];</div><div class="line">            [path addLineToPoint:center];</div><div class="line">            </div><div class="line">            CGPoint center_n = CGPointMake(size.width/2.0 + 1, size.height/2.0);</div><div class="line">            UIBezierPath *path_n = [UIBezierPath bezierPathWithArcCenter:center_n radius:radius startAngle:M_PI + M_PI_2 endAngle:2 * M_PI + M_PI_2 clockwise:YES];</div><div class="line">            [path_n addLineToPoint:center_n];</div><div class="line">            </div><div class="line">            if ([contents[0] isKindOfClass:[UIImage class]]) &#123;</div><div class="line">                CGContextAddPath(context, path.CGPath);</div><div class="line">                </div><div class="line">            &#125;else&#123;</div><div class="line">                CGContextSetFillColorWithColor(context, [UIColor redColor].CGColor);</div><div class="line">                CGContextAddPath(context, path.CGPath);</div><div class="line">                </div><div class="line">                CGContextFillPath(context);</div><div class="line">                </div><div class="line">                NSAttributedString *string = (NSAttributedString*)contents[0];</div><div class="line">                CGSize stringSize = [string size];</div><div class="line">                CGFloat x = (path.bounds.size.width - stringSize.width)/2.0;</div><div class="line">                CGFloat y = (path.bounds.size.height - stringSize.height)/2.0;</div><div class="line">                </div><div class="line">                [string drawInRect:CGRectMake(x, y, stringSize.width, stringSize.height)];</div><div class="line">            &#125;</div><div class="line">            </div><div class="line">            if ([contents[1] isKindOfClass:[UIImage class]]) &#123;</div><div class="line">                CGContextAddPath(context, path_n.CGPath);</div><div class="line">            &#125;else&#123;</div><div class="line">                CGContextSetFillColorWithColor(context, [UIColor orangeColor].CGColor);</div><div class="line">                CGContextAddPath(context, path_n.CGPath);</div><div class="line">                </div><div class="line">                CGContextFillPath(context);</div><div class="line">                </div><div class="line">                NSAttributedString *string = (NSAttributedString*)contents[1];</div><div class="line">                CGSize stringSize = [string size];</div><div class="line">                CGFloat x = path_n.currentPoint.x + (path_n.bounds.size.width - stringSize.width)/2.0;</div><div class="line">                CGFloat y = (path_n.bounds.size.height - stringSize.height)/2.0;</div><div class="line">                </div><div class="line">                [string drawInRect:CGRectMake(x, y, stringSize.width, stringSize.height)];</div><div class="line">                </div><div class="line">                //图片在前的时候 文字在后 路径被清了 导致后面的clip剪切不了路径</div><div class="line">                CGContextAddPath(context, path.CGPath);</div><div class="line">            &#125;</div><div class="line">            </div><div class="line">            CGContextClip(context);</div><div class="line">            </div><div class="line">            if ([contents[0] isKindOfClass:[UIImage class]]) &#123;</div><div class="line">                UIImage *img = (UIImage *)contents[0];</div><div class="line">                [img drawInRect:path.bounds];</div><div class="line">            &#125;</div><div class="line">            if ([contents[1] isKindOfClass:[UIImage class]]) &#123;</div><div class="line">                UIImage *img = (UIImage *)contents[1];</div><div class="line">                [img drawInRect:path_n.bounds];</div><div class="line">            &#125;</div><div class="line">            UIImage *newimg = UIGraphicsGetImageFromCurrentImageContext();</div><div class="line">            UIGraphicsEndImageContext();</div><div class="line">            return newimg;</div><div class="line">        &#125;</div><div class="line">            break;</div><div class="line">        case 3:</div><div class="line">        &#123;</div><div class="line">            //通过自己创建一个context来绘制，通常用于对图片的处理</div><div class="line">            UIGraphicsBeginImageContextWithOptions(size, NO, [UIScreen mainScreen].scale);</div><div class="line">            //获取上下文</div><div class="line">            CGContextRef context = UIGraphicsGetCurrentContext();</div><div class="line">            </div><div class="line">            //先确定三个路径</div><div class="line">            CGFloat radius = size.width/2.0 - 1;</div><div class="line">            CGPoint center = CGPointMake(size.width/2.0 - 1, size.height/2.0);</div><div class="line">            UIBezierPath *path = [UIBezierPath bezierPathWithArcCenter:center radius:radius startAngle:M_PI_2 endAngle:M_PI +  M_PI_2 clockwise:YES];</div><div class="line">            [path addLineToPoint:center];</div><div class="line">            </div><div class="line">            CGPoint center_s = CGPointMake(size.width/2.0 + 1, size.height/2.0 - 1);</div><div class="line">            UIBezierPath *path_s = [UIBezierPath bezierPathWithArcCenter:center_s radius:radius-1 startAngle:M_PI + M_PI_2 endAngle:2 * M_PI clockwise:YES];</div><div class="line">            [path_s addLineToPoint:center_s];</div><div class="line">            </div><div class="line">            </div><div class="line">            CGPoint center_t = CGPointMake(size.width/2.0 + 1, size.height/2.0 + 1);</div><div class="line">            UIBezierPath *path_t = [UIBezierPath bezierPathWithArcCenter:center_t radius:radius-1 startAngle:2 * M_PI endAngle:2 * M_PI + M_PI_2 clockwise:YES];</div><div class="line">            [path_t addLineToPoint:center_t];</div><div class="line">            </div><div class="line">            NSMutableArray *imageArray = [[NSMutableArray alloc] init];</div><div class="line">            NSMutableArray *titleArray = [[NSMutableArray alloc] init];</div><div class="line">            for (id object in contents) &#123;</div><div class="line">                if ([object isKindOfClass:[UIImage class]]) &#123;</div><div class="line">                    [imageArray addObject:object];</div><div class="line">                &#125;else&#123;</div><div class="line">                    [titleArray addObject:object];</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            </div><div class="line">            if (imageArray.count == 3) &#123;</div><div class="line">                //全部为图片</div><div class="line">                CGContextAddPath(context, path.CGPath);</div><div class="line">                CGContextAddPath(context, path_s.CGPath);</div><div class="line">                CGContextAddPath(context, path_t.CGPath);</div><div class="line">                </div><div class="line">                CGContextClip(context);</div><div class="line"> </div><div class="line">                UIImage *img0 = (UIImage *)imageArray[0];</div><div class="line">                UIImage *img1 = (UIImage *)imageArray[1];</div><div class="line">                UIImage *img2 = (UIImage *)imageArray[2];</div><div class="line">                </div><div class="line">                [img0 drawInRect:path.bounds];</div><div class="line">                [img1 drawInRect:path_s.bounds];</div><div class="line">                [img2 drawInRect:path_t.bounds];</div><div class="line">            &#125;else if (imageArray.count == 2)&#123;</div><div class="line">                //文字1</div><div class="line">                CGContextSetFillColorWithColor(context, [UIColor orangeColor].CGColor);</div><div class="line">                CGContextAddPath(context, path_t.CGPath);</div><div class="line">                CGContextFillPath(context);</div><div class="line">                </div><div class="line">                NSAttributedString *string = (NSAttributedString*)titleArray[0];</div><div class="line">                CGSize stringSize = [string size];</div><div class="line">                CGFloat x = path_t.currentPoint.x + (path_t.bounds.size.width - stringSize.width)/2.0;</div><div class="line">                CGFloat y = path_t.currentPoint.y + (path_t.bounds.size.height - stringSize.height)/2.0;</div><div class="line">                </div><div class="line">                [string drawInRect:CGRectMake(x, y, stringSize.width, stringSize.height)];</div><div class="line">                </div><div class="line">                //图片1 图片2</div><div class="line">                CGContextAddPath(context, path.CGPath);</div><div class="line">                CGContextAddPath(context, path_s.CGPath);</div><div class="line">                CGContextClip(context);</div><div class="line">                </div><div class="line">                UIImage *img0 = (UIImage *)imageArray[0];</div><div class="line">                UIImage *img1 = (UIImage *)imageArray[1];</div><div class="line">                [img0 drawInRect:path.bounds];</div><div class="line">                [img1 drawInRect:path_s.bounds];</div><div class="line"></div><div class="line">            &#125;else if (imageArray.count == 1)&#123;</div><div class="line">                </div><div class="line">                //文字1</div><div class="line">                CGContextSetFillColorWithColor(context, [UIColor orangeColor].CGColor);</div><div class="line">                CGContextAddPath(context, path_t.CGPath);</div><div class="line">                CGContextFillPath(context);</div><div class="line">                </div><div class="line">                NSAttributedString *string = (NSAttributedString*)titleArray[0];</div><div class="line">                CGSize stringSize = [string size];</div><div class="line">                CGFloat x = path_t.currentPoint.x + (path_t.bounds.size.width - stringSize.width)/2.0;</div><div class="line">                CGFloat y = path_t.currentPoint.y + (path_t.bounds.size.height - stringSize.height)/2.0;</div><div class="line">                </div><div class="line">                [string drawInRect:CGRectMake(x, y, stringSize.width, stringSize.height)];</div><div class="line">                </div><div class="line">                </div><div class="line">                //文字2</div><div class="line">                CGContextSetFillColorWithColor(context, [UIColor purpleColor].CGColor);</div><div class="line">                CGContextAddPath(context, path_s.CGPath);</div><div class="line">                CGContextFillPath(context);</div><div class="line">                </div><div class="line">                NSAttributedString *string_s = (NSAttributedString*)titleArray[1];</div><div class="line">                CGSize stringSize_s = [string_s size];</div><div class="line">                CGFloat x_s = path_s.currentPoint.x + (path_s.bounds.size.width - stringSize_s.width)/2.0;</div><div class="line">                CGFloat y_s = (path_s.bounds.size.height - stringSize_s.height)/2.0;</div><div class="line">                </div><div class="line">                [string_s drawInRect:CGRectMake(x_s, y_s, stringSize_s.width, stringSize_s.height)];</div><div class="line">                </div><div class="line">                //图片</div><div class="line">                CGContextAddPath(context, path.CGPath);</div><div class="line">                CGContextClip(context);</div><div class="line">                UIImage *img0 = (UIImage *)imageArray[0];</div><div class="line">                [img0 drawInRect:path.bounds];</div><div class="line">                </div><div class="line">            &#125;else&#123;</div><div class="line">                for (int i = 0; i &lt; titleArray.count; i ++) &#123;</div><div class="line">                    UIColor *color;</div><div class="line">                    UIBezierPath *drawPath;</div><div class="line">                    </div><div class="line">                    NSAttributedString *string_s = (NSAttributedString*)titleArray[i];</div><div class="line">                    CGSize stringSize_s = [string_s size];</div><div class="line">                    CGFloat x_s = 0;</div><div class="line">                    CGFloat y_s = 0;</div><div class="line">                    if (i == 0) &#123;</div><div class="line">                        color = [UIColor greenColor];</div><div class="line">                        drawPath = path;</div><div class="line">                        x_s = (drawPath.bounds.size.width - stringSize_s.width)/2.0;</div><div class="line">                        y_s = (drawPath.bounds.size.height - stringSize_s.height)/2.0;</div><div class="line">                    &#125;else if(i == 1)&#123;</div><div class="line">                        color = [UIColor purpleColor];</div><div class="line">                        drawPath = path_s;</div><div class="line">                        x_s = drawPath.currentPoint.x + (drawPath.bounds.size.width - stringSize_s.width)/2.0;</div><div class="line">                        y_s = (drawPath.bounds.size.height - stringSize_s.height)/2.0;</div><div class="line">                    &#125;else&#123;</div><div class="line">                        color = [UIColor redColor];</div><div class="line">                        drawPath = path_t;</div><div class="line">                        </div><div class="line">                        x_s = drawPath.currentPoint.x + (drawPath.bounds.size.width - stringSize_s.width)/2.0;</div><div class="line">                        y_s = drawPath.currentPoint.y + (drawPath.bounds.size.height - stringSize_s.height)/2.0;</div><div class="line">                    &#125;</div><div class="line">                    </div><div class="line">                    CGContextSetFillColorWithColor(context, color.CGColor);</div><div class="line">                    CGContextAddPath(context, drawPath.CGPath);</div><div class="line">                    CGContextFillPath(context);</div><div class="line">                    </div><div class="line">                </div><div class="line">                    </div><div class="line">                    [string_s drawInRect:CGRectMake(x_s, y_s, stringSize_s.width, stringSize_s.height)];</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            </div><div class="line">            UIImage *newimg = UIGraphicsGetImageFromCurrentImageContext();</div><div class="line">            UIGraphicsEndImageContext();</div><div class="line">            return newimg;</div><div class="line">        &#125;</div><div class="line">            break;</div><div class="line">        case 4:</div><div class="line">        &#123;</div><div class="line">            CGSize imageSize = size;</div><div class="line">            //通过自己创建一个context来绘制，通常用于对图片的处理</div><div class="line">            UIGraphicsBeginImageContextWithOptions(imageSize, NO, [UIScreen mainScreen].scale);</div><div class="line">            //获取上下文</div><div class="line">            CGContextRef context = UIGraphicsGetCurrentContext();</div><div class="line">            </div><div class="line">            CGFloat radius = size.width/2.0 - 1;</div><div class="line">            CGPoint center = CGPointMake(imageSize.width/2.0 + 1, imageSize.height/2.0 + 1);</div><div class="line">            </div><div class="line">            //路径</div><div class="line">            UIBezierPath *path = [UIBezierPath bezierPathWithArcCenter:CGPointMake(imageSize.width/2.0 - 1, imageSize.height/2.0 - 1) radius:radius startAngle:M_PI endAngle:M_PI + M_PI_2 clockwise:YES];</div><div class="line">            [path addLineToPoint:CGPointMake(imageSize.width/2.0 - 1, imageSize.height/2.0 - 1)];</div><div class="line">            </div><div class="line">            //路径1</div><div class="line">            UIBezierPath *path1 = [UIBezierPath bezierPathWithArcCenter:CGPointMake(imageSize.width/2.0 + 1, imageSize.height/2.0 - 1) radius:radius startAngle:M_PI + M_PI_2 endAngle:2*M_PI clockwise:YES];</div><div class="line">            [path1 addLineToPoint:CGPointMake(imageSize.width/2.0 + 1, imageSize.height/2.0 - 1)];</div><div class="line">            </div><div class="line">            //路径2</div><div class="line">            UIBezierPath *path2 = [UIBezierPath bezierPathWithArcCenter:center radius:radius startAngle:0 endAngle:M_PI_2 clockwise:YES];</div><div class="line">            [path2 addLineToPoint:center];</div><div class="line">            </div><div class="line">            //路径3</div><div class="line">            UIBezierPath *path3 = [UIBezierPath bezierPathWithArcCenter:CGPointMake(center.x-2, center.y) radius:radius startAngle:M_PI_2 endAngle:M_PI clockwise:YES];</div><div class="line">            [path3 addLineToPoint:CGPointMake(center.x-2, center.y)];</div><div class="line"></div><div class="line">            </div><div class="line"></div><div class="line">            </div><div class="line"></div><div class="line"></div><div class="line">            </div><div class="line">            NSMutableArray *imageArray = [[NSMutableArray alloc] init];</div><div class="line">            NSMutableArray *titleArray = [[NSMutableArray alloc] init];</div><div class="line">            for (id object in contents) &#123;</div><div class="line">                if ([object isKindOfClass:[UIImage class]]) &#123;</div><div class="line">                    [imageArray addObject:object];</div><div class="line">                &#125;else&#123;</div><div class="line">                    [titleArray addObject:object];</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            </div><div class="line">            if (imageArray.count == 4) &#123;</div><div class="line">                //图片</div><div class="line">                CGContextAddPath(context, path.CGPath);</div><div class="line">                CGContextAddPath(context, path1.CGPath);</div><div class="line">                CGContextAddPath(context, path2.CGPath);</div><div class="line">                CGContextAddPath(context, path3.CGPath);</div><div class="line">                CGContextClip(context);</div><div class="line">                </div><div class="line">                UIImage *img0 = (UIImage *)imageArray[0];</div><div class="line">                UIImage *img1 = (UIImage *)imageArray[1];</div><div class="line">                UIImage *img2 = (UIImage *)imageArray[2];</div><div class="line">                UIImage *img3 = (UIImage *)imageArray[3];</div><div class="line">                [img0 drawInRect:path.bounds];</div><div class="line">                [img1 drawInRect:path1.bounds];</div><div class="line">                [img2 drawInRect:path2.bounds];</div><div class="line">                [img3 drawInRect:path3.bounds];</div><div class="line">            &#125;else if (imageArray.count == 3)&#123;</div><div class="line">                for (int i = 0; i &lt; titleArray.count; i ++) &#123;</div><div class="line">                    UIColor *color;</div><div class="line">                    UIBezierPath *drawPath;</div><div class="line">                    </div><div class="line">                    NSAttributedString *string_s = (NSAttributedString*)titleArray[i];</div><div class="line">                    CGSize stringSize_s = [string_s size];</div><div class="line">                    CGFloat x_s = 0;</div><div class="line">                    CGFloat y_s = 0;</div><div class="line">                    if (i == 0) &#123;</div><div class="line">                        color = [UIColor redColor];</div><div class="line">                        drawPath = path3;</div><div class="line">                        </div><div class="line">                        x_s = (drawPath.bounds.size.width - stringSize_s.width)/2.0;</div><div class="line">                        y_s = drawPath.currentPoint.y + (drawPath.bounds.size.height - stringSize_s.height)/2.0;</div><div class="line">                    &#125;</div><div class="line">                    CGContextSetFillColorWithColor(context, color.CGColor);</div><div class="line">                    CGContextAddPath(context, drawPath.CGPath);</div><div class="line">                    CGContextFillPath(context);</div><div class="line">                    </div><div class="line">                    [string_s drawInRect:CGRectMake(x_s, y_s, stringSize_s.width, stringSize_s.height)];</div><div class="line">                &#125;</div><div class="line">                </div><div class="line">                CGContextAddPath(context, path.CGPath);</div><div class="line">                CGContextAddPath(context, path1.CGPath);</div><div class="line">                CGContextAddPath(context, path2.CGPath);</div><div class="line">                CGContextClip(context);</div><div class="line">                </div><div class="line">                UIImage *img0 = (UIImage *)imageArray[0];</div><div class="line">                UIImage *img1 = (UIImage *)imageArray[1];</div><div class="line">                UIImage *img2 = (UIImage *)imageArray[2];</div><div class="line">                [img0 drawInRect:path.bounds];</div><div class="line">                [img1 drawInRect:path1.bounds];</div><div class="line">                [img2 drawInRect:path2.bounds];</div><div class="line">                </div><div class="line">            &#125;else if (imageArray.count == 2)&#123;</div><div class="line">                for (int i = 0; i &lt; titleArray.count; i ++) &#123;</div><div class="line">                    UIColor *color;</div><div class="line">                    UIBezierPath *drawPath;</div><div class="line">                    </div><div class="line">                    NSAttributedString *string_s = (NSAttributedString*)titleArray[i];</div><div class="line">                    CGSize stringSize_s = [string_s size];</div><div class="line">                    CGFloat x_s = 0;</div><div class="line">                    CGFloat y_s = 0;</div><div class="line">                    if(i == 1)&#123;</div><div class="line">                        color = [UIColor purpleColor];</div><div class="line">                        drawPath = path2;</div><div class="line">                        x_s = drawPath.currentPoint.x + (drawPath.bounds.size.width - stringSize_s.width)/2.0;</div><div class="line">                        y_s = drawPath.currentPoint.y + (drawPath.bounds.size.height - stringSize_s.height)/2.0;</div><div class="line">                    &#125;else&#123;</div><div class="line">                        color = [UIColor redColor];</div><div class="line">                        drawPath = path3;</div><div class="line">                        </div><div class="line">                        x_s = (drawPath.bounds.size.width - stringSize_s.width)/2.0;</div><div class="line">                        y_s = drawPath.currentPoint.y + (drawPath.bounds.size.height - stringSize_s.height)/2.0;</div><div class="line">                    &#125;</div><div class="line">                    </div><div class="line">                    CGContextSetFillColorWithColor(context, color.CGColor);</div><div class="line">                    CGContextAddPath(context, drawPath.CGPath);</div><div class="line">                    CGContextFillPath(context);</div><div class="line">                    </div><div class="line">                    [string_s drawInRect:CGRectMake(x_s, y_s, stringSize_s.width, stringSize_s.height)];</div><div class="line">                &#125;</div><div class="line"></div><div class="line">                </div><div class="line">                CGContextAddPath(context, path.CGPath);</div><div class="line">                CGContextAddPath(context, path1.CGPath);</div><div class="line">                CGContextClip(context);</div><div class="line">                </div><div class="line">                UIImage *img0 = (UIImage *)imageArray[0];</div><div class="line">                UIImage *img1 = (UIImage *)imageArray[1];</div><div class="line">                [img0 drawInRect:path.bounds];</div><div class="line">                [img1 drawInRect:path1.bounds];</div><div class="line">                </div><div class="line">            &#125;else if (imageArray.count == 1)&#123;</div><div class="line">                </div><div class="line">                for (int i = 0; i &lt; titleArray.count; i ++) &#123;</div><div class="line">                    UIColor *color;</div><div class="line">                    UIBezierPath *drawPath;</div><div class="line">                    </div><div class="line">                    NSAttributedString *string_s = (NSAttributedString*)titleArray[i];</div><div class="line">                    CGSize stringSize_s = [string_s size];</div><div class="line">                    CGFloat x_s = 0;</div><div class="line">                    CGFloat y_s = 0;</div><div class="line">                    if(i == 0)&#123;</div><div class="line">                        color = [UIColor orangeColor];</div><div class="line">                        drawPath = path1;</div><div class="line">                        x_s = drawPath.currentPoint.x + (drawPath.bounds.size.width - stringSize_s.width)/2.0;</div><div class="line">                        y_s = (drawPath.bounds.size.height - stringSize_s.height)/2.0;</div><div class="line">                    &#125;else if(i == 1)&#123;</div><div class="line">                        color = [UIColor purpleColor];</div><div class="line">                        drawPath = path2;</div><div class="line">                        x_s = drawPath.currentPoint.x + (drawPath.bounds.size.width - stringSize_s.width)/2.0;</div><div class="line">                        y_s = drawPath.currentPoint.y + (drawPath.bounds.size.height - stringSize_s.height)/2.0;</div><div class="line">                    &#125;else&#123;</div><div class="line">                        color = [UIColor redColor];</div><div class="line">                        drawPath = path3;</div><div class="line">                        </div><div class="line">                        x_s = (drawPath.bounds.size.width - stringSize_s.width)/2.0;</div><div class="line">                        y_s = drawPath.currentPoint.y + (drawPath.bounds.size.height - stringSize_s.height)/2.0;</div><div class="line">                    &#125;</div><div class="line">                    </div><div class="line">                    CGContextSetFillColorWithColor(context, color.CGColor);</div><div class="line">                    CGContextAddPath(context, drawPath.CGPath);</div><div class="line">                    CGContextFillPath(context);</div><div class="line">                    </div><div class="line">                    [string_s drawInRect:CGRectMake(x_s, y_s, stringSize_s.width, stringSize_s.height)];</div><div class="line">                &#125;</div><div class="line">                </div><div class="line">                CGContextAddPath(context, path.CGPath);</div><div class="line">                CGContextClip(context);</div><div class="line">                </div><div class="line">                UIImage *img0 = (UIImage *)imageArray[0];</div><div class="line">                [img0 drawInRect:path.bounds];</div><div class="line">            &#125;else&#123;</div><div class="line">                for (int i = 0; i &lt; titleArray.count; i ++) &#123;</div><div class="line">                    UIColor *color;</div><div class="line">                    UIBezierPath *drawPath;</div><div class="line">                    </div><div class="line">                    NSAttributedString *string_s = (NSAttributedString*)titleArray[i];</div><div class="line">                    CGSize stringSize_s = [string_s size];</div><div class="line">                    CGFloat x_s = 0;</div><div class="line">                    CGFloat y_s = 0;</div><div class="line">                    if (i == 0) &#123;</div><div class="line">                        color = [UIColor greenColor];</div><div class="line">                        drawPath = path;</div><div class="line">                        x_s = (drawPath.bounds.size.width - stringSize_s.width)/2.0;</div><div class="line">                        y_s = (drawPath.bounds.size.height - stringSize_s.height)/2.0;</div><div class="line">                    &#125;else if(i == 1)&#123;</div><div class="line">                        color = [UIColor orangeColor];</div><div class="line">                        drawPath = path1;</div><div class="line">                        x_s = drawPath.currentPoint.x + (drawPath.bounds.size.width - stringSize_s.width)/2.0;</div><div class="line">                        y_s = (drawPath.bounds.size.height - stringSize_s.height)/2.0;</div><div class="line">                    &#125;else if(i == 2)&#123;</div><div class="line">                        color = [UIColor purpleColor];</div><div class="line">                        drawPath = path2;</div><div class="line">                        x_s = drawPath.currentPoint.x + (drawPath.bounds.size.width - stringSize_s.width)/2.0;</div><div class="line">                        y_s = drawPath.currentPoint.y + (drawPath.bounds.size.height - stringSize_s.height)/2.0;</div><div class="line">                    &#125;else&#123;</div><div class="line">                        color = [UIColor redColor];</div><div class="line">                        drawPath = path3;</div><div class="line">                        </div><div class="line">                        x_s = (drawPath.bounds.size.width - stringSize_s.width)/2.0;</div><div class="line">                        y_s = drawPath.currentPoint.y + (drawPath.bounds.size.height - stringSize_s.height)/2.0;</div><div class="line">                    &#125;</div><div class="line">                    </div><div class="line">                    CGContextSetFillColorWithColor(context, color.CGColor);</div><div class="line">                    CGContextAddPath(context, drawPath.CGPath);</div><div class="line">                    CGContextFillPath(context);</div><div class="line"></div><div class="line">                    [string_s drawInRect:CGRectMake(x_s, y_s, stringSize_s.width, stringSize_s.height)];</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            UIImage *newimg = UIGraphicsGetImageFromCurrentImageContext();</div><div class="line">            UIGraphicsEndImageContext();</div><div class="line">            return newimg;</div><div class="line">        &#125;</div><div class="line">            break;</div><div class="line">        default:</div><div class="line">            break;</div><div class="line">    &#125;</div><div class="line">    return nil;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>由于时间关系，代码比较长，中间文字的绘制的坐标稍微有点偏，算的上是我目前为止封装的比较长的<code>API</code>了，各位看官得耐心了，多多包涵~<br>下面还是看看效果图<br><img src="https://upload-images.jianshu.io/upload_images/2525768-5393329b90f0a719.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="four.png"><br><img src="https://upload-images.jianshu.io/upload_images/2525768-966756d9cc1d7830.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="three"></p>
+<p>最后还是来个<a href="https://github.com/gao211326/UIImageOperationDemo" target="_blank" rel="external">传送门</a></p>
+</the></excerpt>
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2018/03/12/iOS 图片文字组合头像那点事/">iOS 图片文字组合头像那点事</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">One Dream</a></p>
+        <p><span>发布时间:</span>2018-03-12, 00:00:00</p>
+        <p><span>最后更新:</span>2018-03-12, 17:12:49</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2018/03/12/iOS 图片文字组合头像那点事/" title="iOS 图片文字组合头像那点事">http://yoursite.com/2018/03/12/iOS 图片文字组合头像那点事/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/2018/03/12/iOS 图片文字组合头像那点事/　　作者: One Dream" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2017/11/14/iOS之基于FreeStreamer的简单音乐播放器/">
+                    iOS之基于FreeStreamer的简单音乐播放器
+                </a>
+            </div>
+        
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#思路"><span class="toc-number">2.</span> <span class="toc-text">思路</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#first"><span class="toc-number">3.</span> <span class="toc-text">first</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#second"><span class="toc-number">4.</span> <span class="toc-text">second</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#last"><span class="toc-number">5.</span> <span class="toc-text">last</span></a></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"iOS 图片文字组合头像那点事　| 半笑半醉间　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2017/11/14/iOS之基于FreeStreamer的简单音乐播放器/" title="上一篇: iOS之基于FreeStreamer的简单音乐播放器">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/03/12/iOS 图片文字组合头像那点事/">iOS 图片文字组合头像那点事</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/14/iOS之基于FreeStreamer的简单音乐播放器/">iOS之基于FreeStreamer的简单音乐播放器</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/12/iOS 11之Vision人脸检测/">iOS 11之Vision人脸检测</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/12/iOS Core ML与Vision初识 /">iOS Core ML与Vision初识</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/12/iOS提取APP中的图片资源/">iOS提取APP中的图片资源</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/21/iOS 关于copy与mutableCopy浅析/">iOS 关于copy与mutableCopy浅析</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/15/iOS __attribute__那点小事/">iOS __attribute__那点小事</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/03/Go 语言学习之struct/">Go 语言学习之struct</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/12/Go 语言学习之函数/">Go 语言学习之函数</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/06/iOS translucent引发的那点小事/">iOS translucent引发的那点小事</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/27/iOS 自定义键盘/">iOS 自定义键盘</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/25/Go 语言学习之流程控制/">Go 语言学习之流程控制</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/23/Go 语言学习之数组 字典/">Go 语言学习之数组 字典</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/22/Go 语言基础之常量 变量/">Go 语言基础之常量 变量</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/19/Go 语言之Mac环境配置/">Go 语言之Mac环境配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/12/iOS CoreImage之滤镜简单使用/">iOS CoreImage之滤镜简单使用</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/24/iOS UIImage常用category/">iOS Quart2D绘图之UIImage简单使用</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/05/iOS自定义转场动画/">iOS 自定义转场动画浅谈</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2016-2018 One Dream
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 4;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>
